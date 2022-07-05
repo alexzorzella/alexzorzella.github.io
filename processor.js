@@ -15,8 +15,84 @@ let quotes = ["It's not shuffle cheating, it's a statistical inclination.",
     "Don't worry, just buy another copy. What do you mean it's $240?",
     "No, getting a card in foil does not increase your chances of drawing it.",
     "You know, mulliganing once isn't that bad.",
-    "I'm here to make your life easier.",
+    "I'm here to help.",
     "You know that your odds don't stack, right?"];
+
+let helpInfo = false;
+
+function help()
+{
+    helpInfo = !helpInfo;
+
+    let helpText = "";
+
+    if(helpInfo)
+    {
+        helpText = "Welcome! This is an unofficial Magic the Gathering mulligan simulator. Use this website to calculate your odds of getting a successful starting hand with specific card requirements. Have a good opener? Let's use an example: you have four Wall of Runes cards. Wall of Runes is a 0/4 Defender which costs 1 Island to cast and has 'When Wall of Runes enters the battlefield, scry 1.' If we want the bare minimum, then we'll need 1 Wall of Runes and 1 Island in our starting hand to cast it on turn one and getting a scry early on in the game. Let's say our deck is 60 cards. 4 of those are Wall of Runes, and it's a Island Plains deck with 10 of each land type. To calculate at least 1 Wall of Runes and 1 Island in your starting hand, input [4, 1], then [10, 1], then [40, 0]. The computer will then simulate a large amount of openers and then will tell you your odds of success. Remember, this website shuffles the deck very well every time, and decks never get perfectly shuffled in real life. Try your best to shuffle well for the fairest games. Enjoy the site!";
+    }
+
+    document.getElementById("helpDisplay").textContent = helpText;
+}
+
+let resultInfoDisplayed = false;
+
+function resultInfo()
+{
+    resultInfoDisplayed = !resultInfoDisplayed;
+
+    let resultText = "";
+
+    if(resultInfoDisplayed)
+    {
+        resultText = "You've gotten results, but what do they mean? The numbers you want to look at for the best idea of the rate at which you'll see this hand are the top two in the mulligan list (0 and 1 mulligans). If it's a 10% success rate with 0 mulligans, that means that in every 1 of 10 games you'll see this situation in your starting hand without mulliganing at all. If it says that you have, for example, a 5% rate of getting that situation in your starting hand when you mulligan once, it means that you'll see that card in 1 of every 20 games of which you didn't see it in the initial hand but then mulligained once."
+    }
+
+    document.getElementById("resultInfoHelp").textContent = resultText;
+}
+
+function clearInfo()
+{
+    cards = [];
+    input = [];
+    inputReq = [];
+    cardsSearched = 0;
+    deckSize = 0;
+
+    validDeckSize = deckSize >= 7;
+    validSearchSize = cardsSearched <= 7 && cardsSearched > 0;
+
+    document.getElementById('total_cards_in_deck').value = '';
+    document.getElementById('ideal_cards_in_hand').value = '';
+
+    let deckFormat = '';
+    let searchValidity = '';
+
+    if(deckSize >= 40)
+    {
+       if(deckSize < 60)
+       {
+            deckFormat = "Looks like you're playing Limited.";      
+       } else if(deckSize < 100)
+       {
+            deckFormat = "Looks like you're playing a standard format.";
+       } else
+       {
+            deckFormat = "Looks like you're playing Commander."
+       }
+    } else
+    {
+        deckFormat = "Is this a real deck?";
+    }
+
+    searchValidity = validSearchSize ? 
+    "Your search parameters are valid." 
+    : "Make sure you're searching for more than 0 cards and fewer than 8 cards.";
+
+    document.getElementById('card_searched_display').textContent = 'Cards searched: ' + cardsSearched + '/' + deckSize;
+    document.getElementById('deck_valid_display').textContent 
+    = (validDeckSize ? 'Your deck is valid.' : 'Your deck is invalid.') + ' ' + deckFormat;
+    document.getElementById('valid_search_display').textContent = searchValidity;
+}
 
 function append(text) {
         // Create element:
@@ -39,6 +115,8 @@ function setQuote() {
     // append("Foo");
     // append("Boo");
     // append("Foo");
+    
+    clearInfo();
 }
 
 function addCard() {
