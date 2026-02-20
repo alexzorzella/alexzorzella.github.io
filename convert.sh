@@ -2,6 +2,10 @@
 
 set -e
 
+for f in public/art/*.jpg; do
+    convert "$f" "public/art/$(basename "${f%.jpg}").png"
+done
+
 rm -r public/art/thumbnails
 mkdir -p public/art/thumbnails
 
