@@ -1,128 +1,136 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
-    <link href="css/style.css" rel="stylesheet" />
-  </head>
-  <body>
-    <style>
-      li {
-        width: 100%;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guides</title>
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+<style>
+  li {
+    width: 100%;
 
-        &::after {
-          content: "";
-          width: 384px;
-          height: 384px;
-          background-image: var(--cover);
-          background-size: contain;
-          background-position: center;
-          background-repeat: no-repeat;
-          position: absolute;
-          top: 0%;
-          left: calc(100%);
-          opacity: 0;
-          transition: opacity 0.1s ease;
-          pointer-events: none;
-          z-index: 10;
-        }
+    &::after {
+      content: "";
+      width: 384px;
+      height: 384px;
+      background-image: var(--cover);
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 0%;
+      left: calc(100%);
+      opacity: 0;
+      transition: opacity 0.1s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
 
-        &:hover::after {
-          opacity: 1;
-        }
-      }
-    </style>
-    <main>
-      <img
-        src="public/guides.png"
-        alt="Guides"
-        style="width: 100%; max-height: 128px; object-fit: contain"
-      />
+    &:hover::after {
+      opacity: 1;
+    }
+  }
+</style>
+<main>
+  <img
+          src="public/guides.png"
+          alt="Guides"
+          style="width: 100%; max-height: 128px; object-fit: contain"
+  />
+  <div style="position: relative">
+    <div style="position: flex; flex-direction: column;">
       <ul>
         <i>In the Oven</i>
-        <li style="--cover: url('/public/guide_covers/physics_cover.jpg'>
+        <li style="--cover: url('public/guide_covers/math_of_computer_science_cover.jpg')">
           <a href="public/guides/networking.pdf"
           >Networking</a
           >
         </li>
-        <li>
-          <a href="public/guides/economics_principles.pdf"
+        <li style="--cover: url('public/guide_covers/physics_cover.jpg')">
+          <a href="public/guides/economics.pdf"
           >Economics</a
           >
         </li>
-        
+
         <br>
         <i>Complete</i>
-        <li>
+        <li style="--cover: url('public/guide_covers/math_of_computer_science_cover.jpg')">
           <a href="public/guides/algorithms_midterm_two_guide.pdf"
-            >Algorithms</a
+          >Algorithms</a
           >
         </li>
-        <li>
+        <li style="--cover: url('public/guide_covers/physics_cover.jpg')">
           <a href="public/guides/calc_iii_final_equation_sheet.pdf"
-            >Calc III</a
+          >Calc III</a
           >
         </li>
-        <li>
+        <li style="--cover: url('public/guide_covers/math_of_computer_science_cover.jpg')">
           <a href="public/guides/computer_organization_note_sheet.pdf"
-            >Computer Organization Note Sheet</a
+          >Computer Organization Note Sheet</a
           >
         </li>
-        <li>
-          <a href="public/guides/deep_learning_guide.pdf"
-            >Deep Learning</a
-          >
+        <li style="--cover: url('public/guide_covers/physics_cover.jpg')">
+          <a href="public/guides/deep_learning_guide.pdf">Deep Learning</a>
         </li>
         <li>
-          <a href="public/guides/human_computer_interaction_midterm_review.pdf"
-            >Human Computer Interaction</a
+          <a
+                  href="public/guides/human_computer_interaction_midterm_review.pdf"
+          >Human Computer Interaction</a
           >
         </li>
         <li>
           <a href="public/guides/machine_learning_midterm_1_study_guide.pdf"
-            >Machine Learning</a
+          >Machine Learning</a
           >
         </li>
         <li>
-          <a href="public/guides/math_of_computer_science_test_1_note_sheet.pdf"
-            >Math of Computer Science I</a
+          <a
+                  href="public/guides/math_of_computer_science_test_1_note_sheet.pdf"
+          >Math of Computer Science I</a
           >
         </li>
         <li>
-          <a href="public/guides/math_of_computer_science_test_2_note_sheet.pdf"
-            >Math of Computer Science II</a
+          <a
+                  href="public/guides/math_of_computer_science_test_2_note_sheet.pdf"
+          >Math of Computer Science II</a
           >
         </li>
         <li>
-          <a href="public/guides/math_of_computer_science_test_3_note_sheet.pdf"
-            >Math of Computer Science III</a
+          <a
+                  href="public/guides/math_of_computer_science_test_3_note_sheet.pdf"
+          >Math of Computer Science III</a
           >
         </li>
         <li>
-          <a href="public/guides/physics_equations.pdf">Physics Equations</a>
+          <a href="public/guides/physics_equations.pdf"
+          >Physics Equations</a
+          >
         </li>
         <li>
           <a href="public/guides/programming_languages_final_review.pdf"
-            >Programming Languages</a
+          >Programming Languages</a
           >
         </li>
         <li>
           <a href="public/guides/software_engineering_midterm_review.pdf"
-            >Software Engineering</a
+          >Software Engineering</a
           >
         </li>
         <li>
           <a href="public/guides/statistics_final_equation_sheet.pdf"
-            >Statistics Probabilities Equations</a
+          >Statistics Probabilities Equations</a
           >
         </li>
         <li>
           <a href="public/guides/statistics_final_guide.pdf"
-            >Statistics Probabilities Review</a
+          >Statistics Probabilities Review</a
           >
         </li>
       </ul>
-    </main>
-  </body>
+    </div>
+  </div>
+</main>
+</body>
 </html>
