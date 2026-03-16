@@ -1,0 +1,65 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="altgraph" />
+          <option value="asttokens" />
+          <option value="colorama" />
+          <option value="contourpy" />
+          <option value="cycler" />
+          <option value="decorator" />
+          <option value="executing" />
+          <option value="filelock" />
+          <option value="fonttools" />
+          <option value="fsspec" />
+          <option value="ipython" />
+          <option value="ipython-pygments-lexers" />
+          <option value="jedi" />
+          <option value="jinja2" />
+          <option value="kiwisolver" />
+          <option value="markupsafe" />
+          <option value="matplotlib" />
+          <option value="matplotlib-inline" />
+          <option value="mpmath" />
+          <option value="networkx" />
+          <option value="numpy" />
+          <option value="packaging" />
+          <option value="parso" />
+          <option value="pefile" />
+          <option value="pillow" />
+          <option value="prompt-toolkit" />
+          <option value="pure-eval" />
+          <option value="pyfiglet" />
+          <option value="pygments" />
+          <option value="pyinstaller" />
+          <option value="pyinstaller-hooks-contrib" />
+          <option value="pyparsing" />
+          <option value="pyside6" />
+          <option value="pyside6-addons" />
+          <option value="pyside6-essentials" />
+          <option value="python-dateutil" />
+          <option value="pywin32-ctypes" />
+          <option value="setuptools" />
+          <option value="shiboken6" />
+          <option value="six" />
+          <option value="stack-data" />
+          <option value="sympy" />
+          <option value="traitlets" />
+          <option value="typing-extensions" />
+          <option value="wcwidth" />
+          <option value="torch" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="PySide6.QtCore.Qt.AlignCenter" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="ReassignedToPlainText" enabled="false" level="WARNING" enabled_by_default="false" />
+  </profile>
+</component>
