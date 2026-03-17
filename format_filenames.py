@@ -16,7 +16,9 @@ def format_filenames(path: str=None):
             replace("’", "_").
             replace("&", "and").
             replace(",", "").
-            replace("-", "_")}"
+            replace("-", "_").
+            replace("(", "").
+            replace(")", "")}"
 
         os.rename(file.absolute(), file.parent / formatted_name)
 
