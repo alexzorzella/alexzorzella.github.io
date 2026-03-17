@@ -73,8 +73,10 @@ ul {
 
 .horizontal-list {
   display: flex;
-  gap: 20px;
+  gap: 110px;
   flex-wrap: wrap;
+  row-gap: 10px;
+  justify-content: center;
 }
 
 .scroll-container {
