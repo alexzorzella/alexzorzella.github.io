@@ -13,7 +13,7 @@ def populate_card_page(template:str="metafight_cards.template.html", output:str=
     code_gen += "<ul>\n"
 
     for card_file in card_files:
-        code_gen += f'<li><img src="{cards}{card_file.name}" alt="{card_file.name}"></li>\n'
+        code_gen += f'<li><img src="{cards}/{card_file.name}" alt="{card_file.name}"></li>\n'
 
     code_gen += "</ul>\n"
 
