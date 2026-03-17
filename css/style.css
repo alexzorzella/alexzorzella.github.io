@@ -73,6 +73,29 @@ ul {
 
 .horizontal-list {
   display: flex;
-  gap: 40px;
+  gap: 20px;
   flex-wrap: wrap;
+}
+
+.scroll-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  background: gold;
+  padding: 5px 0;
+}
+
+.scroll-text {
+  display: inline-block;
+  color: blue;
+  animation: scrolling-marquee 10s linear infinite;
+}
+
+@keyframes scrolling-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translate(-100%); }
+}
+
+.scroll-container:hover .scroll-text {
+  animation-play-state: paused;
 }
