@@ -1,19 +1,20 @@
 from pathlib import Path
 
-def populate_card_page(template:str="metafight_cards.template.html", output:str="cards.html", cards:str="public/metafight"):
+def populate_card_page(template:str, output:str, cards:str, use_thumbnails:bool=False):
     project_root = Path(__file__).parent
     template_file = project_root / template
     output_file = project_root / output
 
     cards_dir = project_root / cards
+    card_files = cards_dir.glob(f"*.png")
 
-    card_files = cards_dir.glob("*.png")
     code_gen = ""
 
     code_gen += "<ul>\n"
 
     for card_file in card_files:
-        code_gen += f'<li><img src="{cards}/{card_file.name}" alt="{card_file.name}"></li>\n'
+        image_source = f'{cards}/thumbnails/{card_file.name.replace(".png", ".webp")}' if use_thumbnails else f'{cards}/{card_file.name}'
+        code_gen += f'<a href="{cards}/{card_file.name}"><li><img src="{image_source}" alt="{card_file.name}"></li></a>\n'
 
     code_gen += "</ul>\n"
 
@@ -25,5 +26,5 @@ def populate_card_page(template:str="metafight_cards.template.html", output:str=
         output.write(template)
 
 if __name__ == "__main__":
-    populate_card_page()
-    populate_card_page(template="magic_cards.template.html", output="mtg.html", cards="public/mtg")
+    populate_card_page(template="metafight_cards.template.html", output="cards.html", cards="public/metafight")
+    populate_card_page(template="magic_cards.template.html", output="mtg.html", cards="public/mtg", use_thumbnails=True)
