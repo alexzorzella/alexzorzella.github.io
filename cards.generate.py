@@ -13,7 +13,8 @@ def populate_card_page(template:str, output:str, cards:str, use_thumbnails:bool=
     code_gen += "<ul>\n"
 
     for card_file in card_files:
-        code_gen += f'<li><a href="{cards}/{card_file.name}"><img src="{cards}/thumbnails/{card_file.name.replace(".png", ".webp")}" alt="{card_file.name}"></a></li>\n'
+        image_source = f'{cards}/thumbnails/{card_file.name.replace(".png", ".webp")}' if use_thumbnails else f'{cards}/{card_file.name}'
+        code_gen += f'<a href="{cards}/{card_file.name}"><li><img src="{image_source}" alt="{card_file.name}"></li></a>\n'
 
     code_gen += "</ul>\n"
 
