@@ -13,10 +13,12 @@ def format_filenames(path: str=None):
             f"{original_filename.lower().strip().
             replace(" ", "_").
             replace("\'", "_").
+            replace("’", "_").
             replace("&", "and").
-            replace(",", "")}"
+            replace(",", "").
+            replace("-", "_")}"
 
-        os.rename(file.absolute(), formatted_name)
+        os.rename(file.absolute(), file.parent / formatted_name)
 
         print(f"Renamed {file} to {formatted_name}")
 
