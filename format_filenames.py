@@ -2,7 +2,7 @@ import os
 import string
 from pathlib import Path
 
-valid_chars: str = string.ascii_letters + string.digits + "_"
+valid_chars: str = string.ascii_letters + string.digits + "_."
 
 def format_filenames(path: str = None):
     while path is None or not Path(path).exists():
