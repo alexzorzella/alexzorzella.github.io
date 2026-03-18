@@ -1,7 +1,10 @@
 import os
+import string
 from pathlib import Path
 
-def format_filenames(path: str=None):
+valid_chars: str = string.ascii_letters + string.digits + "_"
+
+def format_filenames(path: str = None):
     while path is None or not Path(path).exists():
         path = input("Filepath: ")
 
@@ -9,20 +12,18 @@ def format_filenames(path: str=None):
 
     for file in files:
         original_filename = file.name
-        formatted_name = \
-            f"{original_filename.lower().strip().
-            replace(" ", "_").
-            replace("\'", "_").
-            replace("’", "_").
-            replace("&", "and").
-            replace(",", "").
-            replace("-", "_").
-            replace("(", "").
-            replace(")", "")}"
+        original_filename = original_filename.lower().strip().replace(" ", "_")
+
+        formatted_name = ""
+
+        for char in original_filename:
+            if char in valid_chars:
+                formatted_name += char
 
         os.rename(file.absolute(), file.parent / formatted_name)
 
         print(f"Renamed {file} to {formatted_name}")
+
 
 if __name__ == "__main__":
     format_filenames()
