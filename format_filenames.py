@@ -24,6 +24,5 @@ def format_filenames(path: str = None):
 
         print(f"Renamed {file} to {formatted_name}")
 
-
 if __name__ == "__main__":
     format_filenames()
