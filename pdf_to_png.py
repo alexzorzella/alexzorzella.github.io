@@ -4,7 +4,7 @@ from pdf2image import convert_from_path
 
 def format_filenames(path: str = None):
     """Saves the pages of all PDF files in a directory to PNG files"""
-    while path is None or not Path(path).exists():
+    while path is None or not Path(path).exists() or not Path(path).is_dir():
         path = input("Directory: ")
 
     pdf_files = Path(path).glob("*.pdf")
