@@ -23,10 +23,10 @@ def format_filenames(path: str = None):
             image.save(Path(output_dir) / image_filename, 'PNG')
             total_images_saved += 1
 
-        print(f"Saved {len(images)} images from {pdf} to {output_dir}")
+        print(f"Saved {len(images)} image(s) from {pdf} to {output_dir}")
         total_files_processed += 1
 
-    print(f"Done! Processed {total_images_saved} total images from {total_files_processed} pdf files")
+    print(f"Done! Processed {total_images_saved} total image(s) from {total_files_processed} pdf file(s)")
 
 if __name__ == "__main__":
     format_filenames()
