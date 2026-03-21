@@ -1,11 +1,13 @@
 from pathlib import Path
 
-def populate_card_page(template:str, output:str, cards:str, use_thumbnails:bool=False):
+def populate_card_page(template:str, output:str, card_dir:str):
+    """Creates a populated HTML file given a template, output, and a local directory of cards"""
+
     project_root = Path(__file__).parent
     template_file = project_root / template
     output_file = project_root / output
 
-    cards_dir = project_root / cards
+    cards_dir = project_root / card_dir
     card_files = cards_dir.glob(f"*.png")
 
     code_gen = ""
@@ -13,10 +15,14 @@ def populate_card_page(template:str, output:str, cards:str, use_thumbnails:bool=
     code_gen += "<ul>\n"
 
     for card_file in card_files:
-        image_source = f'{cards}/thumbnails/{card_file.name.replace(".png", ".webp")}' if use_thumbnails else f'{cards}/{card_file.name}'
-        # code_gen += f'<li><img src="{image_source}" alt="{card_file.name}"></li>\n'
-        code_gen += f'<li><a href="{cards}/{card_file.name}"><img src="{image_source}" alt="{card_file.name}"></a></li>\n'
-        # code_gen += f'<a href="{cards}/{card_file.name}"><li><img src="{image_source}" alt="{card_file.name}"></li></a>\n'
+        thumbnail_path = f'{card_dir}/thumbnails/{card_file.name.replace(".png", ".webp")}'
+
+        if Path(thumbnail_path).exists():
+            image_source = thumbnail_path
+            code_gen += f'<li><a href="{card_dir}/{card_file.name}"><img src="{image_source}" alt="{card_file.name}"></a></li>\n'
+        else:
+            image_source = f"{card_dir}/{card_file.name}"
+            code_gen += f'<li><img src="{image_source}" alt="{card_file.name}"></li>\n'
 
     code_gen += "</ul>\n"
 
@@ -28,5 +34,5 @@ def populate_card_page(template:str, output:str, cards:str, use_thumbnails:bool=
         output.write(template)
 
 if __name__ == "__main__":
-    populate_card_page(template="metafight_cards.template.html", output="cards.html", cards="public/metafight")
-    populate_card_page(template="magic_cards.template.html", output="mtg.html", cards="public/mtg", use_thumbnails=True)
+    populate_card_page(template="metafight_cards.template.html", output="cards.html", card_dir="public/metafight")
+    populate_card_page(template="magic_cards.template.html", output="mtg.html", card_dir="public/mtg")

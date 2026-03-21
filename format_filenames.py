@@ -5,6 +5,7 @@ from pathlib import Path
 valid_chars: str = string.ascii_letters + string.digits + "_."
 
 def format_filenames(path: str = None):
+    """Formats a directory's files to be snake_case."""
     while path is None or not Path(path).exists():
         path = input("Filepath: ")
 
