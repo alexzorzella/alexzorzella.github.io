@@ -8,7 +8,7 @@ def format_filenames(path: str = None):
         path = input("Directory: ")
 
     pdf_files = Path(path).glob("*.pdf")
-    output_dir = path / "output"
+    output_dir = Path(path) / "output"
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
