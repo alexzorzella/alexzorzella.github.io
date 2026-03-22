@@ -87,9 +87,9 @@ def compress_images_into_thumbnails_recursively(parent_directory:str, thumbnail_
     print(f"Processed {total_images_processed} images")
 
 if __name__ == "__main__":
-    compress_images_into_thumbnails_recursively("public/art")
-    compress_images_into_thumbnails_recursively("public/metafight")
-    compress_images_into_thumbnails_recursively("public/mtg")
+    # compress_images_into_thumbnails_recursively("public/art")
+    # compress_images_into_thumbnails_recursively("public/metafight")
+    # compress_images_into_thumbnails_recursively("public/mtg")
     populate_gallery(template="index.template.html", output="index.html", artwork_directory="public/art")
     populate_card_page(template="metafight_cards.template.html", output="cards.html", card_dir="public/metafight")
     populate_card_page(template="magic_cards.template.html", output="mtg.html", card_dir="public/mtg")
