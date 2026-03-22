@@ -63,7 +63,7 @@ def populate_template(
                 f"/{image_sources_directory_name}/thumbnails/{card_filepath.with_suffix('.webp').name}"
             )
             asset_path = Path(
-                f"/{image_sources_directory_name}/{directory.relative_to(image_sources_directory_path)}/{card_filepath.name}"
+                f"/{image_sources_directory_name}/{card_filepath.parent.relative_to(image_sources_directory_path)}/{card_filepath.name}"
             )
 
             html_image_templates.append(
