@@ -64,7 +64,7 @@ def populate_card_page(template:str, output:str, card_dir:str):
         output.write(template)
 
 def compress_images_into_thumbnails_recursively(parent_directory:str, thumbnail_height:int=512):
-    output_directory = Path(parent_directory) / "output"
+    output_directory = Path(parent_directory) / "thumbnails"
     Path(output_directory).mkdir(parents=True, exist_ok=True)
 
     total_images_processed = 0
