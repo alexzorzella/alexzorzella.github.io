@@ -1,4 +1,5 @@
 from pathlib import Path
+from PIL import Image
 
 def populate_gallery(template:str, output:str, artwork_directory:str):
     code_gen = ""
@@ -62,7 +63,33 @@ def populate_card_page(template:str, output:str, card_dir:str):
     with open(output_file, "w") as output:
         output.write(template)
 
+def compress_images_into_thumbnails_recursively(parent_directory:str, thumbnail_height:int=512):
+    output_directory = Path(parent_directory) / "output"
+    Path(output_directory).mkdir(parents=True, exist_ok=True)
+
+    total_images_processed = 0
+
+    for image_path in parent_directory.rglob("*.png"):
+        with Image.open(image_path) as image:
+            width, height = image.size
+
+            aspect_ratio = width / height
+            new_width = int(thumbnail_height * aspect_ratio)
+
+            resized_image = image.resize((new_width, thumbnail_height), Image.Resampling.LANCZOS)
+
+            output_path = output_directory / f"{image_path.stem}.webp"
+            resized_image.save(output_path, "WEBP", quality=100)
+
+            print(f"Saved thumbnail for {image_path} to {output_path}")
+            total_images_processed += 1
+
+    print(f"Processed {total_images_processed} images")
+
 if __name__ == "__main__":
+    compress_images_into_thumbnails_recursively("public/art")
+    compress_images_into_thumbnails_recursively("public/metafight")
+    compress_images_into_thumbnails_recursively("public/mtg")
     populate_gallery(template="index.template.html", output="index.html", artwork_directory="public/art")
     populate_card_page(template="metafight_cards.template.html", output="cards.html", card_dir="public/metafight")
     populate_card_page(template="magic_cards.template.html", output="mtg.html", card_dir="public/mtg")
