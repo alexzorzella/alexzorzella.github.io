@@ -17,11 +17,14 @@ def populate_gallery(template:str, output:str, artwork_directory:str):
             image_path = artwork_file
             thumbnail_path = f"public/art/thumbnails/{Path(image_path).stem}.webp"
 
-            code_gen += f'<li class="tile"><a href={image_path}><img fetchpriority="high" src={thumbnail_path} alt="Art"/></a></li>\n'
+            formatted_image_path = str(image_path).replace("\\", "/")
+
+            code_gen += f"""
+        <li class="tile"><a href={formatted_image_path}><img fetchpriority="high" src={thumbnail_path} alt="Art"/></a></li>"""
 
     with open(template, "r") as template_file:
         template = template_file.read()
-        template = template.replace("__TEMPLATE__", template)
+        template = template.replace("__TEMPLATE__", code_gen)
 
     with open(output, "w") as output:
         output.write(template)
