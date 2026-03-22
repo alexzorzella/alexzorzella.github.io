@@ -52,25 +52,25 @@ def populate_template(
         if directory.name == "thumbnails":
             continue
 
-        card_filepaths = list(
+        image_filepaths = list(
             itertools.chain.from_iterable(
-                directory.rglob(pattern) for pattern in image_filetypes
+                directory.glob(pattern) for pattern in image_filetypes
             )
         )
 
-        for card_filepath in card_filepaths:
+        for image_filepath in image_filepaths:
             thumbnail_path = Path(
-                f"/{image_sources_directory_name}/thumbnails/{card_filepath.with_suffix('.webp').name}"
+                f"/{image_sources_directory_name}/thumbnails/{image_filepath.with_suffix('.webp').name}"
             )
             asset_path = Path(
-                f"/{image_sources_directory_name}/{card_filepath.parent.relative_to(image_sources_directory_path)}/{card_filepath.name}"
+                f"/{image_sources_directory_name}/{image_filepath.parent.relative_to(image_sources_directory_path)}/{image_filepath.name}"
             )
 
             html_image_templates.append(
                 HTMLImageTemplate(
                     thumbnail_path=thumbnail_path,
                     asset_path=asset_path,
-                    alt=card_filepath.stem,
+                    alt=image_filepath.stem,
                     li_class=li_class,
                 )
             )
