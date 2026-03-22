@@ -69,7 +69,7 @@ def compress_images_into_thumbnails_recursively(parent_directory:str, thumbnail_
 
     total_images_processed = 0
 
-    for image_path in parent_directory.rglob("*.png"):
+    for image_path in Path(parent_directory).rglob("*.png"):
         with Image.open(image_path) as image:
             width, height = image.size
 
