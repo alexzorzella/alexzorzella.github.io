@@ -9,12 +9,15 @@ class HTMLImageTemplate:
     thumbnail_path: Path | None
     asset_path: Path
     alt:str
+    li_class: str | None = None
 
     def render(self):
+        li_class = "" if self.li_class is None else f' class="{self.li_class}"'
+
         if self.thumbnail_path is not None:
-            return f'<li><a href="{self.asset_path.as_posix()}"><img src="{self.thumbnail_path.as_posix()}" alt="{self.alt}"></a></li>'
+            return f'<li{li_class}><a href="{self.asset_path.as_posix()}"><img src="{self.thumbnail_path.as_posix()}" alt="{self.alt}"></a></li>'
         else:
-            return f'<li><a href="{self.asset_path.as_posix()}"><img src="{self.asset_path.as_posix()}" alt="{self.alt}"></a></li>'
+            return f'<li{li_class}><a href="{self.asset_path.as_posix()}"><img src="{self.asset_path.as_posix()}" alt="{self.alt}"></a></li>'
 
 def populate_gallery(template_file:str, output_file:str, artwork_directory:str):
     code_gen = ""
@@ -83,6 +86,11 @@ def populate_card_page(output_template_filename:str, output_filename:str, card_s
 
             html_image_templates.append(HTMLImageTemplate(thumbnail_path=thumbnail_path, asset_path=asset_path, alt=card_filepath.stem))
 
+    render_and_write_to_template(html_image_templates=html_image_templates, output_template_path=output_template_path, output_filepath=output_filepath)
+
+    print(f"Populated {output_template_path.stem} with cards from {card_source_directory_name}")
+
+def render_and_write_to_template(html_image_templates: list[HTMLImageTemplate], output_template_path: Path, output_filepath: Path):
     code_gen = ""
 
     code_gen += "<ul>\n"
@@ -98,8 +106,6 @@ def populate_card_page(output_template_filename:str, output_filename:str, card_s
 
     with open(output_filepath, "w") as output_filename:
         output_filename.write(template)
-
-    print(f"Populated {output_template_path.stem} with cards from {card_source_directory_name}")
 
 def create_thumbnail_for_image(image_path:str, thumbnail_height:int, output_directory:str):
     with Image.open(image_path) as image:
