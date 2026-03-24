@@ -150,10 +150,10 @@ def create_thumbnails_for_images_recursively(
 
 
 if __name__ == "__main__":
-    # create_thumbnails_for_images_recursively("public/art")
-    # create_thumbnails_for_images_recursively("public/metafight")
-    # create_thumbnails_for_images_recursively("public/mtg")
-    # create_thumbnails_for_images_recursively("public/fine_art_i_like")
+    create_thumbnails_for_images_recursively("public/art")
+    create_thumbnails_for_images_recursively("public/metafight")
+    create_thumbnails_for_images_recursively("public/mtg")
+    create_thumbnails_for_images_recursively("public/fine_art_i_like")
 
     populate_template(
         output_template_filename="index.template.html",
