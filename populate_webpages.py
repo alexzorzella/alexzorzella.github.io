@@ -150,18 +150,18 @@ def create_thumbnails_for_images_recursively(
 
 
 if __name__ == "__main__":
-    create_thumbnails_for_images_recursively("public/art")
+    # create_thumbnails_for_images_recursively("public/art")
     # create_thumbnails_for_images_recursively("public/metafight")
-    # create_thumbnails_for_images_recursively("public/mtg")
+    create_thumbnails_for_images_recursively("public/mtg")
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
 
-    populate_template(
-        output_template_filename="index.template.html",
-        output_filename="index.html",
-        image_sources_directory_name="public/art",
-        li_class="tile",
-        ul_class="tilelist",
-    )
+    # populate_template(
+    #     output_template_filename="index.template.html",
+    #     output_filename="index.html",
+    #     image_sources_directory_name="public/art",
+    #     li_class="tile",
+    #     ul_class="tilelist",
+    # )
     # populate_template(
     #     output_template_filename="fine_art.template.html",
     #     output_filename="fine_art.html",
@@ -174,8 +174,8 @@ if __name__ == "__main__":
     #     output_filename="cards.html",
     #     image_sources_directory_name="public/metafight",
     # )
-    # populate_template(
-    #     output_template_filename="magic_cards.template.html",
-    #     output_filename="mtg.html",
-    #     image_sources_directory_name="public/mtg",
-    # )
+    populate_template(
+        output_template_filename="magic_cards.template.html",
+        output_filename="mtg.html",
+        image_sources_directory_name="public/mtg",
+    )
