@@ -4,286 +4,30 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Custom MtG</title>
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
     <link href="/public/favicon.ico" rel="icon"/>
 </head>
-
-<style>
-    ul {
-        display: grid;
-        gap: 1px;
-        justify-content: center;
-        padding: 1px;
-        background: hsl(from papayawhip h s 50);
-        width: 100%;
-        grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
-    }
-
-    li {
-        perspective: 1000px;
-        box-sizing: border-box;
-        transition: transform 0.25s ease;
-
-        & a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-        }
-
-        & img {
-            border: 2px solid hsl(from coral h s 75);
-            border-radius: 8px;
-            transform-style: preserve-3d;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.1s ease-out;
-        }
-
-        &:hover {
-            transform: scale(1.1);
-            z-index: 10;
-        }
-    }
-</style>
 
 <body>
 <main style="background-color: papayawhip;">
     <img src="/public/carlmarket.png" style="max-width: 50%;">
 
-    <ul>
-<li><a href="/public/mtg/_first/alex_airplane_devourer.png"><img src="/public/mtg/thumbnails/alex_airplane_devourer.webp" alt="alex_airplane_devourer"></a></li>
-<li><a href="/public/mtg/_first/almond_and_milk_enjoyers.png"><img src="/public/mtg/thumbnails/almond_and_milk_enjoyers.webp" alt="almond_and_milk_enjoyers"></a></li>
-<li><a href="/public/mtg/_first/david_life_of_the_party.png"><img src="/public/mtg/thumbnails/david_life_of_the_party.webp" alt="david_life_of_the_party"></a></li>
-<li><a href="/public/mtg/_first/mango_multiversal_constant.png"><img src="/public/mtg/thumbnails/mango_multiversal_constant.webp" alt="mango_multiversal_constant"></a></li>
-<li><a href="/public/mtg/_first/park_imperial_counselor.png"><img src="/public/mtg/thumbnails/park_imperial_counselor.webp" alt="park_imperial_counselor"></a></li>
-<li><a href="/public/mtg/_first/scott_enlightened_thinker.png"><img src="/public/mtg/thumbnails/scott_enlightened_thinker.webp" alt="scott_enlightened_thinker"></a></li>
-<li><a href="/public/mtg/_first/scott_the_astromancer.png"><img src="/public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer"></a></li>
-<li><a href="/public/mtg/_first/stephan_datamaster.png"><img src="/public/mtg/thumbnails/stephan_datamaster.webp" alt="stephan_datamaster"></a></li>
-<li><a href="/public/mtg/_first/stephan_tableau_acolyte.png"><img src="/public/mtg/thumbnails/stephan_tableau_acolyte.webp" alt="stephan_tableau_acolyte"></a></li>
-<li><a href="/public/mtg/alien/bishop_artificial_person.png"><img src="/public/mtg/thumbnails/bishop_artificial_person.webp" alt="bishop_artificial_person"></a></li>
-<li><a href="/public/mtg/alien/bishop_artificial_person_back_still_operational.png"><img src="/public/mtg/thumbnails/bishop_artificial_person_back_still_operational.webp" alt="bishop_artificial_person_back_still_operational"></a></li>
-<li><a href="/public/mtg/alien/face_hugger.png"><img src="/public/mtg/thumbnails/face_hugger.webp" alt="face_hugger"></a></li>
-<li><a href="/public/mtg/alien/lieutenant_ellen_ripley.png"><img src="/public/mtg/thumbnails/lieutenant_ellen_ripley.webp" alt="lieutenant_ellen_ripley"></a></li>
-<li><a href="/public/mtg/alien/newt_fearless_survivor.png"><img src="/public/mtg/thumbnails/newt_fearless_survivor.webp" alt="newt_fearless_survivor"></a></li>
-<li><a href="/public/mtg/alien/parasitic_attachment.png"><img src="/public/mtg/thumbnails/parasitic_attachment.webp" alt="parasitic_attachment"></a></li>
-<li><a href="/public/mtg/alien/power_loader.png"><img src="/public/mtg/thumbnails/power_loader.webp" alt="power_loader"></a></li>
-<li><a href="/public/mtg/alien/the_xenomorph.png"><img src="/public/mtg/thumbnails/the_xenomorph.webp" alt="the_xenomorph"></a></li>
-<li><a href="/public/mtg/alien/uscss_nostromo.png"><img src="/public/mtg/thumbnails/uscss_nostromo.webp" alt="uscss_nostromo"></a></li>
-<li><a href="/public/mtg/elesh_morn/adventure.png"><img src="/public/mtg/thumbnails/adventure.webp" alt="adventure"></a></li>
-<li><a href="/public/mtg/elesh_morn/another_recurring_nightmare.png"><img src="/public/mtg/thumbnails/another_recurring_nightmare.webp" alt="another_recurring_nightmare"></a></li>
-<li><a href="/public/mtg/elesh_morn/a_momentary_lapse_in_physicality.png"><img src="/public/mtg/thumbnails/a_momentary_lapse_in_physicality.webp" alt="a_momentary_lapse_in_physicality"></a></li>
-<li><a href="/public/mtg/elesh_morn/date_at_frys_electronics.png"><img src="/public/mtg/thumbnails/date_at_frys_electronics.webp" alt="date_at_frys_electronics"></a></li>
-<li><a href="/public/mtg/elesh_morn/date_at_the_cat_cafe.png"><img src="/public/mtg/thumbnails/date_at_the_cat_cafe.webp" alt="date_at_the_cat_cafe"></a></li>
-<li><a href="/public/mtg/elesh_morn/date_in_the_future.png"><img src="/public/mtg/thumbnails/date_in_the_future.webp" alt="date_in_the_future"></a></li>
-<li><a href="/public/mtg/elesh_morn/elesh_morn_sleepyhead.png"><img src="/public/mtg/thumbnails/elesh_morn_sleepyhead.webp" alt="elesh_morn_sleepyhead"></a></li>
-<li><a href="/public/mtg/elesh_morn/elesh_morn_sleepyhead_back_well_done_invasion.png"><img src="/public/mtg/thumbnails/elesh_morn_sleepyhead_back_well_done_invasion.webp" alt="elesh_morn_sleepyhead_back_well_done_invasion"></a></li>
-<li><a href="/public/mtg/elesh_morn/falling.png"><img src="/public/mtg/thumbnails/falling.webp" alt="falling"></a></li>
-<li><a href="/public/mtg/elesh_morn/feast_of_a_lifetime.png"><img src="/public/mtg/thumbnails/feast_of_a_lifetime.webp" alt="feast_of_a_lifetime"></a></li>
-<li><a href="/public/mtg/elesh_morn/flying.png"><img src="/public/mtg/thumbnails/flying.webp" alt="flying"></a></li>
-<li><a href="/public/mtg/elesh_morn/getting_chased.png"><img src="/public/mtg/thumbnails/getting_chased.webp" alt="getting_chased"></a></li>
-<li><a href="/public/mtg/elesh_morn/i_wonder_how_it_ends.png"><img src="/public/mtg/thumbnails/i_wonder_how_it_ends.webp" alt="i_wonder_how_it_ends"></a></li>
-<li><a href="/public/mtg/elesh_morn/journey_through_the_subconscious.png"><img src="/public/mtg/thumbnails/journey_through_the_subconscious.webp" alt="journey_through_the_subconscious"></a></li>
-<li><a href="/public/mtg/elesh_morn/recurring_rift.png"><img src="/public/mtg/thumbnails/recurring_rift.webp" alt="recurring_rift"></a></li>
-<li><a href="/public/mtg/elesh_morn/running_slowly.png"><img src="/public/mtg/thumbnails/running_slowly.webp" alt="running_slowly"></a></li>
-<li><a href="/public/mtg/elesh_morn/surreal.png"><img src="/public/mtg/thumbnails/surreal.webp" alt="surreal"></a></li>
-<li><a href="/public/mtg/hhhgregg/christmas_in_july.png"><img src="/public/mtg/thumbnails/christmas_in_july.webp" alt="christmas_in_july"></a></li>
-<li><a href="/public/mtg/hhhgregg/copier_machine.png"><img src="/public/mtg/thumbnails/copier_machine.webp" alt="copier_machine"></a></li>
-<li><a href="/public/mtg/hhhgregg/fax_machine.png"><img src="/public/mtg/thumbnails/fax_machine.webp" alt="fax_machine"></a></li>
-<li><a href="/public/mtg/hhhgregg/repurpose_the_surplus.png"><img src="/public/mtg/thumbnails/repurpose_the_surplus.webp" alt="repurpose_the_surplus"></a></li>
-<li><a href="/public/mtg/hhhgregg/ring_fit_session.png"><img src="/public/mtg/thumbnails/ring_fit_session.webp" alt="ring_fit_session"></a></li>
-<li><a href="/public/mtg/kpop/awaited_debut.png"><img src="/public/mtg/thumbnails/awaited_debut.webp" alt="awaited_debut"></a></li>
-<li><a href="/public/mtg/kpop/behold_the_kpocalypse.png"><img src="/public/mtg/thumbnails/behold_the_kpocalypse.webp" alt="behold_the_kpocalypse"></a></li>
-<li><a href="/public/mtg/kpop/berate.png"><img src="/public/mtg/thumbnails/berate.webp" alt="berate"></a></li>
-<li><a href="/public/mtg/kpop/chaewon.png"><img src="/public/mtg/thumbnails/chaewon.webp" alt="chaewon"></a></li>
-<li><a href="/public/mtg/kpop/chaeyoung_inspirer_of_the_masses.png"><img src="/public/mtg/thumbnails/chaeyoung_inspirer_of_the_masses.webp" alt="chaeyoung_inspirer_of_the_masses"></a></li>
-<li><a href="/public/mtg/kpop/dahyun_group_confidant.png"><img src="/public/mtg/thumbnails/dahyun_group_confidant.webp" alt="dahyun_group_confidant"></a></li>
-<li><a href="/public/mtg/kpop/emart.png"><img src="/public/mtg/thumbnails/emart.webp" alt="emart"></a></li>
-<li><a href="/public/mtg/kpop/eunchae.png"><img src="/public/mtg/thumbnails/eunchae.webp" alt="eunchae"></a></li>
-<li><a href="/public/mtg/kpop/first_snow.png"><img src="/public/mtg/thumbnails/first_snow.webp" alt="first_snow"></a></li>
-<li><a href="/public/mtg/kpop/forecasting_love_and_weather.png"><img src="/public/mtg/thumbnails/forecasting_love_and_weather.webp" alt="forecasting_love_and_weather"></a></li>
-<li><a href="/public/mtg/kpop/garam.png"><img src="/public/mtg/thumbnails/garam.webp" alt="garam"></a></li>
-<li><a href="/public/mtg/kpop/giselle_feisty_lyricist.png"><img src="/public/mtg/thumbnails/giselle_feisty_lyricist.webp" alt="giselle_feisty_lyricist"></a></li>
-<li><a href="/public/mtg/kpop/hari_expert_chef.png"><img src="/public/mtg/thumbnails/hari_expert_chef.webp" alt="hari_expert_chef"></a></li>
-<li><a href="/public/mtg/kpop/heedo_twentyfive.png"><img src="/public/mtg/thumbnails/heedo_twentyfive.webp" alt="heedo_twentyfive"></a></li>
-<li><a href="/public/mtg/kpop/hwasa_peoples_advocate.png"><img src="/public/mtg/thumbnails/hwasa_peoples_advocate.webp" alt="hwasa_peoples_advocate"></a></li>
-<li><a href="/public/mtg/kpop/incheon_international_airport.png"><img src="/public/mtg/thumbnails/incheon_international_airport.webp" alt="incheon_international_airport"></a></li>
-<li><a href="/public/mtg/kpop/irene_chaos_visionary.png"><img src="/public/mtg/thumbnails/irene_chaos_visionary.webp" alt="irene_chaos_visionary"></a></li>
-<li><a href="/public/mtg/kpop/jennie_feared_lyricist.png"><img src="/public/mtg/thumbnails/jennie_feared_lyricist.webp" alt="jennie_feared_lyricist"></a></li>
-<li><a href="/public/mtg/kpop/jeongyeon_comeback_frontrunner.png"><img src="/public/mtg/thumbnails/jeongyeon_comeback_frontrunner.webp" alt="jeongyeon_comeback_frontrunner"></a></li>
-<li><a href="/public/mtg/kpop/jihyo_trendsetter.png"><img src="/public/mtg/thumbnails/jihyo_trendsetter.webp" alt="jihyo_trendsetter"></a></li>
-<li><a href="/public/mtg/kpop/jisoo_convincing_liaison.png"><img src="/public/mtg/thumbnails/jisoo_convincing_liaison.webp" alt="jisoo_convincing_liaison"></a></li>
-<li><a href="/public/mtg/kpop/joy_cheerful_vacationer.png"><img src="/public/mtg/thumbnails/joy_cheerful_vacationer.webp" alt="joy_cheerful_vacationer"></a></li>
-<li><a href="/public/mtg/kpop/jyp_headquarters.png"><img src="/public/mtg/thumbnails/jyp_headquarters.webp" alt="jyp_headquarters"></a></li>
-<li><a href="/public/mtg/kpop/karina_grounded_leader.png"><img src="/public/mtg/thumbnails/karina_grounded_leader.webp" alt="karina_grounded_leader"></a></li>
-<li><a href="/public/mtg/kpop/kazuha_legion_devourer.png"><img src="/public/mtg/thumbnails/kazuha_legion_devourer.webp" alt="kazuha_legion_devourer"></a></li>
-<li><a href="/public/mtg/kpop/lead_member.png"><img src="/public/mtg/thumbnails/lead_member.webp" alt="lead_member"></a></li>
-<li><a href="/public/mtg/kpop/lisa_menacing_icon.png"><img src="/public/mtg/thumbnails/lisa_menacing_icon.webp" alt="lisa_menacing_icon"></a></li>
-<li><a href="/public/mtg/kpop/matching_outfit.png"><img src="/public/mtg/thumbnails/matching_outfit.webp" alt="matching_outfit"></a></li>
-<li><a href="/public/mtg/kpop/mina_grave_recruiter.png"><img src="/public/mtg/thumbnails/mina_grave_recruiter.webp" alt="mina_grave_recruiter"></a></li>
-<li><a href="/public/mtg/kpop/momo_master_choreographer.png"><img src="/public/mtg/thumbnails/momo_master_choreographer.webp" alt="momo_master_choreographer"></a></li>
-<li><a href="/public/mtg/kpop/moonbyul_synchronized_plotter.png"><img src="/public/mtg/thumbnails/moonbyul_synchronized_plotter.webp" alt="moonbyul_synchronized_plotter"></a></li>
-<li><a href="/public/mtg/kpop/nayeon_peacekeeper.png"><img src="/public/mtg/thumbnails/nayeon_peacekeeper.webp" alt="nayeon_peacekeeper"></a></li>
-<li><a href="/public/mtg/kpop/ningning_marine_prodigy.png"><img src="/public/mtg/thumbnails/ningning_marine_prodigy.webp" alt="ningning_marine_prodigy"></a></li>
-<li><a href="/public/mtg/kpop/raid_the_kmart.png"><img src="/public/mtg/thumbnails/raid_the_kmart.webp" alt="raid_the_kmart"></a></li>
-<li><a href="/public/mtg/kpop/recruitment_spree.png"><img src="/public/mtg/thumbnails/recruitment_spree.webp" alt="recruitment_spree"></a></li>
-<li><a href="/public/mtg/kpop/romantic_confession.png"><img src="/public/mtg/thumbnails/romantic_confession.webp" alt="romantic_confession"></a></li>
-<li><a href="/public/mtg/kpop/rose_flag_bearer.png"><img src="/public/mtg/thumbnails/rose_flag_bearer.webp" alt="rose_flag_bearer"></a></li>
-<li><a href="/public/mtg/kpop/ros_flag_bearer.png"><img src="/public/mtg/thumbnails/ros_flag_bearer.webp" alt="ros_flag_bearer"></a></li>
-<li><a href="/public/mtg/kpop/sakura.png"><img src="/public/mtg/thumbnails/sakura.webp" alt="sakura"></a></li>
-<li><a href="/public/mtg/kpop/sana_leader_of_legions.png"><img src="/public/mtg/thumbnails/sana_leader_of_legions.webp" alt="sana_leader_of_legions"></a></li>
-<li><a href="/public/mtg/kpop/seri_joybringer.png"><img src="/public/mtg/thumbnails/seri_joybringer.webp" alt="seri_joybringer"></a></li>
-<li><a href="/public/mtg/kpop/seulgi_risk_taker.png"><img src="/public/mtg/thumbnails/seulgi_risk_taker.webp" alt="seulgi_risk_taker"></a></li>
-<li><a href="/public/mtg/kpop/seungyeon_friend_of_many.png"><img src="/public/mtg/thumbnails/seungyeon_friend_of_many.webp" alt="seungyeon_friend_of_many"></a></li>
-<li><a href="/public/mtg/kpop/shot_clock.png"><img src="/public/mtg/thumbnails/shot_clock.webp" alt="shot_clock"></a></li>
-<li><a href="/public/mtg/kpop/show_recruitment.png"><img src="/public/mtg/thumbnails/show_recruitment.webp" alt="show_recruitment"></a></li>
-<li><a href="/public/mtg/kpop/signed_on.png"><img src="/public/mtg/thumbnails/signed_on.webp" alt="signed_on"></a></li>
-<li><a href="/public/mtg/kpop/solar_steadfast_cultivator.png"><img src="/public/mtg/thumbnails/solar_steadfast_cultivator.webp" alt="solar_steadfast_cultivator"></a></li>
-<li><a href="/public/mtg/kpop/taeyeon_venue_packer.png"><img src="/public/mtg/thumbnails/taeyeon_venue_packer.webp" alt="taeyeon_venue_packer"></a></li>
-<li><a href="/public/mtg/kpop/the_debut.png"><img src="/public/mtg/thumbnails/the_debut.webp" alt="the_debut"></a></li>
-<li><a href="/public/mtg/kpop/treasured_pendant.png"><img src="/public/mtg/thumbnails/treasured_pendant.webp" alt="treasured_pendant"></a></li>
-<li><a href="/public/mtg/kpop/twice.png"><img src="/public/mtg/thumbnails/twice.webp" alt="twice"></a></li>
-<li><a href="/public/mtg/kpop/tzuyu_songwriter_extraordinaire.png"><img src="/public/mtg/thumbnails/tzuyu_songwriter_extraordinaire.webp" alt="tzuyu_songwriter_extraordinaire"></a></li>
-<li><a href="/public/mtg/kpop/wendy_honored_to_lead.png"><img src="/public/mtg/thumbnails/wendy_honored_to_lead.webp" alt="wendy_honored_to_lead"></a></li>
-<li><a href="/public/mtg/kpop/wheein_quiet_usurper.png"><img src="/public/mtg/thumbnails/wheein_quiet_usurper.webp" alt="wheein_quiet_usurper"></a></li>
-<li><a href="/public/mtg/kpop/winter_seasonal_balladeer.png"><img src="/public/mtg/thumbnails/winter_seasonal_balladeer.webp" alt="winter_seasonal_balladeer"></a></li>
-<li><a href="/public/mtg/kpop/yeri_guiding_force.png"><img src="/public/mtg/thumbnails/yeri_guiding_force.webp" alt="yeri_guiding_force"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_basic.png"><img src="/public/mtg/thumbnails/mariah_basic.webp" alt="mariah_basic"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_control.png"><img src="/public/mtg/thumbnails/mariah_control.webp" alt="mariah_control"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_faithful.png"><img src="/public/mtg/thumbnails/mariah_faithful.webp" alt="mariah_faithful"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_ramp.png"><img src="/public/mtg/thumbnails/mariah_ramp.webp" alt="mariah_ramp"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_replacement.png"><img src="/public/mtg/thumbnails/mariah_replacement.webp" alt="mariah_replacement"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_token_animator.png"><img src="/public/mtg/thumbnails/mariah_token_animator.webp" alt="mariah_token_animator"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_token_bonus.png"><img src="/public/mtg/thumbnails/mariah_token_bonus.webp" alt="mariah_token_bonus"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_token_sacrifice.png"><img src="/public/mtg/thumbnails/mariah_token_sacrifice.webp" alt="mariah_token_sacrifice"></a></li>
-<li><a href="/public/mtg/mariahs/mariah_unknown_clone.png"><img src="/public/mtg/thumbnails/mariah_unknown_clone.webp" alt="mariah_unknown_clone"></a></li>
-<li><a href="/public/mtg/metafight/beat_rice.png"><img src="/public/mtg/thumbnails/beat_rice.webp" alt="beat_rice"></a></li>
-<li><a href="/public/mtg/metafight/biomechanical_alterations.png"><img src="/public/mtg/thumbnails/biomechanical_alterations.webp" alt="biomechanical_alterations"></a></li>
-<li><a href="/public/mtg/metafight/chronokinesis.png"><img src="/public/mtg/thumbnails/chronokinesis.webp" alt="chronokinesis"></a></li>
-<li><a href="/public/mtg/metafight/containment_breach.png"><img src="/public/mtg/thumbnails/containment_breach.webp" alt="containment_breach"></a></li>
-<li><a href="/public/mtg/metafight/corrupted_niall.png"><img src="/public/mtg/thumbnails/corrupted_niall.webp" alt="corrupted_niall"></a></li>
-<li><a href="/public/mtg/metafight/deer.png"><img src="/public/mtg/thumbnails/deer.webp" alt="deer"></a></li>
-<li><a href="/public/mtg/metafight/effective_lure.png"><img src="/public/mtg/thumbnails/effective_lure.webp" alt="effective_lure"></a></li>
-<li><a href="/public/mtg/metafight/excessive_tax.png"><img src="/public/mtg/thumbnails/excessive_tax.webp" alt="excessive_tax"></a></li>
-<li><a href="/public/mtg/metafight/generous_gift.png"><img src="/public/mtg/thumbnails/generous_gift.webp" alt="generous_gift"></a></li>
-<li><a href="/public/mtg/metafight/jen_in_air.png"><img src="/public/mtg/thumbnails/jen_in_air.webp" alt="jen_in_air"></a></li>
-<li><a href="/public/mtg/metafight/magnetron.png"><img src="/public/mtg/thumbnails/magnetron.webp" alt="magnetron"></a></li>
-<li><a href="/public/mtg/metafight/misfire_arsenal.png"><img src="/public/mtg/thumbnails/misfire_arsenal.webp" alt="misfire_arsenal"></a></li>
-<li><a href="/public/mtg/metafight/niall_with_sodium.png"><img src="/public/mtg/thumbnails/niall_with_sodium.webp" alt="niall_with_sodium"></a></li>
-<li><a href="/public/mtg/metafight/philosophy.png"><img src="/public/mtg/thumbnails/philosophy.webp" alt="philosophy"></a></li>
-<li><a href="/public/mtg/metafight/plot_armor.png"><img src="/public/mtg/thumbnails/plot_armor.webp" alt="plot_armor"></a></li>
-<li><a href="/public/mtg/metafight/sacrificio_letal.png"><img src="/public/mtg/thumbnails/sacrificio_letal.webp" alt="sacrificio_letal"></a></li>
-<li><a href="/public/mtg/metafight/shooting_fish_in_a_barrel.png"><img src="/public/mtg/thumbnails/shooting_fish_in_a_barrel.webp" alt="shooting_fish_in_a_barrel"></a></li>
-<li><a href="/public/mtg/metafight/smokey_cinder_cone.png"><img src="/public/mtg/thumbnails/smokey_cinder_cone.webp" alt="smokey_cinder_cone"></a></li>
-<li><a href="/public/mtg/metafight/suplex_reversal.png"><img src="/public/mtg/thumbnails/suplex_reversal.webp" alt="suplex_reversal"></a></li>
-<li><a href="/public/mtg/metafight/swamp_swamped_by_swans.png"><img src="/public/mtg/thumbnails/swamp_swamped_by_swans.webp" alt="swamp_swamped_by_swans"></a></li>
-<li><a href="/public/mtg/metafight/that_elevator_button.png"><img src="/public/mtg/thumbnails/that_elevator_button.webp" alt="that_elevator_button"></a></li>
-<li><a href="/public/mtg/metafight/that_elevator_button_original.png"><img src="/public/mtg/thumbnails/that_elevator_button_original.webp" alt="that_elevator_button_original"></a></li>
-<li><a href="/public/mtg/metafight/the_bone_zone.png"><img src="/public/mtg/thumbnails/the_bone_zone.webp" alt="the_bone_zone"></a></li>
-<li><a href="/public/mtg/metafight/the_relax_sign.png"><img src="/public/mtg/thumbnails/the_relax_sign.webp" alt="the_relax_sign"></a></li>
-<li><a href="/public/mtg/metafight/the_test.png"><img src="/public/mtg/thumbnails/the_test.webp" alt="the_test"></a></li>
-<li><a href="/public/mtg/metafight/think_again.png"><img src="/public/mtg/thumbnails/think_again.webp" alt="think_again"></a></li>
-<li><a href="/public/mtg/metafight/warehouse_purchase.png"><img src="/public/mtg/thumbnails/warehouse_purchase.webp" alt="warehouse_purchase"></a></li>
-<li><a href="/public/mtg/minecraft/alex.png"><img src="/public/mtg/thumbnails/alex.webp" alt="alex"></a></li>
-<li><a href="/public/mtg/minecraft/enchantment_table.png"><img src="/public/mtg/thumbnails/enchantment_table.webp" alt="enchantment_table"></a></li>
-<li><a href="/public/mtg/minecraft/steve.png"><img src="/public/mtg/thumbnails/steve.webp" alt="steve"></a></li>
-<li><a href="/public/mtg/minecraft/time_to_farm.png"><img src="/public/mtg/thumbnails/time_to_farm.webp" alt="time_to_farm"></a></li>
-<li><a href="/public/mtg/niall/becca_baker_extraordinaire.png"><img src="/public/mtg/thumbnails/becca_baker_extraordinaire.webp" alt="becca_baker_extraordinaire"></a></li>
-<li><a href="/public/mtg/niall/campground.png"><img src="/public/mtg/thumbnails/campground.webp" alt="campground"></a></li>
-<li><a href="/public/mtg/niall/cinder_cone.png"><img src="/public/mtg/thumbnails/cinder_cone.webp" alt="cinder_cone"></a></li>
-<li><a href="/public/mtg/niall/date_at_henry_cowell_national_park.png"><img src="/public/mtg/thumbnails/date_at_henry_cowell_national_park.webp" alt="date_at_henry_cowell_national_park"></a></li>
-<li><a href="/public/mtg/niall/date_at_henry_cowell_national_park_back_henry_cowell_national_park.png"><img src="/public/mtg/thumbnails/date_at_henry_cowell_national_park_back_henry_cowell_national_park.webp" alt="date_at_henry_cowell_national_park_back_henry_cowell_national_park"></a></li>
-<li><a href="/public/mtg/niall/group_hike.png"><img src="/public/mtg/thumbnails/group_hike.webp" alt="group_hike"></a></li>
-<li><a href="/public/mtg/niall/half_dome.png"><img src="/public/mtg/thumbnails/half_dome.webp" alt="half_dome"></a></li>
-<li><a href="/public/mtg/niall/hike_the_beaten_path.png"><img src="/public/mtg/thumbnails/hike_the_beaten_path.webp" alt="hike_the_beaten_path"></a></li>
-<li><a href="/public/mtg/niall/nayeon_frontier_forager.png"><img src="/public/mtg/thumbnails/nayeon_frontier_forager.webp" alt="nayeon_frontier_forager"></a></li>
-<li><a href="/public/mtg/niall/nayeon_world_traveler.png"><img src="/public/mtg/thumbnails/nayeon_world_traveler.webp" alt="nayeon_world_traveler"></a></li>
-<li><a href="/public/mtg/niall/nevasca_glacial.png"><img src="/public/mtg/thumbnails/nevasca_glacial.webp" alt="nevasca_glacial"></a></li>
-<li><a href="/public/mtg/niall/nialls_jeep.png"><img src="/public/mtg/thumbnails/nialls_jeep.webp" alt="nialls_jeep"></a></li>
-<li><a href="/public/mtg/niall/niall_enthused_explorer.png"><img src="/public/mtg/thumbnails/niall_enthused_explorer.webp" alt="niall_enthused_explorer"></a></li>
-<li><a href="/public/mtg/niall/niall_relentless_ranger.png"><img src="/public/mtg/thumbnails/niall_relentless_ranger.webp" alt="niall_relentless_ranger"></a></li>
-<li><a href="/public/mtg/niall/park_ranger.png"><img src="/public/mtg/thumbnails/park_ranger.webp" alt="park_ranger"></a></li>
-<li><a href="/public/mtg/niall/road_trip_to_yosemite.png"><img src="/public/mtg/thumbnails/road_trip_to_yosemite.webp" alt="road_trip_to_yosemite"></a></li>
-<li><a href="/public/mtg/niall/road_trip_to_yosemite_back_yosemite_national_park.png"><img src="/public/mtg/thumbnails/road_trip_to_yosemite_back_yosemite_national_park.webp" alt="road_trip_to_yosemite_back_yosemite_national_park"></a></li>
-<li><a href="/public/mtg/niall/the_guide_nialls_invention.png"><img src="/public/mtg/thumbnails/the_guide_nialls_invention.webp" alt="the_guide_nialls_invention"></a></li>
-<li><a href="/public/mtg/niall/trailhead.png"><img src="/public/mtg/thumbnails/trailhead.webp" alt="trailhead"></a></li>
-<li><a href="/public/mtg/niall/unplanned_hike.png"><img src="/public/mtg/thumbnails/unplanned_hike.webp" alt="unplanned_hike"></a></li>
-<li><a href="/public/mtg/niall/vending_machine.png"><img src="/public/mtg/thumbnails/vending_machine.webp" alt="vending_machine"></a></li>
-<li><a href="/public/mtg/niall/yosemite_falls.png"><img src="/public/mtg/thumbnails/yosemite_falls.webp" alt="yosemite_falls"></a></li>
-<li><a href="/public/mtg/other/coin.png"><img src="/public/mtg/thumbnails/coin.webp" alt="coin"></a></li>
-<li><a href="/public/mtg/other/dracula.png"><img src="/public/mtg/thumbnails/dracula.webp" alt="dracula"></a></li>
-<li><a href="/public/mtg/other/falin_faceless_broker_life.png"><img src="/public/mtg/thumbnails/falin_faceless_broker_life.webp" alt="falin_faceless_broker_life"></a></li>
-<li><a href="/public/mtg/other/one_punch_man.png"><img src="/public/mtg/thumbnails/one_punch_man.webp" alt="one_punch_man"></a></li>
-<li><a href="/public/mtg/other/pistol.png"><img src="/public/mtg/thumbnails/pistol.webp" alt="pistol"></a></li>
-<li><a href="/public/mtg/other/run_them_back.png"><img src="/public/mtg/thumbnails/run_them_back.webp" alt="run_them_back"></a></li>
-<li><a href="/public/mtg/other/senator_steven_armstrong.png"><img src="/public/mtg/thumbnails/senator_steven_armstrong.webp" alt="senator_steven_armstrong"></a></li>
-<li><a href="/public/mtg/other/the_beheaded.png"><img src="/public/mtg/thumbnails/the_beheaded.webp" alt="the_beheaded"></a></li>
-<li><a href="/public/mtg/other/the_chainsaw_man.png"><img src="/public/mtg/thumbnails/the_chainsaw_man.webp" alt="the_chainsaw_man"></a></li>
-<li><a href="/public/mtg/other/the_player.png"><img src="/public/mtg/thumbnails/the_player.webp" alt="the_player"></a></li>
-<li><a href="/public/mtg/party_deck/scryfalls_random_tale.png"><img src="/public/mtg/thumbnails/scryfalls_random_tale.webp" alt="scryfalls_random_tale"></a></li>
-<li><a href="/public/mtg/party_deck/scryfall_random.png"><img src="/public/mtg/thumbnails/scryfall_random.webp" alt="scryfall_random"></a></li>
-<li><a href="/public/mtg/realistic/apoapsis_crawler.png"><img src="/public/mtg/thumbnails/apoapsis_crawler.webp" alt="apoapsis_crawler"></a></li>
-<li><a href="/public/mtg/realistic/artificial_vendetta.png"><img src="/public/mtg/thumbnails/artificial_vendetta.webp" alt="artificial_vendetta"></a></li>
-<li><a href="/public/mtg/realistic/beast_seeker.png"><img src="/public/mtg/thumbnails/beast_seeker.webp" alt="beast_seeker"></a></li>
-<li><a href="/public/mtg/realistic/bountiful_season.png"><img src="/public/mtg/thumbnails/bountiful_season.webp" alt="bountiful_season"></a></li>
-<li><a href="/public/mtg/realistic/chain_of_waves.png"><img src="/public/mtg/thumbnails/chain_of_waves.webp" alt="chain_of_waves"></a></li>
-<li><a href="/public/mtg/realistic/gather_in_the_public_square.png"><img src="/public/mtg/thumbnails/gather_in_the_public_square.webp" alt="gather_in_the_public_square"></a></li>
-<li><a href="/public/mtg/realistic/hay_hauler.png"><img src="/public/mtg/thumbnails/hay_hauler.webp" alt="hay_hauler"></a></li>
-<li><a href="/public/mtg/realistic/high_sea_mutineers.png"><img src="/public/mtg/thumbnails/high_sea_mutineers.webp" alt="high_sea_mutineers"></a></li>
-<li><a href="/public/mtg/realistic/recall_obelisk.png"><img src="/public/mtg/thumbnails/recall_obelisk.webp" alt="recall_obelisk"></a></li>
-<li><a href="/public/mtg/realistic/sleeper_monument.png"><img src="/public/mtg/thumbnails/sleeper_monument.webp" alt="sleeper_monument"></a></li>
-<li><a href="/public/mtg/realistic/tempt_the_merchants.png"><img src="/public/mtg/thumbnails/tempt_the_merchants.webp" alt="tempt_the_merchants"></a></li>
-<li><a href="/public/mtg/realistic/the_liaison.png"><img src="/public/mtg/thumbnails/the_liaison.webp" alt="the_liaison"></a></li>
-<li><a href="/public/mtg/references/antinous_siiver_gunner.png"><img src="/public/mtg/thumbnails/antinous_siiver_gunner.webp" alt="antinous_siiver_gunner"></a></li>
-<li><a href="/public/mtg/references/atomic_separator.png"><img src="/public/mtg/thumbnails/atomic_separator.webp" alt="atomic_separator"></a></li>
-<li><a href="/public/mtg/references/break_into_a_windows_users_house.png"><img src="/public/mtg/thumbnails/break_into_a_windows_users_house.webp" alt="break_into_a_windows_users_house"></a></li>
-<li><a href="/public/mtg/references/burnice.png"><img src="/public/mtg/thumbnails/burnice.webp" alt="burnice"></a></li>
-<li><a href="/public/mtg/references/emergency_meeting.png"><img src="/public/mtg/thumbnails/emergency_meeting.webp" alt="emergency_meeting"></a></li>
-<li><a href="/public/mtg/references/emergency_meeting_version_2.png"><img src="/public/mtg/thumbnails/emergency_meeting_version_2.webp" alt="emergency_meeting_version_2"></a></li>
-<li><a href="/public/mtg/references/five_guys.png"><img src="/public/mtg/thumbnails/five_guys.webp" alt="five_guys"></a></li>
-<li><a href="/public/mtg/references/garfield_banquet_devourer.png"><img src="/public/mtg/thumbnails/garfield_banquet_devourer.webp" alt="garfield_banquet_devourer"></a></li>
-<li><a href="/public/mtg/references/go_to_ihop.png"><img src="/public/mtg/thumbnails/go_to_ihop.webp" alt="go_to_ihop"></a></li>
-<li><a href="/public/mtg/references/hanging_chad.png"><img src="/public/mtg/thumbnails/hanging_chad.webp" alt="hanging_chad"></a></li>
-<li><a href="/public/mtg/references/hatsune_miku_digital_idol.png"><img src="/public/mtg/thumbnails/hatsune_miku_digital_idol.webp" alt="hatsune_miku_digital_idol"></a></li>
-<li><a href="/public/mtg/references/heist_the_louvre.png"><img src="/public/mtg/thumbnails/heist_the_louvre.webp" alt="heist_the_louvre"></a></li>
-<li><a href="/public/mtg/references/joining_the_circus.png"><img src="/public/mtg/thumbnails/joining_the_circus.webp" alt="joining_the_circus"></a></li>
-<li><a href="/public/mtg/references/joseph_traveling_merchant.png"><img src="/public/mtg/thumbnails/joseph_traveling_merchant.webp" alt="joseph_traveling_merchant"></a></li>
-<li><a href="/public/mtg/references/lt_elliot_and_trooper_wagner.png"><img src="/public/mtg/thumbnails/lt_elliot_and_trooper_wagner.webp" alt="lt_elliot_and_trooper_wagner"></a></li>
-<li><a href="/public/mtg/references/megalodon.png"><img src="/public/mtg/thumbnails/megalodon.webp" alt="megalodon"></a></li>
-<li><a href="/public/mtg/references/prius_vehicle.png"><img src="/public/mtg/thumbnails/prius_vehicle.webp" alt="prius_vehicle"></a></li>
-<li><a href="/public/mtg/references/relic_nabber.png"><img src="/public/mtg/thumbnails/relic_nabber.webp" alt="relic_nabber"></a></li>
-<li><a href="/public/mtg/references/take_six.png"><img src="/public/mtg/thumbnails/take_six.webp" alt="take_six"></a></li>
-<li><a href="/public/mtg/references/the_contessa.png"><img src="/public/mtg/thumbnails/the_contessa.webp" alt="the_contessa"></a></li>
-<li><a href="/public/mtg/references/usps_delivery_truck.png"><img src="/public/mtg/thumbnails/usps_delivery_truck.webp" alt="usps_delivery_truck"></a></li>
+    <ul class="tilelist">
+<li class="real-size-tile"><a href="/mtg_card_pages/alien.html"><img src="/public/universes_beyond_logos/thumbnails/alien.webp" alt="alien"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/bonus.html"><img src="/public/universes_beyond_logos/thumbnails/bonus.webp" alt="bonus"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/cardmarket.html"><img src="/public/universes_beyond_logos/thumbnails/cardmarket.webp" alt="cardmarket"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/elesh_morn.html"><img src="/public/universes_beyond_logos/thumbnails/elesh_morn.webp" alt="elesh_morn"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/hhhgregg.html"><img src="/public/universes_beyond_logos/thumbnails/hhhgregg.webp" alt="hhhgregg"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/kpop.html"><img src="/public/universes_beyond_logos/thumbnails/kpop.webp" alt="kpop"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/magic.html"><img src="/public/universes_beyond_logos/thumbnails/magic.webp" alt="magic"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/mariah.html"><img src="/public/universes_beyond_logos/thumbnails/mariah.webp" alt="mariah"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/metafight.html"><img src="/public/universes_beyond_logos/thumbnails/metafight.webp" alt="metafight"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/minecraft.html"><img src="/public/universes_beyond_logos/thumbnails/minecraft.webp" alt="minecraft"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/niall.html"><img src="/public/universes_beyond_logos/thumbnails/niall.webp" alt="niall"></a></li>
+<li class="real-size-tile"><a href="/mtg_card_pages/_earth.html"><img src="/public/universes_beyond_logos/thumbnails/_earth.webp" alt="_earth"></a></li>
 </ul>
 
 </main>
-
-<script>
-    const lis = document.querySelectorAll("li");
-    lis.forEach((li) => {
-        const img = li.querySelector("img");
-
-        li.addEventListener("mousemove", (e) => {
-            const rect = img.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const xCenter = rect.width / 2;
-            const yCenter = rect.height / 2;
-
-            const xRotate = (yCenter - y) / 7;
-            const yRotate = (x - xCenter) / 7;
-
-            img.style.transform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
-        });
-
-        li.addEventListener("mouseleave", () => {
-            img.style.transform = `rotateX(0) rotateY(0)`;
-        });
-    })
-</script>
 
 </body>
 </html>

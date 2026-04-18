@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Custom MtG</title>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <link href="/public/favicon.ico" rel="icon"/>
+</head>
+
+<style>
+    ul {
+        display: grid;
+        gap: 1px;
+        justify-content: center;
+        padding: 1px;
+        background: hsl(from papayawhip h s 50);
+        width: 100%;
+        grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+    }
+
+    li {
+        perspective: 1000px;
+        box-sizing: border-box;
+        transition: transform 0.25s ease;
+
+        & a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        & img {
+            border: 2px solid hsl(from coral h s 75);
+            border-radius: 8px;
+            transform-style: preserve-3d;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.1s ease-out;
+        }
+
+        &:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+    }
+</style>
+
+<body>
+<main style="background-color: papayawhip;">
+    <ul>
+<li><a href="/public/mtg/_earth/alex_airplane_devourer.png"><img src="/public/mtg/thumbnails/alex_airplane_devourer.webp" alt="alex_airplane_devourer"></a></li>
+<li><a href="/public/mtg/_earth/almond_and_milk_enjoyers.png"><img src="/public/mtg/thumbnails/almond_and_milk_enjoyers.webp" alt="almond_and_milk_enjoyers"></a></li>
+<li><a href="/public/mtg/_earth/david_life_of_the_party.png"><img src="/public/mtg/thumbnails/david_life_of_the_party.webp" alt="david_life_of_the_party"></a></li>
+<li><a href="/public/mtg/_earth/mango_multiversal_constant.png"><img src="/public/mtg/thumbnails/mango_multiversal_constant.webp" alt="mango_multiversal_constant"></a></li>
+<li><a href="/public/mtg/_earth/park_imperial_counselor.png"><img src="/public/mtg/thumbnails/park_imperial_counselor.webp" alt="park_imperial_counselor"></a></li>
+<li><a href="/public/mtg/_earth/scott_enlightened_thinker.png"><img src="/public/mtg/thumbnails/scott_enlightened_thinker.webp" alt="scott_enlightened_thinker"></a></li>
+<li><a href="/public/mtg/_earth/scott_the_astromancer.png"><img src="/public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer"></a></li>
+<li><a href="/public/mtg/_earth/stephan_datamaster.png"><img src="/public/mtg/thumbnails/stephan_datamaster.webp" alt="stephan_datamaster"></a></li>
+<li><a href="/public/mtg/_earth/stephan_tableau_acolyte.png"><img src="/public/mtg/thumbnails/stephan_tableau_acolyte.webp" alt="stephan_tableau_acolyte"></a></li>
+</ul>
+
+</main>
+
+<script>
+    const lis = document.querySelectorAll("li");
+    lis.forEach((li) => {
+        const img = li.querySelector("img");
+
+        li.addEventListener("mousemove", (e) => {
+            const rect = img.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const xCenter = rect.width / 2;
+            const yCenter = rect.height / 2;
+
+            const xRotate = (yCenter - y) / 7;
+            const yRotate = (x - xCenter) / 7;
+
+            img.style.transform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
+        });
+
+        li.addEventListener("mouseleave", () => {
+            img.style.transform = `rotateX(0) rotateY(0)`;
+        });
+    })
+</script>
+
+</body>
+</html>

@@ -30,6 +30,8 @@ def populate_template(
     image_sources_directory_name: str,
     ul_class: str | None = None,
     li_class: str | None = None,
+    thumbnail_dir: str | None = None,
+    link_tiles_to_html_pages_of_the_same_name_in: str | None = None
 ):
     """Creates a populated HTML file given a template, output, and a local directory of images"""
 
@@ -52,6 +54,9 @@ def populate_template(
         if directory.name == "thumbnails":
             continue
 
+        if thumbnail_dir is not None and directory.name == thumbnail_dir:
+            continue
+
         image_filepaths = list(
             itertools.chain.from_iterable(
                 directory.glob(pattern) for pattern in image_filetypes
@@ -59,12 +64,22 @@ def populate_template(
         )
 
         for image_filepath in image_filepaths:
-            thumbnail_path = Path(
-                f"/{image_sources_directory_name}/thumbnails/{image_filepath.with_suffix('.webp').name}"
-            )
-            asset_path = Path(
-                f"/{image_sources_directory_name}/{image_filepath.parent.relative_to(image_sources_directory_path)}/{image_filepath.name}"
-            )
+            thumbnail_path = ""
+
+            if thumbnail_dir is not None:
+                thumbnail_path += thumbnail_dir
+            else:
+                thumbnail_path += f"/{image_sources_directory_name}/thumbnails"
+
+            thumbnail_path = Path(f"{thumbnail_path}/{image_filepath.with_suffix('.webp').name}")
+
+            if link_tiles_to_html_pages_of_the_same_name_in is None:
+                asset_path = Path(f"/{image_sources_directory_name}/{image_filepath.parent.relative_to(image_sources_directory_path)}/{image_filepath.name}")
+            else:
+                asset_path = Path(f"{link_tiles_to_html_pages_of_the_same_name_in}/{Path(image_filepath).stem}.html")
+
+            if not thumbnail_path.is_file() and asset_path.is_file():
+                thumbnail_path = asset_path
 
             html_image_templates.append(
                 HTMLImageTemplate(
@@ -148,20 +163,54 @@ def create_thumbnails_for_images_recursively(
 
     print(f"Done! {len(args)} thumbnails created for images in {parent_directory}")
 
+def create_page_for_subdirectory_in_directory(
+        parent_directory: str,
+        output_template_filename: str,
+        output_to_directory: str | None = None,
+        thumbnail_dir: str | None = None,
+        li_class: str | None = None,
+        ul_class: str | None = None):
+    if output_to_directory is not None and not Path(output_to_directory).is_dir():
+        print(f"{output_to_directory} doesn't exist, creating it")
+        os.mkdir(output_to_directory)
+
+    directories_processed: int = 0
+    for subdirectory in Path(parent_directory).iterdir():
+        image_sources_directory_name = str(subdirectory)
+        stem = Path(subdirectory).stem
+        output_filename = f"{stem}.html"
+
+        if output_to_directory is not None:
+            output_filename = f"{output_to_directory}/{output_filename}"
+
+        populate_template(
+            output_template_filename=output_template_filename,
+            output_filename=output_filename,
+            image_sources_directory_name=image_sources_directory_name,
+            li_class=li_class,
+            ul_class=ul_class,
+            thumbnail_dir=thumbnail_dir
+        )
+
+        directories_processed += 1
+
+    print(f"Processed {directories_processed} directories")
 
 if __name__ == "__main__":
     # create_thumbnails_for_images_recursively("public/art")
     # create_thumbnails_for_images_recursively("public/metafight")
-    create_thumbnails_for_images_recursively("public/mtg")
+    # create_thumbnails_for_images_recursively("public/mtg")
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
+    create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
-    # populate_template(
-    #     output_template_filename="index.template.html",
-    #     output_filename="index.html",
-    #     image_sources_directory_name="public/art",
-    #     li_class="tile",
-    #     ul_class="tilelist",
-    # )
+    populate_template(
+        output_template_filename="index.template.html",
+        output_filename="index.html",
+        image_sources_directory_name="public/art",
+        li_class="tile",
+        ul_class="tilelist",
+    )
+
     # populate_template(
     #     output_template_filename="fine_art.template.html",
     #     output_filename="fine_art.html",
@@ -169,13 +218,31 @@ if __name__ == "__main__":
     #     li_class="tile",
     #     ul_class="tilelist",
     # )
+
+    create_page_for_subdirectory_in_directory(
+        parent_directory="public/mtg",
+        output_template_filename="mtg_cards.template.html",
+        output_to_directory="mtg_card_pages",
+        thumbnail_dir="/public/mtg/thumbnails"
+    )
+
+    populate_template(
+        output_template_filename="mtg.template.html",
+        output_filename="mtg.html",
+        image_sources_directory_name="public/universes_beyond_logos",
+        li_class="real-size-tile",
+        ul_class="tilelist",
+        link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages"
+    )
+
     # populate_template(
     #     output_template_filename="metafight_cards.template.html",
     #     output_filename="cards.html",
     #     image_sources_directory_name="public/metafight",
     # )
-    populate_template(
-        output_template_filename="magic_cards.template.html",
-        output_filename="mtg.html",
-        image_sources_directory_name="public/mtg",
-    )
+
+    # populate_template(
+    #     output_template_filename="mtg_main.template.html",
+    #     output_filename="mtg.html",
+    #     image_sources_directory_name="public/mtg",
+    # )
