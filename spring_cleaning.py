@@ -26,4 +26,4 @@ def spring_clean(parent_directory: str):
     print(f"Processed {processed_image_count} images")
 
 if __name__ == "__main__":
-    spring_clean("/public/mtg")
+    spring_clean("./public/mtg/")
