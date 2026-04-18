@@ -71,6 +71,22 @@ ul {
   }
 }
 
+.real-size-tile {
+  overflow: hidden;
+
+  & a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: smooth;
+    transition: transform 200ms;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
 .horizontal-list {
   display: flex;
   gap: 80px;
