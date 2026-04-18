@@ -199,9 +199,9 @@ def create_page_for_subdirectory_in_directory(
 if __name__ == "__main__":
     # create_thumbnails_for_images_recursively("public/art")
     # create_thumbnails_for_images_recursively("public/metafight")
-    # create_thumbnails_for_images_recursively("public/mtg")
+    create_thumbnails_for_images_recursively("public/mtg")
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
-    create_thumbnails_for_images_recursively("public/universes_beyond_logos")
+    # create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
     # populate_template(
     #     output_template_filename="index.template.html",
@@ -219,13 +219,13 @@ if __name__ == "__main__":
     #     ul_class="tilelist",
     # )
 
-    # create_page_for_subdirectory_in_directory(
-    #     parent_directory="public/mtg",
-    #     output_template_filename="mtg_cards.template.html",
-    #     output_to_directory="mtg_card_pages",
-    #     thumbnail_dir="/public/mtg/thumbnails"
-    # )
-    #
+    create_page_for_subdirectory_in_directory(
+        parent_directory="public/mtg",
+        output_template_filename="mtg_cards.template.html",
+        output_to_directory="mtg_card_pages",
+        thumbnail_dir="/public/mtg/thumbnails"
+    )
+
     # populate_template(
     #     output_template_filename="mtg.template.html",
     #     output_filename="mtg.html",
