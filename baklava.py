@@ -60,3 +60,35 @@ def string_to_int(string):
         result = 0
 
     return result
+
+def get_string_input(prompt: str, may_be_nothing: bool = False) -> str | None:
+    result: str | None = None
+
+    if not may_be_nothing and is_null_or_whitespace(result):
+        while is_null_or_whitespace(result):
+            result = input(prompt)
+
+    return result
+
+def get_int_input(prompt: str, may_be_nothing: bool = False, min: int | None = None, max: int | None = None) -> int | None:
+    while True:
+        try:
+            result = get_string_input(prompt=prompt, may_be_nothing=may_be_nothing)
+
+            if is_null_or_whitespace(result) and may_be_nothing:
+                if result is None:
+                    return None
+                elif result.strip() == "":
+                    return 0
+
+            int_result = int(result)
+
+            if isinstance(min, int) and int_result < min:
+                raise ValueError
+
+            if isinstance(max, int) and int_result > max:
+                raise ValueError
+
+            return int_result
+        except:
+            pass
