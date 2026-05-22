@@ -5,8 +5,9 @@ from PIL import Image
 from multiprocessing import Pool
 from dataclasses import dataclass
 
-image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
+from spring_cleaning import spring_clean
 
+image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
 
 @dataclass(frozen=True)
 class HTMLImageTemplate:
@@ -28,10 +29,11 @@ def populate_template(
     output_template_filename: str,
     output_filename: str,
     image_sources_directory_name: str,
+    glob_recursively: bool = False,
     ul_class: str | None = None,
     li_class: str | None = None,
     thumbnail_dir: str | None = None,
-    link_tiles_to_html_pages_of_the_same_name_in: str | None = None
+    link_tiles_to_html_pages_of_the_same_name_in: str | None = None,
 ):
     """Creates a populated HTML file given a template, output, and a local directory of images"""
 
@@ -57,11 +59,18 @@ def populate_template(
         if thumbnail_dir is not None and directory.name == thumbnail_dir:
             continue
 
-        image_filepaths = list(
-            itertools.chain.from_iterable(
-                directory.glob(pattern) for pattern in image_filetypes
+        if not glob_recursively:
+            image_filepaths = list(
+                itertools.chain.from_iterable(
+                    directory.glob(pattern) for pattern in image_filetypes
+                )
             )
-        )
+        else:
+            image_filepaths = list(
+                itertools.chain.from_iterable(
+                    directory.rglob(pattern) for pattern in image_filetypes
+                )
+            )
 
         for image_filepath in image_filepaths:
             thumbnail_path = ""
@@ -205,21 +214,31 @@ if __name__ == "__main__":
     create_thumbnails_for_images_recursively("public/mtg")
     create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
-    create_page_for_subdirectory_in_directory(
-        parent_directory="public/mtg",
-        output_template_filename="mtg_cards.template.html",
-        output_to_directory="mtg_card_pages",
-        thumbnail_dir="/public/mtg/thumbnails"
-    )
+    # create_page_for_subdirectory_in_directory(
+    #     parent_directory="public/mtg",
+    #     output_template_filename="mtg_cards.template.html",
+    #     output_to_directory="mtg_card_pages",
+    #     thumbnail_dir="/public/mtg/thumbnails"
+    # )
+
+    # populate_template(
+    #     output_template_filename="mtg.template.html",
+    #     output_filename="mtg.html",
+    #     image_sources_directory_name="public/universes_beyond_logos",
+    #     li_class="real-size-tile",
+    #     ul_class="tilelist",
+    #     link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages"
+    # )
 
     populate_template(
-        output_template_filename="mtg.template.html",
-        output_filename="mtg.html",
-        image_sources_directory_name="public/universes_beyond_logos",
-        li_class="real-size-tile",
-        ul_class="tilelist",
-        link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages"
+        output_template_filename="mtg_search.template.html",
+        output_filename="mtg_search.html",
+        image_sources_directory_name="public/mtg",
+        glob_recursively=True,
+        link_tiles_to_html_pages_of_the_same_name_in="public/mtg/thumbnails"
     )
+
+    spring_clean("./public/mtg/")
 
     # populate_template(
     #     output_template_filename="index.template.html",
