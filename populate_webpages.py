@@ -106,12 +106,9 @@ def populate_template(
 
         if link_tiles_to_html_pages_of_the_same_name_in is None:
             asset_path = Path(
-                f"/{image_sources_directory_name}/{image_filepath.parent.relative_to(image_sources_directory_path)}/{image_filepath.name}")
+                f"/{image_sources_directory_name}/{image_filepath.parent.absolute().relative_to(image_sources_directory_path)}/{image_filepath.name}")
         else:
             asset_path = Path(f"{link_tiles_to_html_pages_of_the_same_name_in}/{Path(image_filepath).stem}.html")
-
-        if not thumbnail_path.is_file() and asset_path.is_file():
-            thumbnail_path = asset_path
 
         html_image_templates.append(
             HTMLImageTemplate(
@@ -254,8 +251,8 @@ if __name__ == "__main__":
         output_template_filename="mtg_search.template.html",
         output_filename="mtg_search.html",
         image_sources_directory_name="public/mtg",
-        glob_recursively=True,
-        link_tiles_to_html_pages_of_the_same_name_in="public/mtg/thumbnails"
+        glob_recursively=True
+        # link_tiles_to_html_pages_of_the_same_name_in="public/mtg/"
     )
 
     # spring_clean("./public/mtg/")
