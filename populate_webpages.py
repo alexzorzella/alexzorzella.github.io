@@ -64,6 +64,8 @@ def populate_template(
         if Path(subdirectory).is_dir():
             directories_to_process.append(subdirectory)
 
+    directories_to_process.sort(key=lambda p: p.name)
+
     image_filepaths = set()
     html_image_templates: list[HTMLImageTemplate] = []
 
@@ -80,6 +82,7 @@ def populate_template(
 
             for item in images:
                 image_filepaths.add(item)
+                print(item)
 
             print(f"{Fore.CYAN}Found {len(images)} image filepaths in {directory}{Style.RESET_ALL}")
     else:
@@ -87,7 +90,9 @@ def populate_template(
 
         all = (itertools.chain.from_iterable(Path(image_sources_directory_name).rglob(pattern) for pattern in image_filetypes))
         image_filepaths = list(unique_set(all, key=lambda p: p.name))
-        image_filepaths.sort(key=lambda p: p.name)
+
+    image_filepaths = list(image_filepaths)
+    image_filepaths.sort(key=lambda p: p.name)
 
     for image_filepath in image_filepaths:
         thumbnail_path = ""
