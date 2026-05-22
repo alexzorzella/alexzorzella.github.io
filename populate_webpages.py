@@ -1,12 +1,16 @@
 import itertools
 import os
 from pathlib import Path
+
 from PIL import Image
 from multiprocessing import Pool
 from dataclasses import dataclass
 
-image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
+from spring_cleaning import spring_clean
 
+from colorama import Fore, Style
+
+image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
 
 @dataclass(frozen=True)
 class HTMLImageTemplate:
@@ -19,19 +23,29 @@ class HTMLImageTemplate:
         li_class_name = "" if self.li_class is None else f' class="{self.li_class}"'
 
         if self.thumbnail_path is not None:
-            return f'<li{li_class_name}><a href="{self.asset_path.as_posix()}"><img src="{self.thumbnail_path.as_posix()}" alt="{self.alt}"></a></li>'
+            return f'<li{li_class_name} data-search="{self.alt}"><a href="{self.asset_path.as_posix()}"><img src="{self.thumbnail_path.as_posix()}" alt="{self.alt}"></a></li>'
         else:
-            return f'<li{li_class_name}><a href="{self.asset_path.as_posix()}"><img src="{self.asset_path.as_posix()}" alt="{self.alt}"></a></li>'
+            return f'<li{li_class_name} data-search="{self.alt}"><a href="{self.asset_path.as_posix()}"><img src="{self.asset_path.as_posix()}" alt="{self.alt}"></a></li>'
 
+def unique_set(iterable, key=None):
+    seen = set()
+
+    for item in iterable:
+        value = item if key is None else key(item)
+
+        if value not in seen:
+            seen.add(value)
+            yield item
 
 def populate_template(
     output_template_filename: str,
     output_filename: str,
     image_sources_directory_name: str,
+    glob_recursively: bool = False,
     ul_class: str | None = None,
     li_class: str | None = None,
     thumbnail_dir: str | None = None,
-    link_tiles_to_html_pages_of_the_same_name_in: str | None = None
+    link_tiles_to_html_pages_of_the_same_name_in: str | None = None,
 ):
     """Creates a populated HTML file given a template, output, and a local directory of images"""
 
@@ -46,49 +60,62 @@ def populate_template(
     subdirectories = Path(image_sources_directory_path).iterdir()
     subdirectories = sorted(subdirectories)
 
-    directories_to_process.extend(subdirectories)
+    for subdirectory in subdirectories:
+        if Path(subdirectory).is_dir():
+            directories_to_process.append(subdirectory)
 
+    image_filepaths = set()
     html_image_templates: list[HTMLImageTemplate] = []
 
-    for directory in directories_to_process:
-        if directory.name == "thumbnails":
-            continue
+    printable_source_path = Path(image_sources_directory_path)
 
-        if thumbnail_dir is not None and directory.name == thumbnail_dir:
-            continue
+    if not glob_recursively:
+        for directory in directories_to_process:
+            if thumbnail_dir is not None and directory.name == thumbnail_dir or directory.name == "thumbnails" or directory.name == "notshown":
+                continue
 
-        image_filepaths = list(
-            itertools.chain.from_iterable(
-                directory.glob(pattern) for pattern in image_filetypes
+            print(f"{Fore.MAGENTA}Searching {len(directories_to_process)} subdirectories in {printable_source_path}...{Style.RESET_ALL}")
+
+            images = list(itertools.chain.from_iterable(directory.glob(pattern) for pattern in image_filetypes))
+
+            for item in images:
+                image_filepaths.add(item)
+
+            print(f"{Fore.CYAN}Found {len(images)} image filepaths in {directory}{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.MAGENTA}Recursively globbing {printable_source_path}{Style.RESET_ALL}")
+
+        all = (itertools.chain.from_iterable(Path(image_sources_directory_name).rglob(pattern) for pattern in image_filetypes))
+        image_filepaths = list(unique_set(all, key=lambda p: p.name))
+        image_filepaths.sort(key=lambda p: p.name)
+
+    for image_filepath in image_filepaths:
+        thumbnail_path = ""
+
+        if thumbnail_dir is not None:
+            thumbnail_path += thumbnail_dir
+        else:
+            thumbnail_path += f"/{image_sources_directory_name}/thumbnails"
+
+        thumbnail_path = Path(f"{thumbnail_path}/{image_filepath.with_suffix('.webp').name}")
+
+        if link_tiles_to_html_pages_of_the_same_name_in is None:
+            asset_path = Path(
+                f"/{image_sources_directory_name}/{image_filepath.parent.relative_to(image_sources_directory_path)}/{image_filepath.name}")
+        else:
+            asset_path = Path(f"{link_tiles_to_html_pages_of_the_same_name_in}/{Path(image_filepath).stem}.html")
+
+        if not thumbnail_path.is_file() and asset_path.is_file():
+            thumbnail_path = asset_path
+
+        html_image_templates.append(
+            HTMLImageTemplate(
+                thumbnail_path=thumbnail_path,
+                asset_path=asset_path,
+                alt=image_filepath.stem,
+                li_class=li_class,
             )
         )
-
-        for image_filepath in image_filepaths:
-            thumbnail_path = ""
-
-            if thumbnail_dir is not None:
-                thumbnail_path += thumbnail_dir
-            else:
-                thumbnail_path += f"/{image_sources_directory_name}/thumbnails"
-
-            thumbnail_path = Path(f"{thumbnail_path}/{image_filepath.with_suffix('.webp').name}")
-
-            if link_tiles_to_html_pages_of_the_same_name_in is None:
-                asset_path = Path(f"/{image_sources_directory_name}/{image_filepath.parent.relative_to(image_sources_directory_path)}/{image_filepath.name}")
-            else:
-                asset_path = Path(f"{link_tiles_to_html_pages_of_the_same_name_in}/{Path(image_filepath).stem}.html")
-
-            if not thumbnail_path.is_file() and asset_path.is_file():
-                thumbnail_path = asset_path
-
-            html_image_templates.append(
-                HTMLImageTemplate(
-                    thumbnail_path=thumbnail_path,
-                    asset_path=asset_path,
-                    alt=image_filepath.stem,
-                    li_class=li_class,
-                )
-            )
 
     render_and_write_to_template(
         html_image_templates=html_image_templates,
@@ -97,10 +124,7 @@ def populate_template(
         ul_class=ul_class,
     )
 
-    print(
-        f"Populated {output_template_path.stem} with images from {image_sources_directory_name}"
-    )
-
+    print(f"{Fore.GREEN}Populated {len(image_filepaths)} {output_template_path.stem} with images from {image_sources_directory_name}{Style.RESET_ALL}")
 
 def render_and_write_to_template(
     html_image_templates: list[HTMLImageTemplate],
@@ -194,7 +218,7 @@ def create_page_for_subdirectory_in_directory(
 
         directories_processed += 1
 
-    print(f"Processed {directories_processed} directories")
+    print(f"{Fore.LIGHTBLUE_EX}Processed {directories_processed} directories{Style.RESET_ALL}")
 
 if __name__ == "__main__":
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
@@ -202,8 +226,8 @@ if __name__ == "__main__":
 
     # create_thumbnails_for_images_recursively("public/metafight")
 
-    create_thumbnails_for_images_recursively("public/mtg")
-    create_thumbnails_for_images_recursively("public/universes_beyond_logos")
+    # create_thumbnails_for_images_recursively("public/mtg")
+    # create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
     create_page_for_subdirectory_in_directory(
         parent_directory="public/mtg",
@@ -220,6 +244,16 @@ if __name__ == "__main__":
         ul_class="tilelist",
         link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages"
     )
+
+    populate_template(
+        output_template_filename="mtg_search.template.html",
+        output_filename="mtg_search.html",
+        image_sources_directory_name="public/mtg",
+        glob_recursively=True,
+        link_tiles_to_html_pages_of_the_same_name_in="public/mtg/thumbnails"
+    )
+
+    # spring_clean("./public/mtg/")
 
     # populate_template(
     #     output_template_filename="index.template.html",
@@ -241,10 +275,4 @@ if __name__ == "__main__":
     #     output_template_filename="metafight_cards.template.html",
     #     output_filename="cards.html",
     #     image_sources_directory_name="public/metafight",
-    # )
-
-    # populate_template(
-    #     output_template_filename="mtg_main.template.html",
-    #     output_filename="mtg.html",
-    #     image_sources_directory_name="public/mtg",
     # )

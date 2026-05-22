@@ -9,6 +9,10 @@
 </head>
 
 <style>
+    html {
+        scrollbar-gutter: stable;
+    }
+
     ul {
         display: grid;
         gap: 1px;
@@ -50,22 +54,40 @@
 
 <body>
 <main style="background-color: papayawhip;">
-    <ul>
-<li data-search="scott_enlightened_thinker"><a href="/public/mtg/earth/scott_enlightened_thinker.png"><img src="/public/mtg/thumbnails/scott_enlightened_thinker.webp" alt="scott_enlightened_thinker"></a></li>
-<li data-search="scott_the_astromancer"><a href="/public/mtg/earth/scott_the_astromancer.png"><img src="/public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer"></a></li>
-<li data-search="stephan_datamaster"><a href="/public/mtg/earth/stephan_datamaster.png"><img src="/public/mtg/thumbnails/stephan_datamaster.webp" alt="stephan_datamaster"></a></li>
-<li data-search="mango_multiversal_constant"><a href="/public/mtg/earth/mango_multiversal_constant.png"><img src="/public/mtg/thumbnails/mango_multiversal_constant.webp" alt="mango_multiversal_constant"></a></li>
-<li data-search="david_life_of_the_party"><a href="/public/mtg/earth/david_life_of_the_party.png"><img src="/public/mtg/thumbnails/david_life_of_the_party.webp" alt="david_life_of_the_party"></a></li>
-<li data-search="almond_and_milk_enjoyers"><a href="/public/mtg/earth/almond_and_milk_enjoyers.png"><img src="/public/mtg/thumbnails/almond_and_milk_enjoyers.webp" alt="almond_and_milk_enjoyers"></a></li>
-<li data-search="stephan_tableau_acolyte"><a href="/public/mtg/earth/stephan_tableau_acolyte.png"><img src="/public/mtg/thumbnails/stephan_tableau_acolyte.webp" alt="stephan_tableau_acolyte"></a></li>
-<li data-search="alex_airplane_devourer"><a href="/public/mtg/earth/alex_airplane_devourer.png"><img src="/public/mtg/thumbnails/alex_airplane_devourer.webp" alt="alex_airplane_devourer"></a></li>
-<li data-search="park_imperial_counselor"><a href="/public/mtg/earth/park_imperial_counselor.png"><img src="/public/mtg/thumbnails/park_imperial_counselor.webp" alt="park_imperial_counselor"></a></li>
-</ul>
+    <img src="/public/carlmarket.png" style="max-width: 50%;">
 
+    <div style="padding: 0.5rem; display: flex; width: 32rem; height: 4rem; font-size: 2rem; background: white; justify-content: center; align-items: center; gap: 1rem;">
+        <a href="/index.html" style="display: flex;"><img src="/public/favicon.ico" style="width: 2rem; height: 2rem; image-rendering: pixelated;"></a>
+        <input placeholder="Search" style="flex-grow: 1; border: none; height: 4rem; font-size: 2rem; outline: none;" id="search">
+    </div>
+
+    __TEMPLATE__
 </main>
 
+</body>
+
 <script>
+    const search = document.getElementById("search")
+
     const lis = document.querySelectorAll("li");
+    search.addEventListener("input", (e) => {
+        console.log(e.target.value)
+
+        const queries = e.target.value.trim().split(" ")
+
+        for(const li of lis) {
+            const cardName = li.dataset["search"]
+
+            const passes = queries.some((q) => cardName.includes(q))
+
+            if(!passes) {
+                li.style["display"] = "none";
+            } else {
+                li.style["display"] = "block";
+            }
+        }
+    })
+
     lis.forEach((li) => {
         const img = li.querySelector("img");
 
@@ -88,6 +110,4 @@
         });
     })
 </script>
-
-</body>
 </html>
