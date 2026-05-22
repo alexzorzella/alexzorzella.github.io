@@ -1,7 +1,6 @@
 import itertools
 import os
 from pathlib import Path
-from typing import Callable
 
 from PIL import Image
 from multiprocessing import Pool
@@ -66,13 +65,13 @@ def populate_template(
 
     if not glob_recursively:
         for directory in directories_to_process:
-            if directory.name == "thumbnails":
+            # if directory.name == "thumbnails":
+            #     continue
+
+            if thumbnail_dir is not None and directory.name == thumbnail_dir or not Path(directory).is_dir():
                 continue
 
-            if thumbnail_dir is not None and directory.name == thumbnail_dir:
-                continue
-
-            images = [itertools.chain.from_iterable(directory.glob(pattern) for pattern in image_filetypes)]
+            images = list(itertools.chain.from_iterable(directory.glob(pattern) for pattern in image_filetypes))
 
             for item in images:
                 image_filepaths.add(item)
@@ -225,12 +224,12 @@ if __name__ == "__main__":
     # create_thumbnails_for_images_recursively("public/mtg")
     # create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
-    # create_page_for_subdirectory_in_directory(
-    #     parent_directory="public/mtg",
-    #     output_template_filename="mtg_cards.template.html",
-    #     output_to_directory="mtg_card_pages",
-    #     thumbnail_dir="/public/mtg/thumbnails"
-    # )
+    create_page_for_subdirectory_in_directory(
+        parent_directory="public/mtg",
+        output_template_filename="mtg_cards.template.html",
+        output_to_directory="mtg_card_pages",
+        thumbnail_dir="/public/mtg/thumbnails"
+    )
 
     # populate_template(
     #     output_template_filename="mtg.template.html",
