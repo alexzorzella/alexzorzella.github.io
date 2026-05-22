@@ -120,8 +120,7 @@ def populate_template(
         ul_class=ul_class,
     )
 
-    print(f"Populated {total_images} {output_template_path.stem} with images from {image_sources_directory_name}")
-
+    print(f"Populated {len(image_filepaths)} {output_template_path.stem} with images from {image_sources_directory_name}")
 
 def render_and_write_to_template(
     html_image_templates: list[HTMLImageTemplate],
