@@ -20,9 +20,9 @@ class HTMLImageTemplate:
         li_class_name = "" if self.li_class is None else f' class="{self.li_class}"'
 
         if self.thumbnail_path is not None:
-            return f'<li{li_class_name}><a href="{self.asset_path.as_posix()}"><img src="{self.thumbnail_path.as_posix()}" alt="{self.alt}"></a></li>'
+            return f'<li{li_class_name} data-search="{self.alt}"><a href="{self.asset_path.as_posix()}"><img src="{self.thumbnail_path.as_posix()}" alt="{self.alt}"></a></li>'
         else:
-            return f'<li{li_class_name}><a href="{self.asset_path.as_posix()}"><img src="{self.asset_path.as_posix()}" alt="{self.alt}"></a></li>'
+            return f'<li{li_class_name} data-search="{self.alt}"><a href="{self.asset_path.as_posix()}"><img src="{self.asset_path.as_posix()}" alt="{self.alt}"></a></li>'
 
 
 def populate_template(
@@ -60,13 +60,13 @@ def populate_template(
             continue
 
         if not glob_recursively:
-            image_filepaths = list(
+            image_filepaths = set(
                 itertools.chain.from_iterable(
                     directory.glob(pattern) for pattern in image_filetypes
                 )
             )
         else:
-            image_filepaths = list(
+            image_filepaths = set(
                 itertools.chain.from_iterable(
                     directory.rglob(pattern) for pattern in image_filetypes
                 )
