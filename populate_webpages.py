@@ -8,6 +8,8 @@ from dataclasses import dataclass
 
 from spring_cleaning import spring_clean
 
+from colorama import Fore, Style
+
 image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
 
 @dataclass(frozen=True)
@@ -58,31 +60,34 @@ def populate_template(
     subdirectories = Path(image_sources_directory_path).iterdir()
     subdirectories = sorted(subdirectories)
 
-    directories_to_process.extend(subdirectories)
+    for subdirectory in subdirectories:
+        if Path(subdirectory).is_dir():
+            directories_to_process.append(subdirectory)
 
     image_filepaths = set()
     html_image_templates: list[HTMLImageTemplate] = []
 
+    printable_source_path = Path(image_sources_directory_path)
+
     if not glob_recursively:
         for directory in directories_to_process:
-            # if directory.name == "thumbnails":
-            #     continue
-
-            if thumbnail_dir is not None and directory.name == thumbnail_dir or not Path(directory).is_dir():
+            if thumbnail_dir is not None and directory.name == thumbnail_dir or directory.name == "thumbnails" or directory.name == "notshown":
                 continue
+
+            print(f"{Fore.MAGENTA}Searching {len(directories_to_process)} subdirectories in {printable_source_path}...{Style.RESET_ALL}")
 
             images = list(itertools.chain.from_iterable(directory.glob(pattern) for pattern in image_filetypes))
 
             for item in images:
                 image_filepaths.add(item)
 
-            print(f"Found {len(images)} image filepaths in {directory}")
+            print(f"{Fore.CYAN}Found {len(images)} image filepaths in {directory}{Style.RESET_ALL}")
     else:
+        print(f"{Fore.MAGENTA}Recursively globbing {printable_source_path}{Style.RESET_ALL}")
+
         all = (itertools.chain.from_iterable(Path(image_sources_directory_name).rglob(pattern) for pattern in image_filetypes))
         image_filepaths = list(unique_set(all, key=lambda p: p.name))
         image_filepaths.sort(key=lambda p: p.name)
-
-    print(f"Found {len(image_filepaths)} total unique image filepaths")
 
     for image_filepath in image_filepaths:
         thumbnail_path = ""
@@ -119,7 +124,7 @@ def populate_template(
         ul_class=ul_class,
     )
 
-    print(f"Populated {len(image_filepaths)} {output_template_path.stem} with images from {image_sources_directory_name}")
+    print(f"{Fore.GREEN}Populated {len(image_filepaths)} {output_template_path.stem} with images from {image_sources_directory_name}{Style.RESET_ALL}")
 
 def render_and_write_to_template(
     html_image_templates: list[HTMLImageTemplate],
@@ -213,7 +218,7 @@ def create_page_for_subdirectory_in_directory(
 
         directories_processed += 1
 
-    print(f"Processed {directories_processed} directories")
+    print(f"{Fore.LIGHTBLUE_EX}Processed {directories_processed} directories{Style.RESET_ALL}")
 
 if __name__ == "__main__":
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
