@@ -228,7 +228,7 @@ if __name__ == "__main__":
 
     # create_thumbnails_for_images_recursively("public/metafight")
 
-    # create_thumbnails_for_images_recursively("public/mtg")
+    create_thumbnails_for_images_recursively("public/mtg")
     # create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
     create_page_for_subdirectory_in_directory(
@@ -255,7 +255,7 @@ if __name__ == "__main__":
         # link_tiles_to_html_pages_of_the_same_name_in="public/mtg/"
     )
 
-    # spring_clean("./public/mtg/")
+    spring_clean("./public/mtg/")
 
     # populate_template(
     #     output_template_filename="index.template.html",
