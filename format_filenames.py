@@ -10,9 +10,12 @@ def format_filenames(path: str = None):
     while path is None or not Path(path).exists():
         path = input("Filepath: ")
 
-    files = Path(path).glob("*.*")
+    files = Path(path).rglob("*.*")
 
     for file in files:
+        if not file.is_file():
+            continue
+
         original_filename = file.name
         original_filename = original_filename.lower().strip().replace(" ", "_")
 

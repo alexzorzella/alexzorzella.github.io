@@ -6,6 +6,7 @@ from PIL import Image
 from multiprocessing import Pool
 from dataclasses import dataclass
 
+from format_filenames import format_filenames
 from spring_cleaning import spring_clean
 
 from colorama import Fore, Style
@@ -223,6 +224,8 @@ def create_page_for_subdirectory_in_directory(
     print(f"{Fore.LIGHTBLUE_EX}Processed {directories_processed} directories{Style.RESET_ALL}")
 
 if __name__ == "__main__":
+    format_filenames(r".\public\mtg")
+
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
     # create_thumbnails_for_images_recursively("public/art")
 
