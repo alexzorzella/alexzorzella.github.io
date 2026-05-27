@@ -2,8 +2,15 @@ import os
 import string
 from pathlib import Path
 
+from colorama import Fore, Style
+
 valid_chars: str = string.ascii_letters + string.digits + "_."
 
+def filename_already_formatted_guess(filename: str) -> bool:
+    if " " not in filename and filename.lower() == filename:
+        return True
+
+    return False
 
 def format_filenames(path: str = None):
     """Formats a directory's files to be snake_case."""
@@ -17,6 +24,10 @@ def format_filenames(path: str = None):
             continue
 
         original_filename = file.name
+
+        if filename_already_formatted_guess(filename=original_filename):
+            continue
+
         original_filename = original_filename.lower().strip().replace(" ", "_")
 
         formatted_name = ""
