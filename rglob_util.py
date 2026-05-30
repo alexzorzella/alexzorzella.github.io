@@ -1,12 +1,21 @@
 import datetime
 import glob
 import os
+from collections import defaultdict
 from pathlib import Path
 
 from datetime import datetime
 from colorama import Fore, Style
 
 INFO_CSV = "./public/cardinfo.tsv"
+
+def get_card_commentary():
+    dictionary: dict[str, str] = defaultdict(str)
+
+    with open(INFO_CSV, "r", encoding="utf-8") as f:
+        for index, line in enumerate(f):
+            if index == 0:
+                continue
 
 def rglob_cards_into_tsv():
     path = str(Path("./public/mtg").absolute())
