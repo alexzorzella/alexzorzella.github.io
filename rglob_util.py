@@ -6,9 +6,9 @@ from pathlib import Path
 from datetime import datetime
 from colorama import Fore, Style
 
-INFO_CSV = "./public/cardinfo.csv"
+INFO_CSV = "./public/cardinfo.tsv"
 
-def main():
+def rglob_cards_into_tsv():
     path = str(Path("./public/mtg").absolute())
     files = list(filter(os.path.isfile, glob.glob(path + r"/**/*.png", recursive=True)))
 
@@ -40,4 +40,4 @@ def main():
     #     even = not even
 
 if __name__ == "__main__":
-    main()
+    rglob_cards_into_tsv()
