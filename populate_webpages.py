@@ -6,6 +6,7 @@ from PIL import Image
 from multiprocessing import Pool
 from dataclasses import dataclass
 
+from baklava import is_null_or_whitespace
 from format_filenames import format_filenames
 from spring_cleaning import spring_clean
 
@@ -81,9 +82,17 @@ def populate_template(
 
             images = list(itertools.chain.from_iterable(directory.glob(pattern) for pattern in image_filetypes))
 
+            image_name_list: str = ""
+
             for item in images:
                 image_filepaths.add(item)
-                print(item)
+
+                image_name_list += f"{Path(item).name}"
+
+                if not is_null_or_whitespace(image_name_list) and item != images[-1]:
+                    image_name_list += ", "
+
+            print(f"{Fore.CYAN}Images: {image_name_list}")
 
             print(f"{Fore.CYAN}Found {len(images)} image filepaths in {directory}{Style.RESET_ALL}")
     else:
@@ -188,7 +197,7 @@ def create_thumbnails_for_images_recursively(
     with Pool(processes=os.cpu_count()) as pool:
         pool.starmap(create_thumbnail_for_image, args)
 
-    print(f"Done! {len(args)} thumbnails created for images in {parent_directory}")
+    print(f"{Fore.GREEN}Done! {len(args)} thumbnails created for images in {parent_directory}{Style.RESET_ALL}")
 
 def create_page_for_subdirectory_in_directory(
         parent_directory: str,
@@ -198,7 +207,7 @@ def create_page_for_subdirectory_in_directory(
         li_class: str | None = None,
         ul_class: str | None = None):
     if output_to_directory is not None and not Path(output_to_directory).is_dir():
-        print(f"{output_to_directory} doesn't exist, creating it")
+        print(f"{Fore.RED}{output_to_directory} doesn't exist, creating it{Style.RESET_ALL}")
         os.mkdir(output_to_directory)
 
     directories_processed: int = 0
