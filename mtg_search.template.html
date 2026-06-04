@@ -71,11 +71,16 @@
 <script>
     const search = document.getElementById("search")
 
-    const all_lis = document.querySelectorAll("li");
-    search.addEventListener("input", (e) => {
-        console.log(e.target.value)
+    function setQueryParameters(key, value) {
+        const url = new URL(window.location.href);
+        url.searchParams.set(key, value);
+        window.history.pushState({}, '', url);
+    }
 
-        const queries = e.target.value.trim().split(" ")
+    const all_lis = document.querySelectorAll("li");
+
+    function updateVisibleCards(search_text) {
+        const queries = search_text.trim().split(" ")
 
         for(const li of all_lis) {
             const cardName = li.dataset["search"]
@@ -88,6 +93,18 @@
                 li.style["display"] = "block";
             }
         }
+    }
+
+    const url = new URL(window.location.href)
+    const initial_query = url.searchParams.get("q")
+    if (initial_query !== null) {
+        updateVisibleCards(initial_query)
+        search.value = initial_query
+    }
+
+    search.addEventListener("input", (e) => {
+        setQueryParameters("q", e.target.value)
+        updateVisibleCards(e.target.value)
     })
 
     const perspective_compatible_lis = document.querySelectorAll("li:not([data-card-type])");
