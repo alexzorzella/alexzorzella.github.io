@@ -311,13 +311,13 @@
 <script>
     const search = document.getElementById("search")
 
-    const lis = document.querySelectorAll("li");
+    const all_lis = document.querySelectorAll("li");
     search.addEventListener("input", (e) => {
         console.log(e.target.value)
 
         const queries = e.target.value.trim().split(" ")
 
-        for(const li of lis) {
+        for(const li of all_lis) {
             const cardName = li.dataset["search"]
 
             const passes = queries.some((q) => cardName.includes(q))
@@ -330,7 +330,8 @@
         }
     })
 
-    lis.forEach((li) => {
+    const perspective_compatible_lis = document.querySelectorAll("li:not([data-card-type])");
+    perspective_compatible_lis.forEach((li) => {
         const images = li.querySelectorAll("img");
         const img = images[images.length - 1];
 
