@@ -29,6 +29,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+
+            transition: transform 0.6s;
         }
 
         & img {
@@ -51,26 +53,27 @@
 <body>
 <main style="background-color: papayawhip;">
     <ul>
-<li data-search="alex_airplane_devourer"><a href="/public/mtg/earth/alex_airplane_devourer.png"><img src="/public/mtg/thumbnails/alex_airplane_devourer.webp" alt="alex_airplane_devourer"></a></li>
-<li data-search="almond_and_milk_enjoyers"><a href="/public/mtg/earth/almond_and_milk_enjoyers.png"><img src="/public/mtg/thumbnails/almond_and_milk_enjoyers.webp" alt="almond_and_milk_enjoyers"></a></li>
-<li data-search="david_life_of_the_party"><a href="/public/mtg/earth/david_life_of_the_party.png"><img src="/public/mtg/thumbnails/david_life_of_the_party.webp" alt="david_life_of_the_party"></a></li>
-<li data-search="mango_multiversal_constant"><a href="/public/mtg/earth/mango_multiversal_constant.png"><img src="/public/mtg/thumbnails/mango_multiversal_constant.webp" alt="mango_multiversal_constant"></a></li>
-<li data-search="park_imperial_counselor"><a href="/public/mtg/earth/park_imperial_counselor.png"><img src="/public/mtg/thumbnails/park_imperial_counselor.webp" alt="park_imperial_counselor"></a></li>
-<li data-search="scott_enlightened_thinker"><a href="/public/mtg/earth/scott_enlightened_thinker.png"><img src="/public/mtg/thumbnails/scott_enlightened_thinker.webp" alt="scott_enlightened_thinker"></a></li>
-<li data-search="scott_the_astromancer"><a href="/public/mtg/earth/scott_the_astromancer.png"><img src="/public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer"></a></li>
-<li data-search="sigourney_beaver"><a href="/public/mtg/earth/sigourney_beaver.png"><img src="/public/mtg/thumbnails/sigourney_beaver.webp" alt="sigourney_beaver"></a></li>
-<li data-search="stephan_datamaster"><a href="/public/mtg/earth/stephan_datamaster.png"><img src="/public/mtg/thumbnails/stephan_datamaster.webp" alt="stephan_datamaster"></a></li>
-<li data-search="stephan_tableau_acolyte"><a href="/public/mtg/earth/stephan_tableau_acolyte.png"><img src="/public/mtg/thumbnails/stephan_tableau_acolyte.webp" alt="stephan_tableau_acolyte"></a></li>
-<li data-search="valley_of_hearts_delight"><a href="/public/mtg/earth/valley_of_hearts_delight.png"><img src="/public/mtg/thumbnails/valley_of_hearts_delight.webp" alt="valley_of_hearts_delight"></a></li>
-<li data-search="valley_of_hearts_delight_backside_highway_280"><a href="/public/mtg/earth/valley_of_hearts_delight_backside_highway_280.png"><img src="/public/mtg/thumbnails/valley_of_hearts_delight_backside_highway_280.webp" alt="valley_of_hearts_delight_backside_highway_280"></a></li>
+<li data-search="alex_airplane_devourer" ><a href="/public/mtg/earth/alex_airplane_devourer.png" ><img src="/public/mtg/thumbnails/alex_airplane_devourer.webp" alt="alex_airplane_devourer" >
+<li data-search="almond_and_milk_enjoyers" ><a href="/public/mtg/earth/almond_and_milk_enjoyers.png" ><img src="/public/mtg/thumbnails/almond_and_milk_enjoyers.webp" alt="almond_and_milk_enjoyers" >
+<li data-search="david_life_of_the_party" ><a href="/public/mtg/earth/david_life_of_the_party.png" ><img src="/public/mtg/thumbnails/david_life_of_the_party.webp" alt="david_life_of_the_party" >
+<li data-search="mango_multiversal_constant" ><a href="/public/mtg/earth/mango_multiversal_constant.png" ><img src="/public/mtg/thumbnails/mango_multiversal_constant.webp" alt="mango_multiversal_constant" >
+<li data-search="park_imperial_counselor" ><a href="/public/mtg/earth/park_imperial_counselor.png" ><img src="/public/mtg/thumbnails/park_imperial_counselor.webp" alt="park_imperial_counselor" >
+<li data-search="scott_enlightened_thinker" ><a href="/public/mtg/earth/scott_enlightened_thinker.png" ><img src="/public/mtg/thumbnails/scott_enlightened_thinker.webp" alt="scott_enlightened_thinker" >
+<li data-search="scott_the_astromancer" ><a href="/public/mtg/earth/scott_the_astromancer.png" ><img src="/public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer" >
+<li data-search="sigourney_beaver" ><a href="/public/mtg/earth/sigourney_beaver.png" ><img src="/public/mtg/thumbnails/sigourney_beaver.webp" alt="sigourney_beaver" >
+<li data-search="stephan_datamaster" ><a href="/public/mtg/earth/stephan_datamaster.png" ><img src="/public/mtg/thumbnails/stephan_datamaster.webp" alt="stephan_datamaster" >
+<li data-search="stephan_tableau_acolyte" ><a href="/public/mtg/earth/stephan_tableau_acolyte.png" ><img src="/public/mtg/thumbnails/stephan_tableau_acolyte.webp" alt="stephan_tableau_acolyte" >
+<li data-search="valley_of_hearts_delight_back_highway_280" data-card-type="double_faced" ><a href="/public/mtg/earth/valley_of_hearts_delight.png" ><img src="/public/mtg/thumbnails/valley_of_hearts_delight.webp" alt="valley_of_hearts_delight_back_highway_280" class="flip__card-front" >
+<img src="/public/mtg/thumbnails/valley_of_hearts_delight_back_highway_280.webp" alt="valley_of_hearts_delight_back_highway_280" class="flip__card-back" >
 </ul>
 
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li");
+    const lis = document.querySelectorAll("li:not([data-card-type])");
     lis.forEach((li) => {
-        const img = li.querySelector("img");
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
 
         li.addEventListener("mousemove", (e) => {
             const rect = img.getBoundingClientRect();
@@ -90,7 +93,20 @@
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
     })
-</script>
 
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
 </body>
 </html>

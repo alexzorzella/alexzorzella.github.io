@@ -29,6 +29,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+
+            transition: transform 0.6s;
         }
 
         & img {
@@ -51,16 +53,17 @@
 <body>
 <main style="background-color: papayawhip;">
     <ul>
-<li data-search="scryfall_random"><a href="/public/mtg/cardmarket/scryfall_random.png"><img src="/public/mtg/thumbnails/scryfall_random.webp" alt="scryfall_random"></a></li>
-<li data-search="scryfalls_random_tale"><a href="/public/mtg/cardmarket/scryfalls_random_tale.png"><img src="/public/mtg/thumbnails/scryfalls_random_tale.webp" alt="scryfalls_random_tale"></a></li>
+<li data-search="scryfall_random" ><a href="/public/mtg/cardmarket/scryfall_random.png" ><img src="/public/mtg/thumbnails/scryfall_random.webp" alt="scryfall_random" >
+<li data-search="scryfalls_random_tale" ><a href="/public/mtg/cardmarket/scryfalls_random_tale.png" ><img src="/public/mtg/thumbnails/scryfalls_random_tale.webp" alt="scryfalls_random_tale" >
 </ul>
 
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li");
+    const lis = document.querySelectorAll("li:not([data-card-type])");
     lis.forEach((li) => {
-        const img = li.querySelector("img");
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
 
         li.addEventListener("mousemove", (e) => {
             const rect = img.getBoundingClientRect();
@@ -80,7 +83,20 @@
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
     })
-</script>
 
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
 </body>
 </html>

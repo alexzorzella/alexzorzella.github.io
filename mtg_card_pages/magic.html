@@ -29,6 +29,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+
+            transition: transform 0.6s;
         }
 
         & img {
@@ -51,24 +53,25 @@
 <body>
 <main style="background-color: papayawhip;">
     <ul>
-<li data-search="cosmonaut_zenith"><a href="/public/mtg/magic/cosmonaut_zenith.png"><img src="/public/mtg/thumbnails/cosmonaut_zenith.webp" alt="cosmonaut_zenith"></a></li>
-<li data-search="ecstatic_beauty"><a href="/public/mtg/magic/ecstatic_beauty.png"><img src="/public/mtg/thumbnails/ecstatic_beauty.webp" alt="ecstatic_beauty"></a></li>
-<li data-search="glacial_chasm"><a href="/public/mtg/magic/glacial_chasm.png"><img src="/public/mtg/thumbnails/glacial_chasm.webp" alt="glacial_chasm"></a></li>
-<li data-search="lcc304heraldshorn"><a href="/public/mtg/magic/lcc304heraldshorn.jpg"><img src="/public/mtg/thumbnails/lcc304heraldshorn.webp" alt="lcc304heraldshorn"></a></li>
-<li data-search="mind_goblin"><a href="/public/mtg/magic/mind_goblin.png"><img src="/public/mtg/thumbnails/mind_goblin.webp" alt="mind_goblin"></a></li>
-<li data-search="mind_goblins_reference_card_2"><a href="/public/mtg/magic/mind_goblins_reference_card_2.png"><img src="/public/mtg/thumbnails/mind_goblins_reference_card_2.webp" alt="mind_goblins_reference_card_2"></a></li>
-<li data-search="nadu_winged_wisdom"><a href="/public/mtg/magic/nadu_winged_wisdom.png"><img src="/public/mtg/thumbnails/nadu_winged_wisdom.webp" alt="nadu_winged_wisdom"></a></li>
-<li data-search="thb24idyllictutor"><a href="/public/mtg/magic/thb24idyllictutor.jpg"><img src="/public/mtg/thumbnails/thb24idyllictutor.webp" alt="thb24idyllictutor"></a></li>
-<li data-search="the_altar"><a href="/public/mtg/magic/the_altar.png"><img src="/public/mtg/thumbnails/the_altar.webp" alt="the_altar"></a></li>
-<li data-search="winter_moon"><a href="/public/mtg/magic/winter_moon.png"><img src="/public/mtg/thumbnails/winter_moon.webp" alt="winter_moon"></a></li>
+<li data-search="cosmonaut_zenith" ><a href="/public/mtg/magic/cosmonaut_zenith.png" ><img src="/public/mtg/thumbnails/cosmonaut_zenith.webp" alt="cosmonaut_zenith" >
+<li data-search="ecstatic_beauty" ><a href="/public/mtg/magic/ecstatic_beauty.png" ><img src="/public/mtg/thumbnails/ecstatic_beauty.webp" alt="ecstatic_beauty" >
+<li data-search="glacial_chasm" ><a href="/public/mtg/magic/glacial_chasm.png" ><img src="/public/mtg/thumbnails/glacial_chasm.webp" alt="glacial_chasm" >
+<li data-search="lcc304heraldshorn" ><a href="/public/mtg/magic/lcc304heraldshorn.jpg" ><img src="/public/mtg/thumbnails/lcc304heraldshorn.webp" alt="lcc304heraldshorn" >
+<li data-search="mind_goblin" ><a href="/public/mtg/magic/mind_goblin.png" ><img src="/public/mtg/thumbnails/mind_goblin.webp" alt="mind_goblin" >
+<li data-search="mind_goblins_reference_card_2" ><a href="/public/mtg/magic/mind_goblins_reference_card_2.png" ><img src="/public/mtg/thumbnails/mind_goblins_reference_card_2.webp" alt="mind_goblins_reference_card_2" >
+<li data-search="nadu_winged_wisdom" ><a href="/public/mtg/magic/nadu_winged_wisdom.png" ><img src="/public/mtg/thumbnails/nadu_winged_wisdom.webp" alt="nadu_winged_wisdom" >
+<li data-search="thb24idyllictutor" ><a href="/public/mtg/magic/thb24idyllictutor.jpg" ><img src="/public/mtg/thumbnails/thb24idyllictutor.webp" alt="thb24idyllictutor" >
+<li data-search="the_altar" ><a href="/public/mtg/magic/the_altar.png" ><img src="/public/mtg/thumbnails/the_altar.webp" alt="the_altar" >
+<li data-search="winter_moon" ><a href="/public/mtg/magic/winter_moon.png" ><img src="/public/mtg/thumbnails/winter_moon.webp" alt="winter_moon" >
 </ul>
 
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li");
+    const lis = document.querySelectorAll("li:not([data-card-type])");
     lis.forEach((li) => {
-        const img = li.querySelector("img");
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
 
         li.addEventListener("mousemove", (e) => {
             const rect = img.getBoundingClientRect();
@@ -88,7 +91,20 @@
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
     })
-</script>
 
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
 </body>
 </html>
