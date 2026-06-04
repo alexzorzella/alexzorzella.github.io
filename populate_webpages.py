@@ -343,7 +343,7 @@ if __name__ == "__main__":
     # create_thumbnails_for_images_recursively("public/metafight")
 
     create_thumbnails_for_images_recursively("public/mtg")
-    # create_thumbnails_for_images_recursively("public/universes_beyond_logos")
+    create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
     create_page_for_subdirectory_in_directory(
         parent_directory="public/mtg",
