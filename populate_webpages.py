@@ -14,20 +14,78 @@ from colorama import Fore, Style
 
 image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
 
+
 @dataclass(frozen=True)
-class HTMLImageTemplate:
+class AssetWithThumbnail:
     thumbnail_path: Path | None
     asset_path: Path
     alt: str
+
+    def get_visual(self):
+        return self.thumbnail_path.as_posix() if self.thumbnail_path is not None else self.asset_path.as_posix()
+
+@dataclass(frozen=True)
+class HTMLImageTemplate:
+    card: AssetWithThumbnail
+    back: AssetWithThumbnail | None = None
     li_class: str | None = None
 
     def render(self):
-        li_class_name = "" if self.li_class is None else f' class="{self.li_class}"'
+        data_search = self.card.alt
+        asset_path = self.card.asset_path.as_posix()
 
-        if self.thumbnail_path is not None:
-            return f'<li{li_class_name} data-search="{self.alt}"><a href="{self.asset_path.as_posix()}"><img src="{self.thumbnail_path.as_posix()}" alt="{self.alt}"></a></li>'
+        front_image_path = self.card.get_visual()
+
+        if self.back is not None:
+            data_search = self.back.alt # Back alt name contains front alt name
+
+            back_image_path = self.back.get_visual()
+
+            children = [create_element(
+                "a",
+                {"href": asset_path},
+                children=[
+                    create_element("img", {"src": front_image_path, "alt": data_search, "class": "flip__card-front"}),
+                    create_element("img", {"src": back_image_path, "alt": data_search, "class": "flip__card-back"})
+                ]
+            )]
         else:
-            return f'<li{li_class_name} data-search="{self.alt}"><a href="{self.asset_path.as_posix()}"><img src="{self.asset_path.as_posix()}" alt="{self.alt}"></a></li>'
+            children = [create_element(
+                "a",
+                {"href": asset_path},
+                children=[
+                    create_element("img", {"src": front_image_path, "alt": data_search})
+                ]
+            )]
+
+        return create_element(
+            tag_name='li',
+            attributes={"data-search": data_search, "class": self.li_class},
+            children=children)
+
+def create_element(tag_name: str, attributes: dict[str, str | None], children: list[str] | None = None,
+                   self_closing: bool = False) -> str:
+    if self_closing:
+        assert children is None, "Self closing tags must not have children"
+
+    if children is None:
+        child_str = ""
+    else:
+        child_str = "\n".join(children)
+
+    attribute_str = ""
+
+    for attribute, value in attributes.items():
+        if value is not None:
+            attribute_str += f'{attribute}="{value}" '
+
+    tag_str = f'<{tag_name} {attribute_str}>{child_str}'
+
+    if self_closing:
+        tag_str += f'</{tag_name}>'
+
+    return tag_str
+
 
 def unique_set(iterable, key=None):
     seen = set()
@@ -39,15 +97,16 @@ def unique_set(iterable, key=None):
             seen.add(value)
             yield item
 
+
 def populate_template(
-    output_template_filename: str,
-    output_filename: str,
-    image_sources_directory_name: str,
-    glob_recursively: bool = False,
-    ul_class: str | None = None,
-    li_class: str | None = None,
-    thumbnail_dir: str | None = None,
-    link_tiles_to_html_pages_of_the_same_name_in: str | None = None,
+        output_template_filename: str,
+        output_filename: str,
+        image_sources_directory_name: str,
+        glob_recursively: bool = False,
+        ul_class: str | None = None,
+        li_class: str | None = None,
+        thumbnail_dir: str | None = None,
+        link_tiles_to_html_pages_of_the_same_name_in: str | None = None,
 ):
     """Creates a populated HTML file given a template, output, and a local directory of images"""
 
@@ -78,7 +137,8 @@ def populate_template(
             if thumbnail_dir is not None and directory.name == thumbnail_dir or directory.name == "thumbnails" or directory.name == "notshown":
                 continue
 
-            print(f"{Fore.MAGENTA}Searching {len(directories_to_process)} subdirectories in {printable_source_path}...{Style.RESET_ALL}")
+            print(
+                f"{Fore.MAGENTA}Searching {len(directories_to_process)} subdirectories in {printable_source_path}...{Style.RESET_ALL}")
 
             images = list(itertools.chain.from_iterable(directory.glob(pattern) for pattern in image_filetypes))
 
@@ -98,7 +158,8 @@ def populate_template(
     else:
         print(f"{Fore.MAGENTA}Recursively globbing {printable_source_path}{Style.RESET_ALL}")
 
-        all = (itertools.chain.from_iterable(Path(image_sources_directory_name).rglob(pattern) for pattern in image_filetypes))
+        all = (itertools.chain.from_iterable(
+            Path(image_sources_directory_name).rglob(pattern) for pattern in image_filetypes))
         image_filepaths = list(unique_set(all, key=lambda p: p.name))
 
     image_filepaths = list(image_filepaths)
@@ -136,13 +197,15 @@ def populate_template(
         ul_class=ul_class,
     )
 
-    print(f"{Fore.GREEN}Populated {len(image_filepaths)} {output_template_path.stem} with images from {image_sources_directory_name}{Style.RESET_ALL}")
+    print(
+        f"{Fore.GREEN}Populated {len(image_filepaths)} {output_template_path.stem} with images from {image_sources_directory_name}{Style.RESET_ALL}")
+
 
 def render_and_write_to_template(
-    html_image_templates: list[HTMLImageTemplate],
-    output_template_path: Path,
-    output_filepath: Path,
-    ul_class: str | None = None,
+        html_image_templates: list[HTMLImageTemplate],
+        output_template_path: Path,
+        output_filepath: Path,
+        ul_class: str | None = None,
 ):
     ul_class_name = "" if ul_class is None else f' class="{ul_class}"'
 
@@ -164,7 +227,7 @@ def render_and_write_to_template(
 
 
 def create_thumbnail_for_image(
-    image_path: str, thumbnail_height: int, output_directory: str
+        image_path: str, thumbnail_height: int, output_directory: str
 ):
     with Image.open(image_path) as image:
         width, height = image.size
@@ -181,7 +244,7 @@ def create_thumbnail_for_image(
 
 
 def create_thumbnails_for_images_recursively(
-    parent_directory: str, thumbnail_height: int = 512
+        parent_directory: str, thumbnail_height: int = 512
 ):
     output_directory = Path(parent_directory) / "thumbnails"
     Path(output_directory).mkdir(parents=True, exist_ok=True)
@@ -198,6 +261,7 @@ def create_thumbnails_for_images_recursively(
         pool.starmap(create_thumbnail_for_image, args)
 
     print(f"{Fore.GREEN}Done! {len(args)} thumbnails created for images in {parent_directory}{Style.RESET_ALL}")
+
 
 def create_page_for_subdirectory_in_directory(
         parent_directory: str,
@@ -231,6 +295,7 @@ def create_page_for_subdirectory_in_directory(
         directories_processed += 1
 
     print(f"{Fore.LIGHTBLUE_EX}Processed {directories_processed} directories{Style.RESET_ALL}")
+
 
 if __name__ == "__main__":
     format_filenames(r".\public\mtg")
