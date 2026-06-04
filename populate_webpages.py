@@ -26,20 +26,22 @@ class AssetWithThumbnail:
 
 @dataclass(frozen=True)
 class HTMLImageTemplate:
-    card: AssetWithThumbnail
-    back: AssetWithThumbnail | None = None
+    card_front: AssetWithThumbnail
+    card_back: AssetWithThumbnail | None = None
     li_class: str | None = None
 
     def render(self):
-        data_search = self.card.alt
-        asset_path = self.card.asset_path.as_posix()
+        data_search = self.card_front.alt
+        asset_path = self.card_front.asset_path.as_posix()
 
-        front_image_path = self.card.get_visual()
+        front_image_path = self.card_front.get_visual()
 
-        if self.back is not None:
-            data_search = self.back.alt # Back alt name contains front alt name
+        is_double_faced = self.card_back is not None
 
-            back_image_path = self.back.get_visual()
+        if is_double_faced:
+            data_search = self.card_back.alt # Back alt name contains front alt name
+
+            back_image_path = self.card_back.get_visual()
 
             children = [create_element(
                 "a",
@@ -60,7 +62,7 @@ class HTMLImageTemplate:
 
         return create_element(
             tag_name='li',
-            attributes={"data-search": data_search, "class": self.li_class},
+            attributes={"data-search": data_search, "class": self.li_class, "data-card-type": "double_faced" if is_double_faced else None},
             children=children)
 
 def create_element(tag_name: str, attributes: dict[str, str | None], children: list[str] | None = None,
@@ -97,6 +99,28 @@ def unique_set(iterable, key=None):
             seen.add(value)
             yield item
 
+def get_thumbnail_and_asset_paths(
+        thumbnail_dir,
+        image_sources_directory_name,
+        image_filepath,
+        link_tiles_to_html_pages_of_the_same_name_in,
+        image_sources_directory_path):
+    thumbnail_path = ""
+
+    if thumbnail_dir is not None:
+        thumbnail_path += thumbnail_dir
+    else:
+        thumbnail_path += f"/{image_sources_directory_name}/thumbnails"
+
+    thumbnail_path = Path(f"{thumbnail_path}/{image_filepath.with_suffix('.webp').name}")
+
+    if link_tiles_to_html_pages_of_the_same_name_in is None:
+        asset_path = Path(
+            f"/{image_sources_directory_name}/{image_filepath.parent.absolute().relative_to(image_sources_directory_path)}/{image_filepath.name}")
+    else:
+        asset_path = Path(f"{link_tiles_to_html_pages_of_the_same_name_in}/{Path(image_filepath).stem}.html")
+
+    return thumbnail_path, asset_path
 
 def populate_template(
         output_template_filename: str,
@@ -165,30 +189,43 @@ def populate_template(
     image_filepaths = list(image_filepaths)
     image_filepaths.sort(key=lambda p: p.name)
 
+    double_sided_cards_fronts_to_backs: dict[str, Path] = { }
+
     for image_filepath in image_filepaths:
-        thumbnail_path = ""
+        cardname = image_filepath.stem
+        back_char_index = cardname.find("_back_")
 
-        if thumbnail_dir is not None:
-            thumbnail_path += thumbnail_dir
-        else:
-            thumbnail_path += f"/{image_sources_directory_name}/thumbnails"
+        if back_char_index >= 0:
+            front_cardname = cardname[:back_char_index]
+            double_sided_cards_fronts_to_backs[front_cardname] = Path(image_filepath)
 
-        thumbnail_path = Path(f"{thumbnail_path}/{image_filepath.with_suffix('.webp').name}")
+    for image_filepath in image_filepaths:
+        if "_back_" in Path(image_filepath).stem:
+            continue
 
-        if link_tiles_to_html_pages_of_the_same_name_in is None:
-            asset_path = Path(
-                f"/{image_sources_directory_name}/{image_filepath.parent.absolute().relative_to(image_sources_directory_path)}/{image_filepath.name}")
-        else:
-            asset_path = Path(f"{link_tiles_to_html_pages_of_the_same_name_in}/{Path(image_filepath).stem}.html")
+        thumbnail_path, asset_path = get_thumbnail_and_asset_paths(
+            thumbnail_dir=thumbnail_dir,
+            image_sources_directory_name=image_sources_directory_name,
+            image_filepath=image_filepath,
+            link_tiles_to_html_pages_of_the_same_name_in=link_tiles_to_html_pages_of_the_same_name_in,
+            image_sources_directory_path=image_sources_directory_path)
 
-        html_image_templates.append(
-            HTMLImageTemplate(
-                thumbnail_path=thumbnail_path,
-                asset_path=asset_path,
-                alt=image_filepath.stem,
-                li_class=li_class,
-            )
-        )
+        card_front = AssetWithThumbnail(thumbnail_path=thumbnail_path, asset_path=asset_path, alt=image_filepath.stem)
+        card_back = None
+
+        if (back_filepath := double_sided_cards_fronts_to_backs.get(Path(image_filepath).stem)) is not None:
+            back_thumbnail_path, back_asset_path = get_thumbnail_and_asset_paths(
+                thumbnail_dir=thumbnail_dir,
+                image_sources_directory_name=image_sources_directory_name,
+                image_filepath=back_filepath,
+                link_tiles_to_html_pages_of_the_same_name_in=link_tiles_to_html_pages_of_the_same_name_in,
+                image_sources_directory_path=image_sources_directory_path)
+
+            card_back = AssetWithThumbnail(thumbnail_path=back_thumbnail_path, asset_path=back_asset_path, alt=back_filepath.stem)
+
+        html_image_template = HTMLImageTemplate(card_front=card_front, card_back=card_back, li_class=li_class)
+
+        html_image_templates.append(html_image_template)
 
     render_and_write_to_template(
         html_image_templates=html_image_templates,

@@ -29,6 +29,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+
+            transition: transform 0.6s;
         }
 
         & img {
@@ -75,9 +77,10 @@
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li");
+    const lis = document.querySelectorAll("li:not([data-card-type])");
     lis.forEach((li) => {
-        const img = li.querySelector("img");
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
 
         li.addEventListener("mousemove", (e) => {
             const rect = img.getBoundingClientRect();
@@ -101,14 +104,14 @@
     const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
 
     cardsWithBackside.forEach((card) => {
-        const div = card.querySelector("div")
+        const anchor = card.querySelector("a")
 
             card.addEventListener("mouseover", (e) => {
-                div.style.transform="rotateY(180deg)"
+                anchor.style.transform="rotateY(180deg)"
             })
 
             card.addEventListener("mouseout", (e) => {
-                div.style.transform="rotateY(0deg)"
+                anchor.style.transform="rotateY(0deg)"
             })
     })
 </script>

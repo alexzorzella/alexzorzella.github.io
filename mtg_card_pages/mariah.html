@@ -29,6 +29,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+
+            transition: transform 0.6s;
         }
 
         & img {
@@ -45,28 +47,50 @@
             transform: scale(1.1);
             z-index: 10;
         }
+
+        .flip__card-front {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            backface-visibility: hidden;
+        }
+
+        .flip__card-back {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+        }
     }
 </style>
 
 <body>
 <main style="background-color: papayawhip;">
     <ul>
-<li data-search="mariah_basic"><a href="/public/mtg/mariah/mariah_basic.png"><img src="/public/mtg/thumbnails/mariah_basic.webp" alt="mariah_basic"></a></li>
-<li data-search="mariah_control"><a href="/public/mtg/mariah/mariah_control.png"><img src="/public/mtg/thumbnails/mariah_control.webp" alt="mariah_control"></a></li>
-<li data-search="mariah_ramp"><a href="/public/mtg/mariah/mariah_ramp.png"><img src="/public/mtg/thumbnails/mariah_ramp.webp" alt="mariah_ramp"></a></li>
-<li data-search="mariah_replacement"><a href="/public/mtg/mariah/mariah_replacement.png"><img src="/public/mtg/thumbnails/mariah_replacement.webp" alt="mariah_replacement"></a></li>
-<li data-search="mariah_token_animator"><a href="/public/mtg/mariah/mariah_token_animator.png"><img src="/public/mtg/thumbnails/mariah_token_animator.webp" alt="mariah_token_animator"></a></li>
-<li data-search="mariah_token_bonus"><a href="/public/mtg/mariah/mariah_token_bonus.png"><img src="/public/mtg/thumbnails/mariah_token_bonus.webp" alt="mariah_token_bonus"></a></li>
-<li data-search="mariah_token_sacrifice"><a href="/public/mtg/mariah/mariah_token_sacrifice.png"><img src="/public/mtg/thumbnails/mariah_token_sacrifice.webp" alt="mariah_token_sacrifice"></a></li>
-<li data-search="mariah_unknown_clone"><a href="/public/mtg/mariah/mariah_unknown_clone.png"><img src="/public/mtg/thumbnails/mariah_unknown_clone.webp" alt="mariah_unknown_clone"></a></li>
+<li data-search="mariah_basic" ><a href="/public/mtg/mariah/mariah_basic.png" ><img src="/public/mtg/thumbnails/mariah_basic.webp" alt="mariah_basic" >
+<li data-search="mariah_control" ><a href="/public/mtg/mariah/mariah_control.png" ><img src="/public/mtg/thumbnails/mariah_control.webp" alt="mariah_control" >
+<li data-search="mariah_ramp" ><a href="/public/mtg/mariah/mariah_ramp.png" ><img src="/public/mtg/thumbnails/mariah_ramp.webp" alt="mariah_ramp" >
+<li data-search="mariah_replacement" ><a href="/public/mtg/mariah/mariah_replacement.png" ><img src="/public/mtg/thumbnails/mariah_replacement.webp" alt="mariah_replacement" >
+<li data-search="mariah_token_animator" ><a href="/public/mtg/mariah/mariah_token_animator.png" ><img src="/public/mtg/thumbnails/mariah_token_animator.webp" alt="mariah_token_animator" >
+<li data-search="mariah_token_bonus" ><a href="/public/mtg/mariah/mariah_token_bonus.png" ><img src="/public/mtg/thumbnails/mariah_token_bonus.webp" alt="mariah_token_bonus" >
+<li data-search="mariah_token_sacrifice" ><a href="/public/mtg/mariah/mariah_token_sacrifice.png" ><img src="/public/mtg/thumbnails/mariah_token_sacrifice.webp" alt="mariah_token_sacrifice" >
+<li data-search="mariah_unknown_clone" ><a href="/public/mtg/mariah/mariah_unknown_clone.png" ><img src="/public/mtg/thumbnails/mariah_unknown_clone.webp" alt="mariah_unknown_clone" >
 </ul>
 
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li");
+    const lis = document.querySelectorAll("li:not([data-card-type])");
     lis.forEach((li) => {
-        const img = li.querySelector("img");
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
 
         li.addEventListener("mousemove", (e) => {
             const rect = img.getBoundingClientRect();
@@ -86,7 +110,20 @@
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
     })
-</script>
 
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
 </body>
 </html>

@@ -29,6 +29,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+
+            transition: transform 0.6s;
         }
 
         & img {
@@ -45,75 +47,97 @@
             transform: scale(1.1);
             z-index: 10;
         }
+
+        .flip__card-front {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            backface-visibility: hidden;
+        }
+
+        .flip__card-back {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+        }
     }
 </style>
 
 <body>
 <main style="background-color: papayawhip;">
     <ul>
-<li data-search="awaited_debut"><a href="/public/mtg/kpop/awaited_debut.png"><img src="/public/mtg/thumbnails/awaited_debut.webp" alt="awaited_debut"></a></li>
-<li data-search="behold_the_kpocalypse"><a href="/public/mtg/kpop/behold_the_kpocalypse.png"><img src="/public/mtg/thumbnails/behold_the_kpocalypse.webp" alt="behold_the_kpocalypse"></a></li>
-<li data-search="berate"><a href="/public/mtg/kpop/berate.png"><img src="/public/mtg/thumbnails/berate.webp" alt="berate"></a></li>
-<li data-search="chaewon"><a href="/public/mtg/kpop/chaewon.png"><img src="/public/mtg/thumbnails/chaewon.webp" alt="chaewon"></a></li>
-<li data-search="chaeyoung_inspirer_of_the_masses"><a href="/public/mtg/kpop/chaeyoung_inspirer_of_the_masses.png"><img src="/public/mtg/thumbnails/chaeyoung_inspirer_of_the_masses.webp" alt="chaeyoung_inspirer_of_the_masses"></a></li>
-<li data-search="dahyun_group_confidant"><a href="/public/mtg/kpop/dahyun_group_confidant.png"><img src="/public/mtg/thumbnails/dahyun_group_confidant.webp" alt="dahyun_group_confidant"></a></li>
-<li data-search="emart"><a href="/public/mtg/kpop/emart.png"><img src="/public/mtg/thumbnails/emart.webp" alt="emart"></a></li>
-<li data-search="eunchae"><a href="/public/mtg/kpop/eunchae.png"><img src="/public/mtg/thumbnails/eunchae.webp" alt="eunchae"></a></li>
-<li data-search="first_snow"><a href="/public/mtg/kpop/first_snow.png"><img src="/public/mtg/thumbnails/first_snow.webp" alt="first_snow"></a></li>
-<li data-search="forecasting_love_and_weather"><a href="/public/mtg/kpop/forecasting_love_and_weather.png"><img src="/public/mtg/thumbnails/forecasting_love_and_weather.webp" alt="forecasting_love_and_weather"></a></li>
-<li data-search="garam"><a href="/public/mtg/kpop/garam.png"><img src="/public/mtg/thumbnails/garam.webp" alt="garam"></a></li>
-<li data-search="giselle_feisty_lyricist"><a href="/public/mtg/kpop/giselle_feisty_lyricist.png"><img src="/public/mtg/thumbnails/giselle_feisty_lyricist.webp" alt="giselle_feisty_lyricist"></a></li>
-<li data-search="hari_expert_chef"><a href="/public/mtg/kpop/hari_expert_chef.png"><img src="/public/mtg/thumbnails/hari_expert_chef.webp" alt="hari_expert_chef"></a></li>
-<li data-search="heedo_twentyfive"><a href="/public/mtg/kpop/heedo_twentyfive.png"><img src="/public/mtg/thumbnails/heedo_twentyfive.webp" alt="heedo_twentyfive"></a></li>
-<li data-search="hwasa_peoples_advocate"><a href="/public/mtg/kpop/hwasa_peoples_advocate.png"><img src="/public/mtg/thumbnails/hwasa_peoples_advocate.webp" alt="hwasa_peoples_advocate"></a></li>
-<li data-search="incheon_international_airport"><a href="/public/mtg/kpop/incheon_international_airport.png"><img src="/public/mtg/thumbnails/incheon_international_airport.webp" alt="incheon_international_airport"></a></li>
-<li data-search="irene_chaos_visionary"><a href="/public/mtg/kpop/irene_chaos_visionary.png"><img src="/public/mtg/thumbnails/irene_chaos_visionary.webp" alt="irene_chaos_visionary"></a></li>
-<li data-search="jennie_feared_lyricist"><a href="/public/mtg/kpop/jennie_feared_lyricist.png"><img src="/public/mtg/thumbnails/jennie_feared_lyricist.webp" alt="jennie_feared_lyricist"></a></li>
-<li data-search="jeongyeon_comeback_frontrunner"><a href="/public/mtg/kpop/jeongyeon_comeback_frontrunner.png"><img src="/public/mtg/thumbnails/jeongyeon_comeback_frontrunner.webp" alt="jeongyeon_comeback_frontrunner"></a></li>
-<li data-search="jihyo_trendsetter"><a href="/public/mtg/kpop/jihyo_trendsetter.png"><img src="/public/mtg/thumbnails/jihyo_trendsetter.webp" alt="jihyo_trendsetter"></a></li>
-<li data-search="jisoo_convincing_liaison"><a href="/public/mtg/kpop/jisoo_convincing_liaison.png"><img src="/public/mtg/thumbnails/jisoo_convincing_liaison.webp" alt="jisoo_convincing_liaison"></a></li>
-<li data-search="joy_cheerful_vacationer"><a href="/public/mtg/kpop/joy_cheerful_vacationer.png"><img src="/public/mtg/thumbnails/joy_cheerful_vacationer.webp" alt="joy_cheerful_vacationer"></a></li>
-<li data-search="jyp_headquarters"><a href="/public/mtg/kpop/jyp_headquarters.png"><img src="/public/mtg/thumbnails/jyp_headquarters.webp" alt="jyp_headquarters"></a></li>
-<li data-search="karina_grounded_leader"><a href="/public/mtg/kpop/karina_grounded_leader.png"><img src="/public/mtg/thumbnails/karina_grounded_leader.webp" alt="karina_grounded_leader"></a></li>
-<li data-search="kazuha_legion_devourer"><a href="/public/mtg/kpop/kazuha_legion_devourer.png"><img src="/public/mtg/thumbnails/kazuha_legion_devourer.webp" alt="kazuha_legion_devourer"></a></li>
-<li data-search="lead_member"><a href="/public/mtg/kpop/lead_member.png"><img src="/public/mtg/thumbnails/lead_member.webp" alt="lead_member"></a></li>
-<li data-search="lisa_menacing_icon"><a href="/public/mtg/kpop/lisa_menacing_icon.png"><img src="/public/mtg/thumbnails/lisa_menacing_icon.webp" alt="lisa_menacing_icon"></a></li>
-<li data-search="matching_outfit"><a href="/public/mtg/kpop/matching_outfit.png"><img src="/public/mtg/thumbnails/matching_outfit.webp" alt="matching_outfit"></a></li>
-<li data-search="mina_grave_recruiter"><a href="/public/mtg/kpop/mina_grave_recruiter.png"><img src="/public/mtg/thumbnails/mina_grave_recruiter.webp" alt="mina_grave_recruiter"></a></li>
-<li data-search="momo_master_choreographer"><a href="/public/mtg/kpop/momo_master_choreographer.png"><img src="/public/mtg/thumbnails/momo_master_choreographer.webp" alt="momo_master_choreographer"></a></li>
-<li data-search="moonbyul_synchronized_plotter"><a href="/public/mtg/kpop/moonbyul_synchronized_plotter.png"><img src="/public/mtg/thumbnails/moonbyul_synchronized_plotter.webp" alt="moonbyul_synchronized_plotter"></a></li>
-<li data-search="nayeon_peacekeeper"><a href="/public/mtg/kpop/nayeon_peacekeeper.png"><img src="/public/mtg/thumbnails/nayeon_peacekeeper.webp" alt="nayeon_peacekeeper"></a></li>
-<li data-search="ningning_marine_prodigy"><a href="/public/mtg/kpop/ningning_marine_prodigy.png"><img src="/public/mtg/thumbnails/ningning_marine_prodigy.webp" alt="ningning_marine_prodigy"></a></li>
-<li data-search="raid_the_kmart"><a href="/public/mtg/kpop/raid_the_kmart.png"><img src="/public/mtg/thumbnails/raid_the_kmart.webp" alt="raid_the_kmart"></a></li>
-<li data-search="recruitment_spree"><a href="/public/mtg/kpop/recruitment_spree.png"><img src="/public/mtg/thumbnails/recruitment_spree.webp" alt="recruitment_spree"></a></li>
-<li data-search="romantic_confession"><a href="/public/mtg/kpop/romantic_confession.png"><img src="/public/mtg/thumbnails/romantic_confession.webp" alt="romantic_confession"></a></li>
-<li data-search="rose_flag_bearer"><a href="/public/mtg/kpop/rose_flag_bearer.png"><img src="/public/mtg/thumbnails/rose_flag_bearer.webp" alt="rose_flag_bearer"></a></li>
-<li data-search="sakura"><a href="/public/mtg/kpop/sakura.png"><img src="/public/mtg/thumbnails/sakura.webp" alt="sakura"></a></li>
-<li data-search="sana_leader_of_legions"><a href="/public/mtg/kpop/sana_leader_of_legions.png"><img src="/public/mtg/thumbnails/sana_leader_of_legions.webp" alt="sana_leader_of_legions"></a></li>
-<li data-search="seri_joybringer"><a href="/public/mtg/kpop/seri_joybringer.png"><img src="/public/mtg/thumbnails/seri_joybringer.webp" alt="seri_joybringer"></a></li>
-<li data-search="seulgi_risk_taker"><a href="/public/mtg/kpop/seulgi_risk_taker.png"><img src="/public/mtg/thumbnails/seulgi_risk_taker.webp" alt="seulgi_risk_taker"></a></li>
-<li data-search="seungyeon_friend_of_many"><a href="/public/mtg/kpop/seungyeon_friend_of_many.png"><img src="/public/mtg/thumbnails/seungyeon_friend_of_many.webp" alt="seungyeon_friend_of_many"></a></li>
-<li data-search="shot_clock"><a href="/public/mtg/kpop/shot_clock.png"><img src="/public/mtg/thumbnails/shot_clock.webp" alt="shot_clock"></a></li>
-<li data-search="show_recruitment"><a href="/public/mtg/kpop/show_recruitment.png"><img src="/public/mtg/thumbnails/show_recruitment.webp" alt="show_recruitment"></a></li>
-<li data-search="signed_on"><a href="/public/mtg/kpop/signed_on.png"><img src="/public/mtg/thumbnails/signed_on.webp" alt="signed_on"></a></li>
-<li data-search="solar_steadfast_cultivator"><a href="/public/mtg/kpop/solar_steadfast_cultivator.png"><img src="/public/mtg/thumbnails/solar_steadfast_cultivator.webp" alt="solar_steadfast_cultivator"></a></li>
-<li data-search="taeyeon_venue_packer"><a href="/public/mtg/kpop/taeyeon_venue_packer.png"><img src="/public/mtg/thumbnails/taeyeon_venue_packer.webp" alt="taeyeon_venue_packer"></a></li>
-<li data-search="the_debut"><a href="/public/mtg/kpop/the_debut.png"><img src="/public/mtg/thumbnails/the_debut.webp" alt="the_debut"></a></li>
-<li data-search="treasured_pendant"><a href="/public/mtg/kpop/treasured_pendant.png"><img src="/public/mtg/thumbnails/treasured_pendant.webp" alt="treasured_pendant"></a></li>
-<li data-search="twice"><a href="/public/mtg/kpop/twice.png"><img src="/public/mtg/thumbnails/twice.webp" alt="twice"></a></li>
-<li data-search="tzuyu_songwriter_extraordinaire"><a href="/public/mtg/kpop/tzuyu_songwriter_extraordinaire.png"><img src="/public/mtg/thumbnails/tzuyu_songwriter_extraordinaire.webp" alt="tzuyu_songwriter_extraordinaire"></a></li>
-<li data-search="wendy_honored_to_lead"><a href="/public/mtg/kpop/wendy_honored_to_lead.png"><img src="/public/mtg/thumbnails/wendy_honored_to_lead.webp" alt="wendy_honored_to_lead"></a></li>
-<li data-search="wheein_quiet_usurper"><a href="/public/mtg/kpop/wheein_quiet_usurper.png"><img src="/public/mtg/thumbnails/wheein_quiet_usurper.webp" alt="wheein_quiet_usurper"></a></li>
-<li data-search="winter_seasonal_balladeer"><a href="/public/mtg/kpop/winter_seasonal_balladeer.png"><img src="/public/mtg/thumbnails/winter_seasonal_balladeer.webp" alt="winter_seasonal_balladeer"></a></li>
-<li data-search="yeri_guiding_force"><a href="/public/mtg/kpop/yeri_guiding_force.png"><img src="/public/mtg/thumbnails/yeri_guiding_force.webp" alt="yeri_guiding_force"></a></li>
+<li data-search="awaited_debut" ><a href="/public/mtg/kpop/awaited_debut.png" ><img src="/public/mtg/thumbnails/awaited_debut.webp" alt="awaited_debut" >
+<li data-search="behold_the_kpocalypse" ><a href="/public/mtg/kpop/behold_the_kpocalypse.png" ><img src="/public/mtg/thumbnails/behold_the_kpocalypse.webp" alt="behold_the_kpocalypse" >
+<li data-search="berate" ><a href="/public/mtg/kpop/berate.png" ><img src="/public/mtg/thumbnails/berate.webp" alt="berate" >
+<li data-search="chaewon" ><a href="/public/mtg/kpop/chaewon.png" ><img src="/public/mtg/thumbnails/chaewon.webp" alt="chaewon" >
+<li data-search="chaeyoung_inspirer_of_the_masses" ><a href="/public/mtg/kpop/chaeyoung_inspirer_of_the_masses.png" ><img src="/public/mtg/thumbnails/chaeyoung_inspirer_of_the_masses.webp" alt="chaeyoung_inspirer_of_the_masses" >
+<li data-search="dahyun_group_confidant" ><a href="/public/mtg/kpop/dahyun_group_confidant.png" ><img src="/public/mtg/thumbnails/dahyun_group_confidant.webp" alt="dahyun_group_confidant" >
+<li data-search="emart" ><a href="/public/mtg/kpop/emart.png" ><img src="/public/mtg/thumbnails/emart.webp" alt="emart" >
+<li data-search="eunchae" ><a href="/public/mtg/kpop/eunchae.png" ><img src="/public/mtg/thumbnails/eunchae.webp" alt="eunchae" >
+<li data-search="first_snow" ><a href="/public/mtg/kpop/first_snow.png" ><img src="/public/mtg/thumbnails/first_snow.webp" alt="first_snow" >
+<li data-search="forecasting_love_and_weather" ><a href="/public/mtg/kpop/forecasting_love_and_weather.png" ><img src="/public/mtg/thumbnails/forecasting_love_and_weather.webp" alt="forecasting_love_and_weather" >
+<li data-search="garam" ><a href="/public/mtg/kpop/garam.png" ><img src="/public/mtg/thumbnails/garam.webp" alt="garam" >
+<li data-search="giselle_feisty_lyricist" ><a href="/public/mtg/kpop/giselle_feisty_lyricist.png" ><img src="/public/mtg/thumbnails/giselle_feisty_lyricist.webp" alt="giselle_feisty_lyricist" >
+<li data-search="hari_expert_chef" ><a href="/public/mtg/kpop/hari_expert_chef.png" ><img src="/public/mtg/thumbnails/hari_expert_chef.webp" alt="hari_expert_chef" >
+<li data-search="heedo_twentyfive" ><a href="/public/mtg/kpop/heedo_twentyfive.png" ><img src="/public/mtg/thumbnails/heedo_twentyfive.webp" alt="heedo_twentyfive" >
+<li data-search="hwasa_peoples_advocate" ><a href="/public/mtg/kpop/hwasa_peoples_advocate.png" ><img src="/public/mtg/thumbnails/hwasa_peoples_advocate.webp" alt="hwasa_peoples_advocate" >
+<li data-search="incheon_international_airport" ><a href="/public/mtg/kpop/incheon_international_airport.png" ><img src="/public/mtg/thumbnails/incheon_international_airport.webp" alt="incheon_international_airport" >
+<li data-search="irene_chaos_visionary" ><a href="/public/mtg/kpop/irene_chaos_visionary.png" ><img src="/public/mtg/thumbnails/irene_chaos_visionary.webp" alt="irene_chaos_visionary" >
+<li data-search="jennie_feared_lyricist" ><a href="/public/mtg/kpop/jennie_feared_lyricist.png" ><img src="/public/mtg/thumbnails/jennie_feared_lyricist.webp" alt="jennie_feared_lyricist" >
+<li data-search="jeongyeon_comeback_frontrunner" ><a href="/public/mtg/kpop/jeongyeon_comeback_frontrunner.png" ><img src="/public/mtg/thumbnails/jeongyeon_comeback_frontrunner.webp" alt="jeongyeon_comeback_frontrunner" >
+<li data-search="jihyo_trendsetter" ><a href="/public/mtg/kpop/jihyo_trendsetter.png" ><img src="/public/mtg/thumbnails/jihyo_trendsetter.webp" alt="jihyo_trendsetter" >
+<li data-search="jisoo_convincing_liaison" ><a href="/public/mtg/kpop/jisoo_convincing_liaison.png" ><img src="/public/mtg/thumbnails/jisoo_convincing_liaison.webp" alt="jisoo_convincing_liaison" >
+<li data-search="joy_cheerful_vacationer" ><a href="/public/mtg/kpop/joy_cheerful_vacationer.png" ><img src="/public/mtg/thumbnails/joy_cheerful_vacationer.webp" alt="joy_cheerful_vacationer" >
+<li data-search="jyp_headquarters" ><a href="/public/mtg/kpop/jyp_headquarters.png" ><img src="/public/mtg/thumbnails/jyp_headquarters.webp" alt="jyp_headquarters" >
+<li data-search="karina_grounded_leader" ><a href="/public/mtg/kpop/karina_grounded_leader.png" ><img src="/public/mtg/thumbnails/karina_grounded_leader.webp" alt="karina_grounded_leader" >
+<li data-search="kazuha_legion_devourer" ><a href="/public/mtg/kpop/kazuha_legion_devourer.png" ><img src="/public/mtg/thumbnails/kazuha_legion_devourer.webp" alt="kazuha_legion_devourer" >
+<li data-search="lead_member" ><a href="/public/mtg/kpop/lead_member.png" ><img src="/public/mtg/thumbnails/lead_member.webp" alt="lead_member" >
+<li data-search="lisa_menacing_icon" ><a href="/public/mtg/kpop/lisa_menacing_icon.png" ><img src="/public/mtg/thumbnails/lisa_menacing_icon.webp" alt="lisa_menacing_icon" >
+<li data-search="matching_outfit" ><a href="/public/mtg/kpop/matching_outfit.png" ><img src="/public/mtg/thumbnails/matching_outfit.webp" alt="matching_outfit" >
+<li data-search="mina_grave_recruiter" ><a href="/public/mtg/kpop/mina_grave_recruiter.png" ><img src="/public/mtg/thumbnails/mina_grave_recruiter.webp" alt="mina_grave_recruiter" >
+<li data-search="momo_master_choreographer" ><a href="/public/mtg/kpop/momo_master_choreographer.png" ><img src="/public/mtg/thumbnails/momo_master_choreographer.webp" alt="momo_master_choreographer" >
+<li data-search="moonbyul_synchronized_plotter" ><a href="/public/mtg/kpop/moonbyul_synchronized_plotter.png" ><img src="/public/mtg/thumbnails/moonbyul_synchronized_plotter.webp" alt="moonbyul_synchronized_plotter" >
+<li data-search="nayeon_peacekeeper" ><a href="/public/mtg/kpop/nayeon_peacekeeper.png" ><img src="/public/mtg/thumbnails/nayeon_peacekeeper.webp" alt="nayeon_peacekeeper" >
+<li data-search="ningning_marine_prodigy" ><a href="/public/mtg/kpop/ningning_marine_prodigy.png" ><img src="/public/mtg/thumbnails/ningning_marine_prodigy.webp" alt="ningning_marine_prodigy" >
+<li data-search="raid_the_kmart" ><a href="/public/mtg/kpop/raid_the_kmart.png" ><img src="/public/mtg/thumbnails/raid_the_kmart.webp" alt="raid_the_kmart" >
+<li data-search="recruitment_spree" ><a href="/public/mtg/kpop/recruitment_spree.png" ><img src="/public/mtg/thumbnails/recruitment_spree.webp" alt="recruitment_spree" >
+<li data-search="romantic_confession" ><a href="/public/mtg/kpop/romantic_confession.png" ><img src="/public/mtg/thumbnails/romantic_confession.webp" alt="romantic_confession" >
+<li data-search="rose_flag_bearer" ><a href="/public/mtg/kpop/rose_flag_bearer.png" ><img src="/public/mtg/thumbnails/rose_flag_bearer.webp" alt="rose_flag_bearer" >
+<li data-search="sakura" ><a href="/public/mtg/kpop/sakura.png" ><img src="/public/mtg/thumbnails/sakura.webp" alt="sakura" >
+<li data-search="sana_leader_of_legions" ><a href="/public/mtg/kpop/sana_leader_of_legions.png" ><img src="/public/mtg/thumbnails/sana_leader_of_legions.webp" alt="sana_leader_of_legions" >
+<li data-search="seri_joybringer" ><a href="/public/mtg/kpop/seri_joybringer.png" ><img src="/public/mtg/thumbnails/seri_joybringer.webp" alt="seri_joybringer" >
+<li data-search="seulgi_risk_taker" ><a href="/public/mtg/kpop/seulgi_risk_taker.png" ><img src="/public/mtg/thumbnails/seulgi_risk_taker.webp" alt="seulgi_risk_taker" >
+<li data-search="seungyeon_friend_of_many" ><a href="/public/mtg/kpop/seungyeon_friend_of_many.png" ><img src="/public/mtg/thumbnails/seungyeon_friend_of_many.webp" alt="seungyeon_friend_of_many" >
+<li data-search="shot_clock" ><a href="/public/mtg/kpop/shot_clock.png" ><img src="/public/mtg/thumbnails/shot_clock.webp" alt="shot_clock" >
+<li data-search="show_recruitment" ><a href="/public/mtg/kpop/show_recruitment.png" ><img src="/public/mtg/thumbnails/show_recruitment.webp" alt="show_recruitment" >
+<li data-search="signed_on" ><a href="/public/mtg/kpop/signed_on.png" ><img src="/public/mtg/thumbnails/signed_on.webp" alt="signed_on" >
+<li data-search="solar_steadfast_cultivator" ><a href="/public/mtg/kpop/solar_steadfast_cultivator.png" ><img src="/public/mtg/thumbnails/solar_steadfast_cultivator.webp" alt="solar_steadfast_cultivator" >
+<li data-search="taeyeon_venue_packer" ><a href="/public/mtg/kpop/taeyeon_venue_packer.png" ><img src="/public/mtg/thumbnails/taeyeon_venue_packer.webp" alt="taeyeon_venue_packer" >
+<li data-search="the_debut" ><a href="/public/mtg/kpop/the_debut.png" ><img src="/public/mtg/thumbnails/the_debut.webp" alt="the_debut" >
+<li data-search="treasured_pendant" ><a href="/public/mtg/kpop/treasured_pendant.png" ><img src="/public/mtg/thumbnails/treasured_pendant.webp" alt="treasured_pendant" >
+<li data-search="twice" ><a href="/public/mtg/kpop/twice.png" ><img src="/public/mtg/thumbnails/twice.webp" alt="twice" >
+<li data-search="tzuyu_songwriter_extraordinaire" ><a href="/public/mtg/kpop/tzuyu_songwriter_extraordinaire.png" ><img src="/public/mtg/thumbnails/tzuyu_songwriter_extraordinaire.webp" alt="tzuyu_songwriter_extraordinaire" >
+<li data-search="wendy_honored_to_lead" ><a href="/public/mtg/kpop/wendy_honored_to_lead.png" ><img src="/public/mtg/thumbnails/wendy_honored_to_lead.webp" alt="wendy_honored_to_lead" >
+<li data-search="wheein_quiet_usurper" ><a href="/public/mtg/kpop/wheein_quiet_usurper.png" ><img src="/public/mtg/thumbnails/wheein_quiet_usurper.webp" alt="wheein_quiet_usurper" >
+<li data-search="winter_seasonal_balladeer" ><a href="/public/mtg/kpop/winter_seasonal_balladeer.png" ><img src="/public/mtg/thumbnails/winter_seasonal_balladeer.webp" alt="winter_seasonal_balladeer" >
+<li data-search="yeri_guiding_force" ><a href="/public/mtg/kpop/yeri_guiding_force.png" ><img src="/public/mtg/thumbnails/yeri_guiding_force.webp" alt="yeri_guiding_force" >
 </ul>
 
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li");
+    const lis = document.querySelectorAll("li:not([data-card-type])");
     lis.forEach((li) => {
-        const img = li.querySelector("img");
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
 
         li.addEventListener("mousemove", (e) => {
             const rect = img.getBoundingClientRect();
@@ -133,7 +157,20 @@
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
     })
-</script>
 
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
 </body>
 </html>

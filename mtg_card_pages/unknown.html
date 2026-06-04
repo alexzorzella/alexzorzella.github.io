@@ -29,6 +29,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+
+            transition: transform 0.6s;
         }
 
         & img {
@@ -45,28 +47,50 @@
             transform: scale(1.1);
             z-index: 10;
         }
+
+        .flip__card-front {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            backface-visibility: hidden;
+        }
+
+        .flip__card-back {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+        }
     }
 </style>
 
 <body>
 <main style="background-color: papayawhip;">
     <ul>
-<li data-search="break_into_a_windows_users_house"><a href="/public/mtg/unknown/break_into_a_windows_users_house.png"><img src="/public/mtg/thumbnails/break_into_a_windows_users_house.webp" alt="break_into_a_windows_users_house"></a></li>
-<li data-search="build_a_blockade"><a href="/public/mtg/unknown/build_a_blockade.png"><img src="/public/mtg/thumbnails/build_a_blockade.webp" alt="build_a_blockade"></a></li>
-<li data-search="five_guys"><a href="/public/mtg/unknown/five_guys.png"><img src="/public/mtg/thumbnails/five_guys.webp" alt="five_guys"></a></li>
-<li data-search="go_to_ihop"><a href="/public/mtg/unknown/go_to_ihop.png"><img src="/public/mtg/thumbnails/go_to_ihop.webp" alt="go_to_ihop"></a></li>
-<li data-search="heist_the_louvre"><a href="/public/mtg/unknown/heist_the_louvre.png"><img src="/public/mtg/thumbnails/heist_the_louvre.webp" alt="heist_the_louvre"></a></li>
-<li data-search="lady_liberty_reforged"><a href="/public/mtg/unknown/lady_liberty_reforged.png"><img src="/public/mtg/thumbnails/lady_liberty_reforged.webp" alt="lady_liberty_reforged"></a></li>
-<li data-search="prius_vehicle"><a href="/public/mtg/unknown/prius_vehicle.png"><img src="/public/mtg/thumbnails/prius_vehicle.webp" alt="prius_vehicle"></a></li>
-<li data-search="sleeper_monument"><a href="/public/mtg/unknown/sleeper_monument.png"><img src="/public/mtg/thumbnails/sleeper_monument.webp" alt="sleeper_monument"></a></li>
+<li data-search="break_into_a_windows_users_house" ><a href="/public/mtg/unknown/break_into_a_windows_users_house.png" ><img src="/public/mtg/thumbnails/break_into_a_windows_users_house.webp" alt="break_into_a_windows_users_house" >
+<li data-search="build_a_blockade" ><a href="/public/mtg/unknown/build_a_blockade.png" ><img src="/public/mtg/thumbnails/build_a_blockade.webp" alt="build_a_blockade" >
+<li data-search="five_guys" ><a href="/public/mtg/unknown/five_guys.png" ><img src="/public/mtg/thumbnails/five_guys.webp" alt="five_guys" >
+<li data-search="go_to_ihop" ><a href="/public/mtg/unknown/go_to_ihop.png" ><img src="/public/mtg/thumbnails/go_to_ihop.webp" alt="go_to_ihop" >
+<li data-search="heist_the_louvre" ><a href="/public/mtg/unknown/heist_the_louvre.png" ><img src="/public/mtg/thumbnails/heist_the_louvre.webp" alt="heist_the_louvre" >
+<li data-search="lady_liberty_reforged" ><a href="/public/mtg/unknown/lady_liberty_reforged.png" ><img src="/public/mtg/thumbnails/lady_liberty_reforged.webp" alt="lady_liberty_reforged" >
+<li data-search="prius_vehicle" ><a href="/public/mtg/unknown/prius_vehicle.png" ><img src="/public/mtg/thumbnails/prius_vehicle.webp" alt="prius_vehicle" >
+<li data-search="sleeper_monument" ><a href="/public/mtg/unknown/sleeper_monument.png" ><img src="/public/mtg/thumbnails/sleeper_monument.webp" alt="sleeper_monument" >
 </ul>
 
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li");
+    const lis = document.querySelectorAll("li:not([data-card-type])");
     lis.forEach((li) => {
-        const img = li.querySelector("img");
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
 
         li.addEventListener("mousemove", (e) => {
             const rect = img.getBoundingClientRect();
@@ -86,7 +110,20 @@
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
     })
-</script>
 
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
 </body>
 </html>

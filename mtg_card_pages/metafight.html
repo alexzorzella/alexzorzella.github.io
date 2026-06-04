@@ -29,6 +29,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+
+            transition: transform 0.6s;
         }
 
         & img {
@@ -45,47 +47,69 @@
             transform: scale(1.1);
             z-index: 10;
         }
+
+        .flip__card-front {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            backface-visibility: hidden;
+        }
+
+        .flip__card-back {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+        }
     }
 </style>
 
 <body>
 <main style="background-color: papayawhip;">
     <ul>
-<li data-search="beat_rice"><a href="/public/mtg/metafight/beat_rice.png"><img src="/public/mtg/thumbnails/beat_rice.webp" alt="beat_rice"></a></li>
-<li data-search="biomechanical_alterations"><a href="/public/mtg/metafight/biomechanical_alterations.png"><img src="/public/mtg/thumbnails/biomechanical_alterations.webp" alt="biomechanical_alterations"></a></li>
-<li data-search="chronokinesis"><a href="/public/mtg/metafight/chronokinesis.png"><img src="/public/mtg/thumbnails/chronokinesis.webp" alt="chronokinesis"></a></li>
-<li data-search="containment_breach"><a href="/public/mtg/metafight/containment_breach.png"><img src="/public/mtg/thumbnails/containment_breach.webp" alt="containment_breach"></a></li>
-<li data-search="corrupted_niall"><a href="/public/mtg/metafight/corrupted_niall.png"><img src="/public/mtg/thumbnails/corrupted_niall.webp" alt="corrupted_niall"></a></li>
-<li data-search="deer"><a href="/public/mtg/metafight/deer.png"><img src="/public/mtg/thumbnails/deer.webp" alt="deer"></a></li>
-<li data-search="effective_lure"><a href="/public/mtg/metafight/effective_lure.png"><img src="/public/mtg/thumbnails/effective_lure.webp" alt="effective_lure"></a></li>
-<li data-search="excessive_tax"><a href="/public/mtg/metafight/excessive_tax.png"><img src="/public/mtg/thumbnails/excessive_tax.webp" alt="excessive_tax"></a></li>
-<li data-search="generous_gift"><a href="/public/mtg/metafight/generous_gift.png"><img src="/public/mtg/thumbnails/generous_gift.webp" alt="generous_gift"></a></li>
-<li data-search="jen_in_air"><a href="/public/mtg/metafight/jen_in_air.png"><img src="/public/mtg/thumbnails/jen_in_air.webp" alt="jen_in_air"></a></li>
-<li data-search="magnetron"><a href="/public/mtg/metafight/magnetron.png"><img src="/public/mtg/thumbnails/magnetron.webp" alt="magnetron"></a></li>
-<li data-search="misfire_arsenal"><a href="/public/mtg/metafight/misfire_arsenal.png"><img src="/public/mtg/thumbnails/misfire_arsenal.webp" alt="misfire_arsenal"></a></li>
-<li data-search="niall_with_sodium"><a href="/public/mtg/metafight/niall_with_sodium.png"><img src="/public/mtg/thumbnails/niall_with_sodium.webp" alt="niall_with_sodium"></a></li>
-<li data-search="philosophy"><a href="/public/mtg/metafight/philosophy.png"><img src="/public/mtg/thumbnails/philosophy.webp" alt="philosophy"></a></li>
-<li data-search="plot_armor"><a href="/public/mtg/metafight/plot_armor.png"><img src="/public/mtg/thumbnails/plot_armor.webp" alt="plot_armor"></a></li>
-<li data-search="sacrificio_letal"><a href="/public/mtg/metafight/sacrificio_letal.png"><img src="/public/mtg/thumbnails/sacrificio_letal.webp" alt="sacrificio_letal"></a></li>
-<li data-search="shooting_fish_in_a_barrel"><a href="/public/mtg/metafight/shooting_fish_in_a_barrel.png"><img src="/public/mtg/thumbnails/shooting_fish_in_a_barrel.webp" alt="shooting_fish_in_a_barrel"></a></li>
-<li data-search="smokey_cinder_cone"><a href="/public/mtg/metafight/smokey_cinder_cone.png"><img src="/public/mtg/thumbnails/smokey_cinder_cone.webp" alt="smokey_cinder_cone"></a></li>
-<li data-search="suplex_reversal"><a href="/public/mtg/metafight/suplex_reversal.png"><img src="/public/mtg/thumbnails/suplex_reversal.webp" alt="suplex_reversal"></a></li>
-<li data-search="swamp_swamped_by_swans"><a href="/public/mtg/metafight/swamp_swamped_by_swans.png"><img src="/public/mtg/thumbnails/swamp_swamped_by_swans.webp" alt="swamp_swamped_by_swans"></a></li>
-<li data-search="that_elevator_button"><a href="/public/mtg/metafight/that_elevator_button.png"><img src="/public/mtg/thumbnails/that_elevator_button.webp" alt="that_elevator_button"></a></li>
-<li data-search="that_elevator_button_original"><a href="/public/mtg/metafight/that_elevator_button_original.png"><img src="/public/mtg/thumbnails/that_elevator_button_original.webp" alt="that_elevator_button_original"></a></li>
-<li data-search="the_bone_zone"><a href="/public/mtg/metafight/the_bone_zone.png"><img src="/public/mtg/thumbnails/the_bone_zone.webp" alt="the_bone_zone"></a></li>
-<li data-search="the_relax_sign"><a href="/public/mtg/metafight/the_relax_sign.png"><img src="/public/mtg/thumbnails/the_relax_sign.webp" alt="the_relax_sign"></a></li>
-<li data-search="the_test"><a href="/public/mtg/metafight/the_test.png"><img src="/public/mtg/thumbnails/the_test.webp" alt="the_test"></a></li>
-<li data-search="think_again"><a href="/public/mtg/metafight/think_again.png"><img src="/public/mtg/thumbnails/think_again.webp" alt="think_again"></a></li>
-<li data-search="warehouse_purchase"><a href="/public/mtg/metafight/warehouse_purchase.png"><img src="/public/mtg/thumbnails/warehouse_purchase.webp" alt="warehouse_purchase"></a></li>
+<li data-search="beat_rice" ><a href="/public/mtg/metafight/beat_rice.png" ><img src="/public/mtg/thumbnails/beat_rice.webp" alt="beat_rice" >
+<li data-search="biomechanical_alterations" ><a href="/public/mtg/metafight/biomechanical_alterations.png" ><img src="/public/mtg/thumbnails/biomechanical_alterations.webp" alt="biomechanical_alterations" >
+<li data-search="chronokinesis" ><a href="/public/mtg/metafight/chronokinesis.png" ><img src="/public/mtg/thumbnails/chronokinesis.webp" alt="chronokinesis" >
+<li data-search="containment_breach" ><a href="/public/mtg/metafight/containment_breach.png" ><img src="/public/mtg/thumbnails/containment_breach.webp" alt="containment_breach" >
+<li data-search="corrupted_niall" ><a href="/public/mtg/metafight/corrupted_niall.png" ><img src="/public/mtg/thumbnails/corrupted_niall.webp" alt="corrupted_niall" >
+<li data-search="deer" ><a href="/public/mtg/metafight/deer.png" ><img src="/public/mtg/thumbnails/deer.webp" alt="deer" >
+<li data-search="effective_lure" ><a href="/public/mtg/metafight/effective_lure.png" ><img src="/public/mtg/thumbnails/effective_lure.webp" alt="effective_lure" >
+<li data-search="excessive_tax" ><a href="/public/mtg/metafight/excessive_tax.png" ><img src="/public/mtg/thumbnails/excessive_tax.webp" alt="excessive_tax" >
+<li data-search="generous_gift" ><a href="/public/mtg/metafight/generous_gift.png" ><img src="/public/mtg/thumbnails/generous_gift.webp" alt="generous_gift" >
+<li data-search="jen_in_air" ><a href="/public/mtg/metafight/jen_in_air.png" ><img src="/public/mtg/thumbnails/jen_in_air.webp" alt="jen_in_air" >
+<li data-search="magnetron" ><a href="/public/mtg/metafight/magnetron.png" ><img src="/public/mtg/thumbnails/magnetron.webp" alt="magnetron" >
+<li data-search="misfire_arsenal" ><a href="/public/mtg/metafight/misfire_arsenal.png" ><img src="/public/mtg/thumbnails/misfire_arsenal.webp" alt="misfire_arsenal" >
+<li data-search="niall_with_sodium" ><a href="/public/mtg/metafight/niall_with_sodium.png" ><img src="/public/mtg/thumbnails/niall_with_sodium.webp" alt="niall_with_sodium" >
+<li data-search="philosophy" ><a href="/public/mtg/metafight/philosophy.png" ><img src="/public/mtg/thumbnails/philosophy.webp" alt="philosophy" >
+<li data-search="plot_armor" ><a href="/public/mtg/metafight/plot_armor.png" ><img src="/public/mtg/thumbnails/plot_armor.webp" alt="plot_armor" >
+<li data-search="sacrificio_letal" ><a href="/public/mtg/metafight/sacrificio_letal.png" ><img src="/public/mtg/thumbnails/sacrificio_letal.webp" alt="sacrificio_letal" >
+<li data-search="shooting_fish_in_a_barrel" ><a href="/public/mtg/metafight/shooting_fish_in_a_barrel.png" ><img src="/public/mtg/thumbnails/shooting_fish_in_a_barrel.webp" alt="shooting_fish_in_a_barrel" >
+<li data-search="smokey_cinder_cone" ><a href="/public/mtg/metafight/smokey_cinder_cone.png" ><img src="/public/mtg/thumbnails/smokey_cinder_cone.webp" alt="smokey_cinder_cone" >
+<li data-search="suplex_reversal" ><a href="/public/mtg/metafight/suplex_reversal.png" ><img src="/public/mtg/thumbnails/suplex_reversal.webp" alt="suplex_reversal" >
+<li data-search="swamp_swamped_by_swans" ><a href="/public/mtg/metafight/swamp_swamped_by_swans.png" ><img src="/public/mtg/thumbnails/swamp_swamped_by_swans.webp" alt="swamp_swamped_by_swans" >
+<li data-search="that_elevator_button" ><a href="/public/mtg/metafight/that_elevator_button.png" ><img src="/public/mtg/thumbnails/that_elevator_button.webp" alt="that_elevator_button" >
+<li data-search="that_elevator_button_original" ><a href="/public/mtg/metafight/that_elevator_button_original.png" ><img src="/public/mtg/thumbnails/that_elevator_button_original.webp" alt="that_elevator_button_original" >
+<li data-search="the_bone_zone" ><a href="/public/mtg/metafight/the_bone_zone.png" ><img src="/public/mtg/thumbnails/the_bone_zone.webp" alt="the_bone_zone" >
+<li data-search="the_relax_sign" ><a href="/public/mtg/metafight/the_relax_sign.png" ><img src="/public/mtg/thumbnails/the_relax_sign.webp" alt="the_relax_sign" >
+<li data-search="the_test" ><a href="/public/mtg/metafight/the_test.png" ><img src="/public/mtg/thumbnails/the_test.webp" alt="the_test" >
+<li data-search="think_again" ><a href="/public/mtg/metafight/think_again.png" ><img src="/public/mtg/thumbnails/think_again.webp" alt="think_again" >
+<li data-search="warehouse_purchase" ><a href="/public/mtg/metafight/warehouse_purchase.png" ><img src="/public/mtg/thumbnails/warehouse_purchase.webp" alt="warehouse_purchase" >
 </ul>
 
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li");
+    const lis = document.querySelectorAll("li:not([data-card-type])");
     lis.forEach((li) => {
-        const img = li.querySelector("img");
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
 
         li.addEventListener("mousemove", (e) => {
             const rect = img.getBoundingClientRect();
@@ -105,7 +129,20 @@
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
     })
-</script>
 
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
 </body>
 </html>
