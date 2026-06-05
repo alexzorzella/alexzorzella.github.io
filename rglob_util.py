@@ -36,7 +36,7 @@ def rglob_cards_into_tsv():
         entries.add(stem)
 
     with open(INFO_CSV, "a", encoding="utf-8") as f:
-        # f.write(f"Name\tApproximate Date Created\tCommentary\n")
+        # f.write(f"Id\tName\tApproximate Date Created\tCommentary\n")
 
         for file in files:
             filepath = Path(file)
@@ -45,8 +45,15 @@ def rglob_cards_into_tsv():
             if filename in entries:
                 continue
 
+            predicted_name = filename.replace('_', ' ').title().replace("Of", "of").replace("The", "the")
+
+            do_put_comma = input(f"Does '{predicted_name}' get a comma after the first word? (y/n): ").lower() == "y"
+
+            if do_put_comma:
+                predicted_name = predicted_name.replace(' ', ", ", 1)
+
             date_created = datetime.fromtimestamp(os.path.getctime(file)).strftime("%Y/%m/%d")
-            f.write(f"{filename}\t{date_created}\t\n")
+            f.write(f"{filename}\t{predicted_name}\t{date_created}\t\n")
 
     # even: bool = True
     # for file in files:
