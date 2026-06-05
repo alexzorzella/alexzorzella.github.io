@@ -142,7 +142,8 @@ def populate_template(
         li_class: str | None = None,
         thumbnail_dir: str | None = None,
         link_tiles_to_html_pages_of_the_same_name_in: str | None = None,
-        cards: list[MtgCard] | None = None
+        cards: list[MtgCard] | None = None,
+        link_to_dedicated_pages: bool = False
 ):
     """Creates a populated HTML file given a template, output, and a local directory of images"""
 
@@ -236,7 +237,7 @@ def populate_template(
             card_back = AssetWithThumbnail(thumbnail_path=back_thumbnail_path, asset_path=back_asset_path,
                                            alt=back_filepath.stem)
 
-        linked_page: Path = Path(f"/dedicated_mtg_cards/{image_filepath.stem}.html")
+        linked_page: Path | None = Path(f"/dedicated_mtg_cards/{image_filepath.stem}.html") if link_to_dedicated_pages else None
 
         commentary = ""
 
@@ -327,7 +328,9 @@ def create_page_for_subdirectory_in_directory(
         output_to_directory: str | None = None,
         thumbnail_dir: str | None = None,
         li_class: str | None = None,
-        ul_class: str | None = None):
+        ul_class: str | None = None,
+        cards: list[MtgCard] | None = None,
+        link_to_dedicated_pages: bool = False):
     if output_to_directory is not None and not Path(output_to_directory).is_dir():
         print(f"{Fore.RED}{output_to_directory} doesn't exist, creating it{Style.RESET_ALL}")
         os.mkdir(output_to_directory)
@@ -347,7 +350,9 @@ def create_page_for_subdirectory_in_directory(
             image_sources_directory_name=image_sources_directory_name,
             li_class=li_class,
             ul_class=ul_class,
-            thumbnail_dir=thumbnail_dir
+            thumbnail_dir=thumbnail_dir,
+            cards=cards,
+            link_to_dedicated_pages=link_to_dedicated_pages
         )
 
         directories_processed += 1
@@ -383,7 +388,6 @@ def populate_individual_mtg_pages(tsv_path: Path,
 
     for file in newspaper_search_root_path.rglob("*.txt"):
         assert file.stem not in card_stem_to_newspaper, f"Duplicate stem found in mtg_card_search_root_path: {file.as_posix()}"
-        print(f"Found {file}!")
         card_stem_to_newspaper[file.stem] = file
 
     cards: list[MtgCard] = []
@@ -452,7 +456,9 @@ if __name__ == "__main__":
         parent_directory="public/mtg",
         output_template_filename="mtg_cards.template.html",
         output_to_directory="mtg_card_pages",
-        thumbnail_dir="/public/mtg/thumbnails"
+        thumbnail_dir="/public/mtg/thumbnails",
+        cards = cards,
+        link_to_dedicated_pages = True
     )
 
     populate_template(
@@ -462,7 +468,6 @@ if __name__ == "__main__":
         li_class="real-size-tile",
         ul_class="tilelist",
         link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages",
-        cards=cards
     )
 
     populate_template(
@@ -470,7 +475,8 @@ if __name__ == "__main__":
         output_filename="mtg_search.html",
         image_sources_directory_name="public/mtg",
         glob_recursively=True,
-        cards=cards
+        cards=cards,
+        link_to_dedicated_pages=True
         # link_tiles_to_html_pages_of_the_same_name_in="public/mtg/"
     )
 
