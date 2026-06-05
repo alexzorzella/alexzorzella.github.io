@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="title" content="swamp swamped by swans"/>
+    <meta name="description" content=""/>
+    <meta name="description" content=""/>
+    <meta property="og:title" content="swamp swamped by swans" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://highqualitybackup.com/dedicated_mtg_cards/swamp_swamped_by_swans.html" />
+    <meta property="og:image" content="/public/mtg/thumbnails/swamp_swamped_by_swans.webp" />
+    <title>swamp swamped by swans</title>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <link href="/public/favicon.ico" rel="icon"/>
+</head>
+
+<style>
+    ul {
+        display: grid;
+        gap: 1px;
+        justify-content: center;
+        padding: 1px;
+        background: hsl(from papayawhip h s 50);
+        /*width: 50%;*/
+        grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+
+        float: left;
+        margin: 0 16px 16px 0;
+        width: 256px;
+    }
+
+    li {
+        perspective: 1000px;
+        box-sizing: border-box;
+        transition: transform 0.25s ease;
+
+        & a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+
+            transition: transform 0.6s;
+        }
+
+        & img {
+            border: 2px solid hsl(from coral h s 75);
+            border-radius: 8px;
+            transform-style: preserve-3d;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.1s ease-out;
+        }
+
+        &:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+    }
+
+    p {
+        text-indent: 2em;
+    }
+</style>
+
+<body>
+<main style="background-color: papayawhip;">
+    <div style="
+        max-width: 1024px;
+        text-align: justify;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        font-family: 'Comic Sans MS', Arial, sans-serif;
+        width: 100%;">
+    <h1 style="font-family: 'Niagara', 'Times New Roman', serif; font-size: 8rem; letter-spacing: 0.32rem; font-weight: 500; margin-top: 30px;">swamp swamped by swans</h1>
+    <img src="/public/mtg/thumbnails/swamp_swamped_by_swans.webp" alt="swamp_swamped_by_swans" title="" style="float: left; margin-right: 25px; margin-bottom: 25px;">
+
+        <p>
+        
+        </p>
+    </div>
+</main>
+
+<script>
+    const lis = document.querySelectorAll("li:not([data-card-type])");
+    lis.forEach((li) => {
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
+
+        li.addEventListener("mousemove", (e) => {
+            const rect = img.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const xCenter = rect.width / 2;
+            const yCenter = rect.height / 2;
+
+            const xRotate = (yCenter - y) / 7;
+            const yRotate = (x - xCenter) / 7;
+
+            img.style.transform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
+        });
+
+        li.addEventListener("mouseleave", () => {
+            img.style.transform = `rotateX(0) rotateY(0)`;
+        });
+    })
+
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
+</body>
+</html>
