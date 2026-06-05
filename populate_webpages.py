@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 import csv
 import datetime
 import itertools
 import os
+from distutils import command
 from pathlib import Path
 
 from PIL import Image
@@ -16,7 +19,6 @@ from colorama import Fore, Style
 
 image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
 
-
 @dataclass(frozen=True)
 class AssetWithThumbnail:
     thumbnail_path: Path | None
@@ -26,12 +28,13 @@ class AssetWithThumbnail:
     def get_visual(self):
         return self.thumbnail_path.as_posix() if self.thumbnail_path is not None else self.asset_path.as_posix()
 
-
 @dataclass(frozen=True)
 class HTMLImageTemplate:
     card_front: AssetWithThumbnail
     card_back: AssetWithThumbnail | None = None
     li_class: str | None = None
+    linked_page: Path | None = None
+    commentary: str | None = None
 
     def render(self):
         data_search = self.card_front.alt
@@ -48,7 +51,7 @@ class HTMLImageTemplate:
 
             children = [create_element(
                 "a",
-                {"href": asset_path},
+                {"href": self.linked_page.as_posix() if self.linked_page is not None else asset_path},
                 children=[
                     create_element("img", {"src": front_image_path, "alt": data_search, "class": "flip__card-front"}),
                     create_element("img", {"src": back_image_path, "alt": data_search, "class": "flip__card-back"})
@@ -57,7 +60,7 @@ class HTMLImageTemplate:
         else:
             children = [create_element(
                 "a",
-                {"href": asset_path},
+                {"href": self.linked_page.as_posix() if self.linked_page is not None else asset_path},
                 children=[
                     create_element("img", {"src": front_image_path, "alt": data_search})
                 ]
@@ -66,7 +69,8 @@ class HTMLImageTemplate:
         return create_element(
             tag_name='li',
             attributes={"data-search": data_search, "class": self.li_class,
-                        "data-card-type": "double_faced" if is_double_faced else None},
+                        "data-card-type": "double_faced" if is_double_faced else None,
+                        "title": self.commentary},
             children=children)
 
 
@@ -88,7 +92,7 @@ def create_element(tag_name: str, attributes: dict[str, str | None], children: l
 
     tag_str = f'<{tag_name} {attribute_str}>{child_str}'
 
-    if self_closing:
+    if not self_closing:
         tag_str += f'</{tag_name}>'
 
     return tag_str
@@ -138,6 +142,7 @@ def populate_template(
         li_class: str | None = None,
         thumbnail_dir: str | None = None,
         link_tiles_to_html_pages_of_the_same_name_in: str | None = None,
+        cards: list[MtgCard] | None = None
 ):
     """Creates a populated HTML file given a template, output, and a local directory of images"""
 
@@ -231,7 +236,15 @@ def populate_template(
             card_back = AssetWithThumbnail(thumbnail_path=back_thumbnail_path, asset_path=back_asset_path,
                                            alt=back_filepath.stem)
 
-        html_image_template = HTMLImageTemplate(card_front=card_front, card_back=card_back, li_class=li_class)
+        linked_page: Path = Path(f"/dedicated_mtg_cards/{image_filepath.stem}.html")
+
+        commentary = ""
+
+        if cards is not None:
+            card = next((c for c in cards if c.id == image_filepath.stem), None)
+            commentary = card.commentary if card is not None else ""
+
+        html_image_template = HTMLImageTemplate(card_front=card_front, card_back=card_back, li_class=li_class, linked_page=linked_page, commentary=commentary)
 
         html_image_templates.append(html_image_template)
 
@@ -400,6 +413,7 @@ def populate_individual_mtg_pages(tsv_path: Path,
         render_and_write_individual_mtg_page(card, card_template_path=card_template_path,
                                    output_file_path=output_dir_path / (card.id + ".html"))
 
+    return cards
 
 def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path, output_file_path: Path):
     with open(card_template_path, "r") as file:
@@ -416,6 +430,14 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
             output_file_path.write(template)
 
 if __name__ == "__main__":
+    cards = populate_individual_mtg_pages(
+        card_template_path=Path("./mtg_card_page.template.html"),
+        mtg_card_search_root_path=Path("./public/mtg/"),
+        newspaper_search_root_path=Path("./public/mtg_card_info/"),
+        tsv_path=Path("./public/cardinfo.tsv"),
+        output_dir_path=Path("./dedicated_mtg_cards/")
+    )
+
     format_filenames(r".\public\mtg")
 
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
@@ -439,14 +461,16 @@ if __name__ == "__main__":
         image_sources_directory_name="public/universes_beyond_logos",
         li_class="real-size-tile",
         ul_class="tilelist",
-        link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages"
+        link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages",
+        cards=cards
     )
 
     populate_template(
         output_template_filename="mtg_search.template.html",
         output_filename="mtg_search.html",
         image_sources_directory_name="public/mtg",
-        glob_recursively=True
+        glob_recursively=True,
+        cards=cards
         # link_tiles_to_html_pages_of_the_same_name_in="public/mtg/"
     )
 
@@ -473,11 +497,3 @@ if __name__ == "__main__":
     #     output_filename="cards.html",
     #     image_sources_directory_name="public/metafight",
     # )
-
-    populate_individual_mtg_pages(
-        card_template_path=Path("./mtg_card_page.template.html"),
-        mtg_card_search_root_path=Path("./public/mtg/"),
-        newspaper_search_root_path=Path("./public/mtg_card_info/"),
-        tsv_path=Path("./public/cardinfo.tsv"),
-        output_dir_path=Path("./dedicated_mtg_cards/")
-    )
