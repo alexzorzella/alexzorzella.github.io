@@ -281,9 +281,8 @@ def render_and_write_to_template(
         template = file.read()
         template = template.replace("__TEMPLATE__", code_gen)
 
-    with open(output_filepath, "w") as output_filename:
+    with open(output_filepath, "w", encoding='utf-8') as output_filename:
         output_filename.write(template)
-
 
 def create_thumbnail_for_image(
         image_path: str, thumbnail_height: int, output_directory: str
@@ -375,7 +374,7 @@ def populate_individual_mtg_pages(tsv_path: Path,
                                   newspaper_search_root_path: Path,
                                   card_template_path: Path,
                                   output_dir_path: Path):
-    tsv_lines = tsv_path.read_text().splitlines()
+    tsv_lines = tsv_path.read_text(encoding='utf-8').splitlines()
     tsv_reader = csv.reader(tsv_lines, delimiter="\t")
 
     card_stem_to_thumbnail_path: dict[str, Path] = {}
@@ -438,7 +437,7 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
 
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(output_file_path, "w") as output_file_path:
+        with open(output_file_path, "w", encoding='utf-8') as output_file_path:
             output_file_path.write(template)
 
 if __name__ == "__main__":
