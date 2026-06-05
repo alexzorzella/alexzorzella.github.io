@@ -81,7 +81,7 @@
     function setQueryParameters(key, value) {
         const url = new URL(window.location.href);
         url.searchParams.set(key, value);
-        window.history.pushState({}, '', url);
+        window.history.replaceState({}, '', url);
     }
 
     const all_lis = document.querySelectorAll("li");
