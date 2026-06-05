@@ -23,7 +23,7 @@ image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
 class AssetWithThumbnail:
     thumbnail_path: Path | None
     asset_path: Path
-    alt: str
+    commentary: str
 
     def get_visual(self):
         return self.thumbnail_path.as_posix() if self.thumbnail_path is not None else self.asset_path.as_posix()
@@ -37,7 +37,7 @@ class HTMLImageTemplate:
     commentary: str | None = None
 
     def render(self):
-        data_search = self.card_front.alt
+        data_search = self.card_front.commentary
         asset_path = self.card_front.asset_path.as_posix()
 
         front_image_path = self.card_front.get_visual()
@@ -45,7 +45,7 @@ class HTMLImageTemplate:
         is_double_faced = self.card_back is not None
 
         if is_double_faced:
-            data_search = self.card_back.alt  # Back alt name contains front alt name
+            data_search = self.card_back.commentary  # Back alt name contains front alt name
 
             back_image_path = self.card_back.get_visual()
 
@@ -53,8 +53,8 @@ class HTMLImageTemplate:
                 "a",
                 {"href": self.linked_page.as_posix() if self.linked_page is not None else asset_path},
                 children=[
-                    create_element("img", {"src": front_image_path, "alt": data_search, "class": "flip__card-front"}),
-                    create_element("img", {"src": back_image_path, "alt": data_search, "class": "flip__card-back"})
+                    create_element("img", {"src": front_image_path, "alt": data_search, "class": "flip__card-front"}, self_closing=True),
+                    create_element("img", {"src": back_image_path, "alt": data_search, "class": "flip__card-back"}, self_closing=True)
                 ]
             )]
         else:
@@ -62,7 +62,7 @@ class HTMLImageTemplate:
                 "a",
                 {"href": self.linked_page.as_posix() if self.linked_page is not None else asset_path},
                 children=[
-                    create_element("img", {"src": front_image_path, "alt": data_search})
+                    create_element("img", {"src": front_image_path, "alt": data_search}, self_closing=True)
                 ]
             )]
 
@@ -223,7 +223,7 @@ def populate_template(
             link_tiles_to_html_pages_of_the_same_name_in=link_tiles_to_html_pages_of_the_same_name_in,
             image_sources_directory_path=image_sources_directory_path)
 
-        card_front = AssetWithThumbnail(thumbnail_path=thumbnail_path, asset_path=asset_path, alt=image_filepath.stem)
+        card_front = AssetWithThumbnail(thumbnail_path=thumbnail_path, asset_path=asset_path, commentary=image_filepath.stem)
         card_back = None
 
         if (back_filepath := double_sided_cards_fronts_to_backs.get(Path(image_filepath).stem)) is not None:
@@ -235,7 +235,7 @@ def populate_template(
                 image_sources_directory_path=image_sources_directory_path)
 
             card_back = AssetWithThumbnail(thumbnail_path=back_thumbnail_path, asset_path=back_asset_path,
-                                           alt=back_filepath.stem)
+                                           commentary=back_filepath.stem)
 
         linked_page: Path | None = Path(f"/dedicated_mtg_cards/{image_filepath.stem}.html") if link_to_dedicated_pages else None
 
@@ -258,7 +258,6 @@ def populate_template(
 
     print(
         f"{Fore.GREEN}Populated {len(image_filepaths)} {output_template_path.stem} with images from {image_sources_directory_name}{Style.RESET_ALL}")
-
 
 def render_and_write_to_template(
         html_image_templates: list[HTMLImageTemplate],
@@ -363,11 +362,28 @@ def create_page_for_subdirectory_in_directory(
 class MtgCard:
     id: str
     name: str
-    asset_path: Path
-    thumbnail_path: Path
+    front: AssetWithThumbnail
     created_at: datetime.datetime
-    commentary: str | None = None
+    back: AssetWithThumbnail | None = None
     article_paragraphs: list[str] = field(default_factory=list)
+
+    def get_front_asset(self):
+        return self.front.asset_path.as_posix()
+
+    def get_front_thumbnail(self):
+        return self.front.thumbnail_path.as_posix() if self.front.thumbnail_path is not None else self.get_front_asset()
+
+    def get_back_asset(self):
+        return self.back.asset_path.as_posix()
+
+    def get_back_thumbnail(self):
+        return self.back.thumbnail_path.as_posix() if self.back.thumbnail_path is not None else self.get_back_asset()
+
+    def get_front_commentary(self):
+        return self.front.commentary or ""
+
+    def get_back_commentary(self):
+        return self.get_front_commentary()
 
 def populate_individual_mtg_pages(tsv_path: Path,
                                   mtg_card_search_root_path: Path,
@@ -428,12 +444,47 @@ def populate_individual_mtg_pages(tsv_path: Path,
 def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path, output_file_path: Path):
     with open(card_template_path, "r") as file:
         template = file.read()
-        template = template.replace("__TITLE__", card.name)
-        template = template.replace("__ID__", card.id)
-        template = template.replace("__ASSET__", card.asset_path.as_posix())
-        template = template.replace("__THUMBNAIL__", card.thumbnail_path.as_posix())
-        template = template.replace("__COMMENTARY__", card.commentary or "")
-        template = template.replace("__CONTENT__", "\n".join([create_element("p", {}, [paragraph]) for paragraph in card.article_paragraphs]))
+
+        card_web_element = ""
+
+        name = card.name
+        id = card.id
+        asset = card.get_front_asset()
+        thumbnail = card.get_front_thumbnail()
+        commentary = card.get_front_commentary()
+
+        if card.back is None:
+            card_web_element = create_element("li", {"title": commentary}, [
+                create_element("a", {"href": asset}, [
+                    create_element("img", {"src": thumbnail, "alt": id}, self_closing=True)
+                ])])
+        else:
+            # back_asset = card.get_back_asset()
+            back_thumbnail = card.get_back_thumbnail()
+            # back_commentary = card.get_back_thumbnail()
+
+            card_web_element = create_element("li", {"card-data-type": "double_faced", "title": commentary}, [
+                create_element("a", {"href": asset}, [
+                    create_element("img", {"src": thumbnail, "alt": id, "class": "flip__card-front"}, [
+                        create_element("img", {"src": back_thumbnail, "alt": id, "class": "flip__card-back"}, self_closing=True)
+                    ], self_closing=True)
+                ])])
+
+        content = "\n".join([create_element("p", {}, [paragraph]) for paragraph in card.article_paragraphs])
+
+        template = template.replace("__TITLE__", name)
+        template = template.replace("__ID__", id)
+        # template = template.replace("__ASSET__", asset)
+        template = template.replace("__THUMBNAIL__", thumbnail)
+        template = template.replace("__COMMENTARY__", commentary)
+
+        template = template.replace("__CARD__", card_web_element)
+        template = template.replace("__CONTENT__", content)
+
+        # <!--<li title="__COMMENTARY__" ><a href="/__ASSET__" ><img src="/__THUMBNAIL__" alt="__ID__" ></a></li>-->
+        #
+        # <!--<li data-card-type="double_faced" title="__COMMENTARY__" ><a href="__ASSET__" ><img src="__THUMBNAIL__" alt="__ID__" class="flip__card-front" >-->
+        # <!--<img src="__BACK_THUMBNAIL__" alt="__BACK_ID__" class="flip__card-back" ></a></li>-->
 
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
 
