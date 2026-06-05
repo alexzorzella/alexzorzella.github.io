@@ -6,9 +6,6 @@ from collections import defaultdict
 from pathlib import Path
 
 from datetime import datetime
-from colorama import Fore, Style
-
-from populate_webpages import MtgCard
 
 INFO_CSV = "./public/cardinfo.tsv"
 
@@ -27,7 +24,7 @@ def rglob_cards_into_tsv():
     files.sort(key=os.path.getctime)
     files.reverse()
 
-    tsv_lines = Path(INFO_CSV).read_text().splitlines()
+    tsv_lines = Path(INFO_CSV).read_text(encoding='utf-8').splitlines()
     tsv_reader = csv.reader(tsv_lines, delimiter="\t")
 
     entries: set[str] = set()

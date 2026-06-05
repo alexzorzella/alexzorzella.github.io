@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 
 from baklava import is_null_or_whitespace
 from format_filenames import format_filenames
+from rglob_util import rglob_cards_into_tsv
 from spring_cleaning import spring_clean
 
 from colorama import Fore, Style
@@ -441,6 +442,8 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
             output_file_path.write(template)
 
 if __name__ == "__main__":
+    rglob_cards_into_tsv()
+
     cards = populate_individual_mtg_pages(
         card_template_path=Path("./mtg_card_page.template.html"),
         mtg_card_search_root_path=Path("./public/mtg/"),

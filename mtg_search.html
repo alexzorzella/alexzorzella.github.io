@@ -291,6 +291,7 @@
 <li data-search="the_test" ><a href="/dedicated_mtg_cards/the_test.html" ><img src="/public/mtg/thumbnails/the_test.webp" alt="the_test" ></img></a></li>
 <li data-search="the_xenomorph" ><a href="/dedicated_mtg_cards/the_xenomorph.html" ><img src="/public/mtg/thumbnails/the_xenomorph.webp" alt="the_xenomorph" ></img></a></li>
 <li data-search="think_again" ><a href="/dedicated_mtg_cards/think_again.html" ><img src="/public/mtg/thumbnails/think_again.webp" alt="think_again" ></img></a></li>
+<li data-search="time_machine" ><a href="/dedicated_mtg_cards/time_machine.html" ><img src="/public/mtg/thumbnails/time_machine.webp" alt="time_machine" ></img></a></li>
 <li data-search="time_to_farm" ><a href="/dedicated_mtg_cards/time_to_farm.html" ><img src="/public/mtg/thumbnails/time_to_farm.webp" alt="time_to_farm" ></img></a></li>
 <li data-search="trailhead" ><a href="/dedicated_mtg_cards/trailhead.html" ><img src="/public/mtg/thumbnails/trailhead.webp" alt="trailhead" ></img></a></li>
 <li data-search="treasured_pendant" ><a href="/dedicated_mtg_cards/treasured_pendant.html" ><img src="/public/mtg/thumbnails/treasured_pendant.webp" alt="treasured_pendant" ></img></a></li>
@@ -321,7 +322,7 @@
     function setQueryParameters(key, value) {
         const url = new URL(window.location.href);
         url.searchParams.set(key, value);
-        window.history.pushState({}, '', url);
+        window.history.replaceState({}, '', url);
     }
 
     const all_lis = document.querySelectorAll("li");
