@@ -384,8 +384,6 @@ def populate_individual_mtg_pages(tsv_path: Path,
 
     card_stem_to_newspaper: dict[str, Path] = {}
 
-    print(", ".join([file.as_posix() for file in newspaper_search_root_path.rglob("*.txt")]))
-
     for file in newspaper_search_root_path.rglob("*.txt"):
         assert file.stem not in card_stem_to_newspaper, f"Duplicate stem found in mtg_card_search_root_path: {file.as_posix()}"
         card_stem_to_newspaper[file.stem] = file
@@ -393,8 +391,9 @@ def populate_individual_mtg_pages(tsv_path: Path,
     cards: list[MtgCard] = []
     for card in list(tsv_reader)[1:]:
         stem: str = card[0]
-        created_at_str: str = card[1]
-        commentary: str = card[2]
+        name: str = card[1]
+        created_at_str: str = card[2]
+        commentary: str = card[3] if len(card) > 3 else ""
 
         thumbnail_path = card_stem_to_thumbnail_path[stem]
 
@@ -406,7 +405,7 @@ def populate_individual_mtg_pages(tsv_path: Path,
 
         cards.append(MtgCard(
             id=stem,
-            name=stem.replace("_", " "),
+            name=name,
             commentary=commentary or None,
             thumbnail_path=thumbnail_path,
             created_at=datetime.datetime.strptime(created_at_str, "%Y/%m/%d"),
