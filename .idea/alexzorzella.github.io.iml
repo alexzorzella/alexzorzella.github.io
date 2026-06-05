@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/dedicated_mtg_cards" />
     </content>
     <orderEntry type="jdk" jdkName="uv (alexzorzella.github.io)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
