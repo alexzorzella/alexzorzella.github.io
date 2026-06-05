@@ -4,7 +4,6 @@ import csv
 import datetime
 import itertools
 import os
-from distutils import command
 from pathlib import Path
 
 from PIL import Image

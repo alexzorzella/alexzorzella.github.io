@@ -9,6 +9,20 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Chomsky";
+  src: url("/public/fonts/chomsky.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Imperial";
+  src: url("/public/fonts/imperial.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
 main {
   display: flex;
   flex-direction: column;
