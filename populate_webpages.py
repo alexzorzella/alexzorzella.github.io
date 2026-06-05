@@ -1,10 +1,12 @@
+import csv
+import datetime
 import itertools
 import os
 from pathlib import Path
 
 from PIL import Image
 from multiprocessing import Pool
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from baklava import is_null_or_whitespace
 from format_filenames import format_filenames
@@ -24,6 +26,7 @@ class AssetWithThumbnail:
     def get_visual(self):
         return self.thumbnail_path.as_posix() if self.thumbnail_path is not None else self.asset_path.as_posix()
 
+
 @dataclass(frozen=True)
 class HTMLImageTemplate:
     card_front: AssetWithThumbnail
@@ -39,7 +42,7 @@ class HTMLImageTemplate:
         is_double_faced = self.card_back is not None
 
         if is_double_faced:
-            data_search = self.card_back.alt # Back alt name contains front alt name
+            data_search = self.card_back.alt  # Back alt name contains front alt name
 
             back_image_path = self.card_back.get_visual()
 
@@ -62,8 +65,10 @@ class HTMLImageTemplate:
 
         return create_element(
             tag_name='li',
-            attributes={"data-search": data_search, "class": self.li_class, "data-card-type": "double_faced" if is_double_faced else None},
+            attributes={"data-search": data_search, "class": self.li_class,
+                        "data-card-type": "double_faced" if is_double_faced else None},
             children=children)
+
 
 def create_element(tag_name: str, attributes: dict[str, str | None], children: list[str] | None = None,
                    self_closing: bool = False) -> str:
@@ -99,6 +104,7 @@ def unique_set(iterable, key=None):
             seen.add(value)
             yield item
 
+
 def get_thumbnail_and_asset_paths(
         thumbnail_dir,
         image_sources_directory_name,
@@ -121,6 +127,7 @@ def get_thumbnail_and_asset_paths(
         asset_path = Path(f"{link_tiles_to_html_pages_of_the_same_name_in}/{Path(image_filepath).stem}.html")
 
     return thumbnail_path, asset_path
+
 
 def populate_template(
         output_template_filename: str,
@@ -189,7 +196,7 @@ def populate_template(
     image_filepaths = list(image_filepaths)
     image_filepaths.sort(key=lambda p: p.name)
 
-    double_sided_cards_fronts_to_backs: dict[str, Path] = { }
+    double_sided_cards_fronts_to_backs: dict[str, Path] = {}
 
     for image_filepath in image_filepaths:
         cardname = image_filepath.stem
@@ -221,7 +228,8 @@ def populate_template(
                 link_tiles_to_html_pages_of_the_same_name_in=link_tiles_to_html_pages_of_the_same_name_in,
                 image_sources_directory_path=image_sources_directory_path)
 
-            card_back = AssetWithThumbnail(thumbnail_path=back_thumbnail_path, asset_path=back_asset_path, alt=back_filepath.stem)
+            card_back = AssetWithThumbnail(thumbnail_path=back_thumbnail_path, asset_path=back_asset_path,
+                                           alt=back_filepath.stem)
 
         html_image_template = HTMLImageTemplate(card_front=card_front, card_back=card_back, li_class=li_class)
 
@@ -334,6 +342,79 @@ def create_page_for_subdirectory_in_directory(
     print(f"{Fore.LIGHTBLUE_EX}Processed {directories_processed} directories{Style.RESET_ALL}")
 
 
+@dataclass(frozen=True)
+class MtgCard:
+    id: str
+    name: str
+    thumbnail_path: Path
+    created_at: datetime.datetime
+    commentary: str | None = None
+    article_paragraphs: list[str] = field(default_factory=list)
+
+def populate_individual_mtg_pages(tsv_path: Path,
+                                  mtg_card_search_root_path: Path,
+                                  newspaper_search_root_path: Path,
+                                  card_template_path: Path,
+                                  output_dir_path: Path):
+    tsv_lines = tsv_path.read_text().splitlines()
+    tsv_reader = csv.reader(tsv_lines, delimiter="\t")
+
+    card_stem_to_thumbnail_path: dict[str, Path] = {}
+    for file in mtg_card_search_root_path.rglob("*.webp"):
+        assert file.stem not in card_stem_to_thumbnail_path, "Duplicate stem found in mtg_card_search_root_path"
+        card_stem_to_thumbnail_path[file.stem] = file
+
+    card_stem_to_newspaper: dict[str, Path] = {}
+
+    print(", ".join([file.as_posix() for file in newspaper_search_root_path.rglob("*.txt")]))
+
+    for file in newspaper_search_root_path.rglob("*.txt"):
+        assert file.stem not in card_stem_to_newspaper, f"Duplicate stem found in mtg_card_search_root_path: {file.as_posix()}"
+        print(f"Found {file}!")
+        card_stem_to_newspaper[file.stem] = file
+
+    cards: list[MtgCard] = []
+    for card in list(tsv_reader)[1:]:
+        stem: str = card[0]
+        created_at_str: str = card[1]
+        commentary: str = card[2]
+
+        thumbnail_path = card_stem_to_thumbnail_path[stem]
+
+        article_path = card_stem_to_newspaper.get(stem)
+        article_paragraphs = []
+
+        if article_path is not None:
+            article_paragraphs = article_path.read_text().strip().splitlines()
+
+        cards.append(MtgCard(
+            id=stem,
+            name=stem.replace("_", " "),
+            commentary=commentary or None,
+            thumbnail_path=thumbnail_path,
+            created_at=datetime.datetime.strptime(created_at_str, "%Y/%m/%d"),
+            article_paragraphs=article_paragraphs
+        ))
+
+    for card in cards:
+        render_and_write_individual_mtg_page(card, card_template_path=card_template_path,
+                                   output_file_path=output_dir_path / (card.id + ".html"))
+
+
+def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path, output_file_path: Path):
+    with open(card_template_path, "r") as file:
+        template = file.read()
+        template = template.replace("__TITLE__", card.name)
+        template = template.replace("__ID__", card.id)
+        template = template.replace("__THUMBNAIL__", card.thumbnail_path.as_posix())
+        template = template.replace("__COMMENTARY__", card.commentary or "")
+        template = template.replace("__CONTENT__", "\n".join([create_element("p", {}, [paragraph]) for paragraph in card.article_paragraphs]))
+
+        output_file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        with open(output_file_path, "w") as output_file_path:
+            output_file_path.write(template)
+
 if __name__ == "__main__":
     format_filenames(r".\public\mtg")
 
@@ -392,3 +473,11 @@ if __name__ == "__main__":
     #     output_filename="cards.html",
     #     image_sources_directory_name="public/metafight",
     # )
+
+    populate_individual_mtg_pages(
+        card_template_path=Path("./mtg_card_page.template.html"),
+        mtg_card_search_root_path=Path("./public/mtg/"),
+        newspaper_search_root_path=Path("./public/mtg_card_info/"),
+        tsv_path=Path("./public/cardinfo.tsv"),
+        output_dir_path=Path("./dedicated_mtg_cards/")
+    )

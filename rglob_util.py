@@ -1,3 +1,4 @@
+import csv
 import datetime
 import glob
 import os
@@ -6,6 +7,8 @@ from pathlib import Path
 
 from datetime import datetime
 from colorama import Fore, Style
+
+from populate_webpages import MtgCard
 
 INFO_CSV = "./public/cardinfo.tsv"
 
@@ -24,12 +27,24 @@ def rglob_cards_into_tsv():
     files.sort(key=os.path.getctime)
     files.reverse()
 
-    with open(INFO_CSV, "w", encoding="utf-8") as f:
-        f.write(f"Name\tApproximate Date Created\tCommentary\n")
+    tsv_lines = Path(INFO_CSV).read_text().splitlines()
+    tsv_reader = csv.reader(tsv_lines, delimiter="\t")
+
+    entries: set[str] = set()
+    for card in list(tsv_reader)[1:]:
+        stem: str = card[0]
+        entries.add(stem)
+
+    with open(INFO_CSV, "a", encoding="utf-8") as f:
+        # f.write(f"Name\tApproximate Date Created\tCommentary\n")
 
         for file in files:
             filepath = Path(file)
             filename = filepath.stem
+
+            if filename in entries:
+                continue
+
             date_created = datetime.fromtimestamp(os.path.getctime(file)).strftime("%Y/%m/%d")
             f.write(f"{filename}\t{date_created}\t\n")
 
