@@ -364,6 +364,7 @@ def create_page_for_subdirectory_in_directory(
 class MtgCard:
     id: str
     name: str
+    asset_path: Path
     thumbnail_path: Path
     created_at: datetime.datetime
     commentary: str | None = None
@@ -382,6 +383,11 @@ def populate_individual_mtg_pages(tsv_path: Path,
         assert file.stem not in card_stem_to_thumbnail_path, "Duplicate stem found in mtg_card_search_root_path"
         card_stem_to_thumbnail_path[file.stem] = file
 
+    card_stem_to_asset_path: dict[str, Path] = {}
+    for file in mtg_card_search_root_path.rglob("*.png"):
+        assert file.stem not in card_stem_to_asset_path, "Duplicate stem found in mtg_card_search_root_path"
+        card_stem_to_asset_path[file.stem] = file
+
     card_stem_to_newspaper: dict[str, Path] = {}
 
     for file in newspaper_search_root_path.rglob("*.txt"):
@@ -395,6 +401,7 @@ def populate_individual_mtg_pages(tsv_path: Path,
         created_at_str: str = card[2]
         commentary: str = card[3] if len(card) > 3 else ""
 
+        asset_path = card_stem_to_asset_path[stem]
         thumbnail_path = card_stem_to_thumbnail_path[stem]
 
         article_path = card_stem_to_newspaper.get(stem)
@@ -407,6 +414,7 @@ def populate_individual_mtg_pages(tsv_path: Path,
             id=stem,
             name=name,
             commentary=commentary or None,
+            asset_path=asset_path,
             thumbnail_path=thumbnail_path,
             created_at=datetime.datetime.strptime(created_at_str, "%Y/%m/%d"),
             article_paragraphs=article_paragraphs
@@ -423,6 +431,7 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
         template = file.read()
         template = template.replace("__TITLE__", card.name)
         template = template.replace("__ID__", card.id)
+        template = template.replace("__ASSET__", card.asset_path.as_posix())
         template = template.replace("__THUMBNAIL__", card.thumbnail_path.as_posix())
         template = template.replace("__COMMENTARY__", card.commentary or "")
         template = template.replace("__CONTENT__", "\n".join([create_element("p", {}, [paragraph]) for paragraph in card.article_paragraphs]))
