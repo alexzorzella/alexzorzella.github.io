@@ -341,8 +341,8 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
             card_web_element = create_element("li", {"card-data-type": "double_faced", "title": commentary}, [
                 create_element("a", {"href": asset}, [
                     create_element("img", {"src": thumbnail, "alt": id, "class": "flip__card-front"}, [
-                        create_element("img", {"src": back_thumbnail, "alt": id, "class": "flip__card-back"}, self_closing=True)
-                    ], self_closing=True)
+                        create_element("img", {"src": back_thumbnail, "alt": id, "class": "flip__card-back"})
+                    ])
                 ])])
 
         content = "\n".join([create_element("p", {}, [paragraph]) for paragraph in card.article_paragraphs])
