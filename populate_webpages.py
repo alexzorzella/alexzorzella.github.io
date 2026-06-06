@@ -325,44 +325,20 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
 
         name = card.name
         id = card.id
-        asset = card.get_front_asset()
         thumbnail = card.get_front_thumbnail()
         commentary = card.get_front_commentary()
 
         rendered_card: str = card.render()
 
-        # if card.back is None:
-        #     card_web_element = create_element("li", {"title": commentary}, [
-        #         create_element("a", {"href": asset}, [
-        #             create_element("img", {"src": thumbnail, "alt": id}, self_closing=True)
-        #         ])])
-        # else:
-        #     # back_asset = card.get_back_asset()
-        #     back_thumbnail = card.get_back_thumbnail()
-        #     # back_commentary = card.get_back_thumbnail()
-        #
-        #     card_web_element = create_element("li", {"card-data-type": "double_faced", "title": commentary}, [
-        #         create_element("a", {"href": asset}, [
-        #             create_element("img", {"src": thumbnail, "alt": id, "class": "flip__card-front"}, [
-        #                 create_element("img", {"src": back_thumbnail, "alt": id, "class": "flip__card-back"})
-        #             ])
-        #         ])])
-
         content = "\n".join([create_element("p", {}, [paragraph]) for paragraph in card.article_paragraphs])
 
         template = template.replace("__TITLE__", name)
         template = template.replace("__ID__", id)
-        # template = template.replace("__ASSET__", asset)
         template = template.replace("__THUMBNAIL__", thumbnail)
         template = template.replace("__COMMENTARY__", commentary)
 
         template = template.replace("__CARD__", rendered_card)
         template = template.replace("__CONTENT__", content)
-
-        # <!--<li title="__COMMENTARY__" ><a href="/__ASSET__" ><img src="/__THUMBNAIL__" alt="__ID__" ></a></li>-->
-        #
-        # <!--<li data-card-type="double_faced" title="__COMMENTARY__" ><a href="__ASSET__" ><img src="__THUMBNAIL__" alt="__ID__" class="flip__card-front" >-->
-        # <!--<img src="__BACK_THUMBNAIL__" alt="__BACK_ID__" class="flip__card-back" ></a></li>-->
 
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
 
