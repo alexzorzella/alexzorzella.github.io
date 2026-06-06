@@ -329,22 +329,24 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
         thumbnail = card.get_front_thumbnail()
         commentary = card.get_front_commentary()
 
-        if card.back is None:
-            card_web_element = create_element("li", {"title": commentary}, [
-                create_element("a", {"href": asset}, [
-                    create_element("img", {"src": thumbnail, "alt": id}, self_closing=True)
-                ])])
-        else:
-            # back_asset = card.get_back_asset()
-            back_thumbnail = card.get_back_thumbnail()
-            # back_commentary = card.get_back_thumbnail()
+        rendered_card: str = card.render()
 
-            card_web_element = create_element("li", {"card-data-type": "double_faced", "title": commentary}, [
-                create_element("a", {"href": asset}, [
-                    create_element("img", {"src": thumbnail, "alt": id, "class": "flip__card-front"}, [
-                        create_element("img", {"src": back_thumbnail, "alt": id, "class": "flip__card-back"})
-                    ])
-                ])])
+        # if card.back is None:
+        #     card_web_element = create_element("li", {"title": commentary}, [
+        #         create_element("a", {"href": asset}, [
+        #             create_element("img", {"src": thumbnail, "alt": id}, self_closing=True)
+        #         ])])
+        # else:
+        #     # back_asset = card.get_back_asset()
+        #     back_thumbnail = card.get_back_thumbnail()
+        #     # back_commentary = card.get_back_thumbnail()
+        #
+        #     card_web_element = create_element("li", {"card-data-type": "double_faced", "title": commentary}, [
+        #         create_element("a", {"href": asset}, [
+        #             create_element("img", {"src": thumbnail, "alt": id, "class": "flip__card-front"}, [
+        #                 create_element("img", {"src": back_thumbnail, "alt": id, "class": "flip__card-back"})
+        #             ])
+        #         ])])
 
         content = "\n".join([create_element("p", {}, [paragraph]) for paragraph in card.article_paragraphs])
 
@@ -354,7 +356,7 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
         template = template.replace("__THUMBNAIL__", thumbnail)
         template = template.replace("__COMMENTARY__", commentary)
 
-        template = template.replace("__CARD__", card_web_element)
+        template = template.replace("__CARD__", rendered_card)
         template = template.replace("__CONTENT__", content)
 
         # <!--<li title="__COMMENTARY__" ><a href="/__ASSET__" ><img src="/__THUMBNAIL__" alt="__ID__" ></a></li>-->

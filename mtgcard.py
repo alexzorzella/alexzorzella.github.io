@@ -5,7 +5,6 @@ from pathlib import Path
 from assetwiththumbnail import AssetWithThumbnail
 from webtools import create_element
 
-
 @dataclass(frozen=True)
 class MtgCard:
     id: str
@@ -53,18 +52,18 @@ class MtgCard:
 
             children = [create_element(
                 "a",
-                {"href": self.linked_page.as_posix() if self.linked_page is not None else asset_path},
+                {"href": f"/{self.linked_page.as_posix()}" if self.linked_page is not None else asset_path},
                 children=[
-                    create_element("img", {"src": front_image_path, "alt": data_search, "class": "flip__card-front"}, self_closing=True),
-                    create_element("img", {"src": back_image_path, "alt": data_search, "class": "flip__card-back"}, self_closing=True)
+                    create_element("img", {"src": f"/{front_image_path}", "alt": data_search, "class": "flip__card-front"}, self_closing=True),
+                    create_element("img", {"src": f"/{back_image_path}", "alt": data_search, "class": "flip__card-back"}, self_closing=True)
                 ]
             )]
         else:
             children = [create_element(
                 "a",
-                {"href": self.linked_page.as_posix() if self.linked_page is not None else asset_path},
+                {"href": f"{self.linked_page.as_posix()}" if self.linked_page is not None else asset_path},
                 children=[
-                    create_element("img", {"src": front_image_path, "alt": data_search}, self_closing=True)
+                    create_element("img", {"src": f"/{front_image_path}", "alt": data_search}, self_closing=True)
                 ]
             )]
 
