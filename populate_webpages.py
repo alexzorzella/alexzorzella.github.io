@@ -201,12 +201,13 @@ def create_thumbnails_for_images_recursively(
 def create_page_for_subdirectory_in_directory(
         parent_directory: str,
         output_template_filename: str,
+        cards: list[MtgCard],
         output_to_directory: str | None = None,
         thumbnail_dir: str | None = None,
-        li_class: str | None = None,
         ul_class: str | None = None,
-        cards: list[MtgCard] | None = None,
-        link_to_dedicated_pages: bool = False):
+        # li_class: str | None = None,
+        # link_to_dedicated_pages: bool = False
+):
     if output_to_directory is not None and not Path(output_to_directory).is_dir():
         print(f"{Fore.RED}{output_to_directory} doesn't exist, creating it{Style.RESET_ALL}")
         os.mkdir(output_to_directory)
@@ -221,14 +222,14 @@ def create_page_for_subdirectory_in_directory(
             output_filename = f"{output_to_directory}/{output_filename}"
 
         populate_template(
+            cards=cards,
             output_template_filename=output_template_filename,
             output_filename=output_filename,
             image_sources_directory_name=image_sources_directory_name,
-            li_class=li_class,
             ul_class=ul_class,
             thumbnail_dir=thumbnail_dir,
-            cards=cards,
-            link_to_dedicated_pages=link_to_dedicated_pages
+            # li_class=li_class,
+            # link_to_dedicated_pages=link_to_dedicated_pages
         )
 
         directories_processed += 1
@@ -382,15 +383,7 @@ if __name__ == "__main__":
     create_thumbnails_for_images_recursively("public/mtg")
     create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
-    create_page_for_subdirectory_in_directory(
-        cards = cards,
-        parent_directory="public/mtg",
-        output_template_filename="mtg_cards.template.html",
-        output_to_directory="mtg_card_pages",
-        thumbnail_dir="/public/mtg/thumbnails",
-        link_to_dedicated_pages = True
-    )
-
+    # Main grid
     populate_template(
         cards=cards,
         output_template_filename="mtg.template.html",
@@ -401,6 +394,17 @@ if __name__ == "__main__":
         # link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages"
     )
 
+    # Subpages
+    create_page_for_subdirectory_in_directory(
+        cards = cards,
+        parent_directory="public/mtg",
+        output_template_filename="mtg_cards.template.html",
+        output_to_directory="mtg_card_pages",
+        thumbnail_dir="/public/mtg/thumbnails",
+        # link_to_dedicated_pages = True
+    )
+
+    # Search page
     populate_template(
         cards=cards,
         output_template_filename="mtg_search.template.html",

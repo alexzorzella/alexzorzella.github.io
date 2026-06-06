@@ -77,8 +77,12 @@
         width: 100%;">
     <h1 style="font-family: 'Chomsky', 'Niagara', 'Times New Roman', serif; font-size: 4rem; font-weight: 300; margin-top: 35px;">Scott, the Astromancer</h1>
         <ul>
-            <li title="" ><a href="/public/mtg/earth/scott_the_astromancer.png" ><img src="/public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer" ></img></a></li>
+<!--            <li title="" ><a href="/__ASSET__" ><img src="/public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer" ></a></li>-->
+<!--        <li data-card-type="double_faced" title="" ><a href="__ASSET__" ><img src="public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer" class="flip__card-front" >-->
+<!--        <img src="__BACK_THUMBNAIL__" alt="__BACK_ID__" class="flip__card-back" ></a></li>-->
+            <li title="" ><a href="public/mtg/earth/scott_the_astromancer.png" ><img src="public/mtg/thumbnails/scott_the_astromancer.webp" alt="scott_the_astromancer" ></a></li>
         </ul>
+
 
         <p>
         
@@ -87,8 +91,46 @@
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li:not([data-card-type])");
-    lis.forEach((li) => {
+    const search = document.getElementById("search")
+
+    function setQueryParameters(key, value) {
+        const url = new URL(window.location.href);
+        url.searchParams.set(key, value);
+        window.history.replaceState({}, '', url);
+    }
+
+    const all_lis = document.querySelectorAll("li");
+
+    function updateVisibleCards(search_text) {
+        const queries = search_text.trim().split(" ")
+
+        for(const li of all_lis) {
+            const cardName = li.dataset["search"]
+
+            const passes = queries.some((q) => cardName.includes(q))
+
+            if(!passes) {
+                li.style["display"] = "none";
+            } else {
+                li.style["display"] = "block";
+            }
+        }
+    }
+
+    const url = new URL(window.location.href)
+    const initial_query = url.searchParams.get("q")
+    if (initial_query !== null) {
+        updateVisibleCards(initial_query)
+        search.value = initial_query
+    }
+
+    search.addEventListener("input", (e) => {
+        setQueryParameters("q", e.target.value)
+        updateVisibleCards(e.target.value)
+    })
+
+    const perspective_compatible_lis = document.querySelectorAll("li:not([data-card-type])");
+    perspective_compatible_lis.forEach((li) => {
         const images = li.querySelectorAll("img");
         const img = images[images.length - 1];
 
@@ -109,20 +151,20 @@
         li.addEventListener("mouseleave", () => {
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
-    })
 
-    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+        const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
 
-    cardsWithBackside.forEach((card) => {
-        const anchor = card.querySelector("a")
+        cardsWithBackside.forEach((card) => {
+            const anchor = card.querySelector("a")
 
-            card.addEventListener("mouseover", (e) => {
-                anchor.style.transform="rotateY(180deg)"
-            })
+                card.addEventListener("mouseover", (e) => {
+                    anchor.style.transform="rotateY(180deg)"
+                })
 
-            card.addEventListener("mouseout", (e) => {
-                anchor.style.transform="rotateY(0deg)"
-            })
+                card.addEventListener("mouseout", (e) => {
+                    anchor.style.transform="rotateY(0deg)"
+                })
+        })
     })
 </script>
 </body>
