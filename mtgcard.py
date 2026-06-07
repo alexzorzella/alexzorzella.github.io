@@ -38,7 +38,7 @@ class MtgCard:
         return self.get_front_commentary()
 
     def render(self):
-        data_search = self.front.commentary
+        data_search = self.id
         asset_path = self.front.asset_path.as_posix()
 
         front_image_path = self.front.get_visual()
@@ -46,8 +46,6 @@ class MtgCard:
         is_double_faced = self.back is not None
 
         if is_double_faced:
-            data_search = self.back.commentary  # Back alt name contains front alt name
-
             back_image_path = self.back.get_visual()
 
             children = [create_element(
@@ -67,9 +65,17 @@ class MtgCard:
                 ]
             )]
 
+        attributes = {
+            "data-search": data_search,
+            "data-card-type": "double_faced" if is_double_faced else None,
+            "title": self.front.commentary
+        }
+
+        if self.li_class is not None:
+            attributes["class"] = self.li_class
+
         return create_element(
             tag_name='li',
-            attributes={"data-search": data_search, "class": self.li_class,
-                        "data-card-type": "double_faced" if is_double_faced else None,
-                        "title": self.front.commentary},
-            children=children)
+            attributes=attributes,
+            children=children
+        )

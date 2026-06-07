@@ -240,7 +240,7 @@ def populate_individual_mtg_pages(cards: list[MtgCard], card_template_path: Path
     for card in cards:
         render_and_write_individual_mtg_page(card, card_template_path=card_template_path, output_file_path=output_dir_path / (card.id + ".html"))
 
-def get_cards(tsv_path: Path, card_root_dir: Path, newspaper_search_root_path: Path, li_class) -> list[MtgCard]:
+def get_cards(tsv_path: Path, card_root_dir: Path, newspaper_search_root_path: Path, li_class: str | None = None) -> list[MtgCard]:
     tsv_lines = tsv_path.read_text(encoding='utf-8').splitlines()
     tsv_reader = csv.reader(tsv_lines, delimiter="\t")
 
@@ -306,7 +306,7 @@ def get_cards(tsv_path: Path, card_root_dir: Path, newspaper_search_root_path: P
                 asset_path=back_asset,
                 commentary=commentary)
 
-        cards.append(MtgCard(
+        card_data = MtgCard(
             id=stem,
             name=name,
             front=front,
@@ -314,8 +314,9 @@ def get_cards(tsv_path: Path, card_root_dir: Path, newspaper_search_root_path: P
             created_at=datetime.datetime.strptime(created_at_str, "%Y/%m/%d"),
             article_paragraphs=article_paragraphs,
             linked_page=linked_pages[stem],
-            li_class=li_class
-        ))
+            li_class=li_class)
+
+        cards.append(card_data)
 
     return cards
 
@@ -352,7 +353,17 @@ if __name__ == "__main__":
         tsv_path=Path("./public/cardinfo.tsv"),
         card_root_dir=Path("./public/mtg/"),
         newspaper_search_root_path=Path("./public/mtg_card_info/"),
-        li_class="real-size-tile")
+    )
+
+
+    collections = []
+
+    # collections = get_cards(
+    #     tsv_path=Path("./public/cardinfo.tsv"),
+    #     card_root_dir=Path("./public/mtg/"),
+    #     newspaper_search_root_path=Path("./public/mtg_card_info/"),
+    #     li_class="real-size-tile"
+    # )
 
     populate_individual_mtg_pages(cards=cards, card_template_path=Path("./mtg_card_page.template.html"),output_dir_path=Path("./dedicated_mtg_cards/"))
 
@@ -363,7 +374,7 @@ if __name__ == "__main__":
 
     # Main grid
     populate_template(
-        cards=cards,
+        cards=collections,
         output_template_filename="mtg.template.html",
         output_filename="mtg.html",
         image_sources_directory_name="public/universes_beyond_logos",
