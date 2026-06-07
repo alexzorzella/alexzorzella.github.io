@@ -241,10 +241,10 @@ def populate_individual_pages(image_elements: list[ImageElementData], page_templ
             output_file_path=output_dir_path / (image_element.id + ".html"))
 
 def get_image_element_data(
-        tsv_path: Path,
         image_root_dir: Path,
-        info_root_dir: Path,
         linked_page_dir: str,
+        info_root_dir: Path | None = None,
+        tsv_path: Path | None = None,
         li_class: str | None = None) -> list[ImageElementData]:
     # Find the thumbnails
     card_stem_to_thumbnail_path: dict[str, Path] = {}
@@ -260,9 +260,11 @@ def get_image_element_data(
 
     # Find the info
     card_stem_to_info: dict[str, Path] = {}
-    for file in info_root_dir.rglob("*.txt"):
-        assert file.stem not in card_stem_to_info, f"Duplicate stem found in mtg_card_search_root_path: {file.as_posix()}"
-        card_stem_to_info[file.stem] = file
+
+    if info_root_dir is not None:
+        for file in info_root_dir.rglob("*.txt"):
+            assert file.stem not in card_stem_to_info, f"Duplicate stem found in mtg_card_search_root_path: {file.as_posix()}"
+            card_stem_to_info[file.stem] = file
 
     # Find the backs (if applicable) and the links to the pages with more information
     double_sided_cards_fronts_to_backs: dict[str, Path] = {}
@@ -280,20 +282,21 @@ def get_image_element_data(
             linked_pages[card_stem] = linked_page
 
     # Read card info tsv for more information
-    tsv_lines = tsv_path.read_text(encoding='utf-8').splitlines()
-    tsv_reader = csv.reader(tsv_lines, delimiter="\t")
-
-    raw_tsv_data = list(tsv_reader)[1:]
-
     tsv_data: dict[str, tuple[str, str, str]] = {}
 
-    for card in raw_tsv_data:
-        stem: str = card[0]
-        name: str = card[1]
-        created_at_str: str = card[2]
-        commentary: str = card[3] if len(card) > 3 else ""
+    if tsv_path is not None:
+        tsv_lines = tsv_path.read_text(encoding='utf-8').splitlines()
+        tsv_reader = csv.reader(tsv_lines, delimiter="\t")
 
-        tsv_data[stem] = (name, created_at_str, commentary)
+        raw_tsv_data = list(tsv_reader)[1:]
+
+        for card in raw_tsv_data:
+            stem: str = card[0]
+            name: str = card[1]
+            created_at_str: str = card[2]
+            commentary: str = card[3] if len(card) > 3 else ""
+
+            tsv_data[stem] = (name, created_at_str, commentary)
 
     # Create entries for the image elements
     image_elements: list[ImageElementData] = []
@@ -439,6 +442,27 @@ if __name__ == "__main__":
         output_filename="mtg_search.html",
         image_sources_directory_name="public/mtg",
         glob_recursively=True
+    )
+
+    artwork_image_data: list[ImageElementData] = get_image_element_data(
+        image_root_dir=Path("./public/art/"),
+        linked_page_dir="art_pages",
+        li_class="tile"
+    )
+
+    # Individual pages for artworks
+    populate_individual_pages(
+        image_elements=artwork_image_data,
+        page_template_path=Path("./mtg_card_page.template.html"),
+        output_dir_path=Path("./art_pages/")
+    )
+
+    populate_template(
+        cards=artwork_image_data,
+        output_template_filename="index.template.html",
+        output_filename="index_test.html",
+        image_sources_directory_name="public/art",
+        ul_class="tilelist"
     )
 
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
