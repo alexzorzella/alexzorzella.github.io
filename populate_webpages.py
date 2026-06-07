@@ -299,6 +299,9 @@ def get_image_element_data(
     image_elements: list[ImageElementData] = []
 
     for stem, asset_path in card_stem_to_asset_path.items():
+        if "_back_" in stem:
+            continue
+
         name, created_at_str, commentary = stem, "2026/01/01", ""
 
         tsv_datum = tsv_data[stem] if tsv_data.get(stem) is not None else None
