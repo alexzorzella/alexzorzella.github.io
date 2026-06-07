@@ -45,7 +45,7 @@ class ImageElementData:
 
         is_double_faced = self.back is not None
 
-        href = f"/{self.linked_page.as_posix()}" if self.linked_page is not None and not link_to_raw_asset else f"/{asset_path}"
+        href = f"{self.linked_page.as_posix()}" if self.linked_page is not None and not link_to_raw_asset else f"/{asset_path}"
 
         if is_double_faced:
             back_image_path = self.back.get_visual()
