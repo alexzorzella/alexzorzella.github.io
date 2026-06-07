@@ -37,7 +37,7 @@ class ImageElementData:
     def get_back_commentary(self):
         return self.get_front_commentary()
 
-    def render(self):
+    def render(self, link_to_raw_asset: bool = False):
         data_search = self.id
         asset_path = self.front.asset_path.as_posix()
 
@@ -45,12 +45,14 @@ class ImageElementData:
 
         is_double_faced = self.back is not None
 
+        href = f"/{self.linked_page.as_posix()}" if self.linked_page is not None and not link_to_raw_asset else asset_path
+
         if is_double_faced:
             back_image_path = self.back.get_visual()
 
             children = [create_element(
                 "a",
-                {"href": f"/{self.linked_page.as_posix()}" if self.linked_page is not None else asset_path},
+                {"href": href},
                 children=[
                     create_element("img", {"src": f"/{front_image_path}", "alt": data_search, "class": "flip__card-front"}, self_closing=True),
                     create_element("img", {"src": f"/{back_image_path}", "alt": data_search, "class": "flip__card-back"}, self_closing=True)
@@ -59,7 +61,7 @@ class ImageElementData:
         else:
             children = [create_element(
                 "a",
-                {"href": f"{self.linked_page.as_posix()}" if self.linked_page is not None else asset_path},
+                {"href": href},
                 children=[
                     create_element("img", {"src": f"/{front_image_path}", "alt": data_search}, self_closing=True)
                 ]
@@ -74,8 +76,4 @@ class ImageElementData:
         if self.li_class is not None:
             attributes["class"] = self.li_class
 
-        return create_element(
-            tag_name='li',
-            attributes=attributes,
-            children=children
-        )
+        return create_element(tag_name='li', attributes=attributes, children=children)

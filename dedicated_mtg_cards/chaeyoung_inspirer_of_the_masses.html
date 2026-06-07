@@ -76,8 +76,8 @@
         font-family: 'Imperial', 'Comic Sans MS', Arial, sans-serif;
         width: 100%;">
     <h1 style="font-family: 'Chomsky', 'Niagara', 'Times New Roman', serif; font-size: 4rem; font-weight: 300; margin-top: 35px;">Chaeyoung, Inspirer of the Masses</h1>
-        <ul>
-            <li data-search="chaeyoung_inspirer_of_the_masses" title="" ><a href="/dedicated_mtg_cards/chaeyoung_inspirer_of_the_masses.html" ><img src="/public/mtg/thumbnails/chaeyoung_inspirer_of_the_masses.webp" alt="chaeyoung_inspirer_of_the_masses" ></a></li>
+        <ul class="tilelist">
+            <li data-search="chaeyoung_inspirer_of_the_masses" title="" ><a href="public/mtg/kpop/chaeyoung_inspirer_of_the_masses.png" ><img src="/public/mtg/thumbnails/chaeyoung_inspirer_of_the_masses.webp" alt="chaeyoung_inspirer_of_the_masses" ></a></li>
         </ul>
 
         <p>
@@ -87,44 +87,6 @@
 </main>
 
 <script>
-    const search = document.getElementById("search")
-
-    function setQueryParameters(key, value) {
-        const url = new URL(window.location.href);
-        url.searchParams.set(key, value);
-        window.history.replaceState({}, '', url);
-    }
-
-    const all_lis = document.querySelectorAll("li");
-
-    function updateVisibleCards(search_text) {
-        const queries = search_text.trim().split(" ")
-
-        for(const li of all_lis) {
-            const cardName = li.dataset["search"]
-
-            const passes = queries.some((q) => cardName.includes(q))
-
-            if(!passes) {
-                li.style["display"] = "none";
-            } else {
-                li.style["display"] = "block";
-            }
-        }
-    }
-
-    const url = new URL(window.location.href)
-    const initial_query = url.searchParams.get("q")
-    if (initial_query !== null) {
-        updateVisibleCards(initial_query)
-        search.value = initial_query
-    }
-
-    search.addEventListener("input", (e) => {
-        setQueryParameters("q", e.target.value)
-        updateVisibleCards(e.target.value)
-    })
-
     const perspective_compatible_lis = document.querySelectorAll("li:not([data-card-type])");
     perspective_compatible_lis.forEach((li) => {
         const images = li.querySelectorAll("img");

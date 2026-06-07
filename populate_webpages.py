@@ -352,7 +352,7 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
         thumbnail = image_element.get_front_thumbnail()
         commentary = image_element.get_front_commentary()
 
-        rendered_card: str = image_element.render()
+        rendered_card: str = image_element.render(link_to_raw_asset=True)
 
         content = "\n".join([create_element("p", {}, [paragraph]) for paragraph in image_element.article_paragraphs])
 
