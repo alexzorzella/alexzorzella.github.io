@@ -373,6 +373,8 @@ if __name__ == "__main__":
     create_thumbnails_for_images_recursively("public/mtg")
     create_thumbnails_for_images_recursively("public/universes_beyond_logos")
 
+    spring_clean("./public/mtg/")
+
     cards = get_image_element_data(
         tsv_path=Path("./public/cardinfo.tsv"),
         image_root_dir=Path("./public/mtg/"),
@@ -419,8 +421,6 @@ if __name__ == "__main__":
         image_sources_directory_name="public/mtg",
         glob_recursively=True
     )
-
-    spring_clean("./public/mtg/")
 
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
     # create_thumbnails_for_images_recursively("public/art")
