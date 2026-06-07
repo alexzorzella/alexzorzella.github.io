@@ -325,7 +325,7 @@ def get_image_element_data(
 
         if back_asset is not None:
             back = AssetWithThumbnail(
-                thumbnail_path=card_stem_to_thumbnail_path[stem],
+                thumbnail_path=card_stem_to_thumbnail_path[double_sided_cards_fronts_to_backs[stem].stem],
                 asset_path=back_asset,
                 commentary=commentary)
 
