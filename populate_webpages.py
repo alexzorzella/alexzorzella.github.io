@@ -241,6 +241,7 @@ def get_image_element_data(
         tsv_path: Path,
         image_root_dir: Path,
         info_root_dir: Path,
+        linked_page_dir: str,
         li_class: str | None = None) -> list[ImageElementData]:
     # Find the thumbnails
     card_stem_to_thumbnail_path: dict[str, Path] = {}
@@ -270,7 +271,7 @@ def get_image_element_data(
             front_card_name = card_stem[:back_char_index]
             double_sided_cards_fronts_to_backs[front_card_name] = asset_filepath
 
-        linked_page: Path | None = Path(f"/dedicated_mtg_cards/{card_stem}.html")
+        linked_page: Path | None = Path(f"/{linked_page_dir}/{card_stem}.html")
 
         if linked_page is not None:
             linked_pages[card_stem] = linked_page
@@ -367,28 +368,30 @@ def render_and_write_individual_mtg_page(card: ImageElementData, card_template_p
 
 if __name__ == "__main__":
     rglob_cards_into_tsv()
-
-    cards = get_image_element_data(
-        tsv_path=Path("./public/cardinfo.tsv"),
-        image_root_dir=Path("./public/mtg/"),
-        info_root_dir=Path("./public/mtg_card_info/"),
-    )
-
-    collections = []
-
-    # collections = get_cards(
-    #     tsv_path=Path("./public/cardinfo.tsv"),
-    #     card_root_dir=Path("./public/mtg/"),
-    #     newspaper_search_root_path=Path("./public/mtg_card_info/"),
-    #     li_class="real-size-tile"
-    # )
-
-    populate_individual_mtg_pages(cards=cards, card_template_path=Path("./mtg_card_page.template.html"),output_dir_path=Path("./dedicated_mtg_cards/"))
-
     format_filenames(r".\public\mtg")
 
     create_thumbnails_for_images_recursively("public/mtg")
     create_thumbnails_for_images_recursively("public/universes_beyond_logos")
+
+    cards = get_image_element_data(
+        tsv_path=Path("./public/cardinfo.tsv"),
+        image_root_dir=Path("./public/mtg/"),
+        linked_page_dir="dedicated_mtg_cards",
+        info_root_dir=Path("./public/mtg_card_info/")
+    )
+
+    collections = get_image_element_data(
+        tsv_path=Path("./public/cardinfo.tsv"),
+        image_root_dir=Path("./public/universes_beyond_logos/"),
+        linked_page_dir="mtg_card_pages",
+        info_root_dir=Path("./public/mtg_card_info/"),
+        li_class="real-size-tile"
+    )
+
+    populate_individual_mtg_pages(
+        cards=cards,
+        card_template_path=Path("./mtg_card_page.template.html"),
+        output_dir_path=Path("./dedicated_mtg_cards/"))
 
     # Main grid
     populate_template(
