@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="title" content="__TITLE__"/>
+    <meta name="title" content="__META_TITLE__"/>
     <meta name="description" content="__COMMENTARY__"/>
-    <meta property="og:title" content="__TITLE__"/>
+    <meta property="og:title" content="__META_TITLE__"/>
     <meta property="og:description" content="__COMMENTARY__"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://highqualitybackup.com/dedicated_mtg_cards/__ID__.html"/>
     <meta property="og:image" content="/__THUMBNAIL__"/>
-    <title>__TITLE__</title>
+    <title>__META_TITLE__</title>
     <link href="/css/style.css" rel="stylesheet"/>
     <link href="/public/favicon.ico" rel="icon"/>
 </head>
@@ -64,26 +64,29 @@
     p {
         text-indent: 2em;
     }
-</style>
 
-<body>
-<main style="background-color: white;">
-    <div style="
+    div {
         max-width: 768px;
         text-align: justify;
         font-size: 1.2rem;
         line-height: 1.5rem;
         font-family: 'Imperial', 'Comic Sans MS', Arial, sans-serif;
-        width: 100%;">
-    <h1 style="font-family: 'Chomsky', 'Niagara', 'Times New Roman', serif; font-size: 4rem; font-weight: 300; margin-top: 35px;">__TITLE__</h1>
-        <ul>
-            __CARD__
-        </ul>
+        width: 100%;
+    }
 
-        <p>
-        __CONTENT__
-        </p>
-    </div>
+    h1 {
+        font-family: 'Chomsky', 'Niagara', 'Times New Roman', serif;
+        font-size: 4rem;
+        font-weight: 300;
+        margin-top: 35px;
+    }
+</style>
+
+<body>
+<main style="background-color: white;">
+    __TITLE__
+
+    __BODY__
 </main>
 
 <script>

@@ -359,13 +359,24 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
 
         content = "\n".join([create_element("p", {}, [paragraph]) for paragraph in image_element.article_paragraphs])
 
-        template = template.replace("__TITLE__", name)
+        name_element = create_element("div", {}, [
+            create_element("h1", {}, [name]),
+        ])
+
+        template = template.replace("__META_TITLE__", name)
+        template = template.replace("__TITLE__", name_element)
         template = template.replace("__ID__", id)
         template = template.replace("__THUMBNAIL__", thumbnail)
         template = template.replace("__COMMENTARY__", commentary)
 
-        template = template.replace("__CARD__", rendered_card)
-        template = template.replace("__CONTENT__", content)
+        body_div_attributes = { "style": "display: flex; justify-content: center" } if is_null_or_whitespace(content) else {}
+
+        body_element = create_element("div", body_div_attributes, [
+            create_element("ul", {}, [rendered_card]),
+            content
+        ])
+
+        template = template.replace("__BODY__", body_element)
 
         output_file_path.parent.mkdir(parents=True, exist_ok=True)
 
