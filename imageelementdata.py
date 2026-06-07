@@ -6,7 +6,7 @@ from assetwiththumbnail import AssetWithThumbnail
 from webtools import create_element
 
 @dataclass(frozen=True)
-class MtgCard:
+class ImageElementData:
     id: str
     name: str
     created_at: datetime.datetime

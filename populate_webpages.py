@@ -12,7 +12,7 @@ from multiprocessing import Pool
 from assetwiththumbnail import AssetWithThumbnail
 from baklava import is_null_or_whitespace
 from format_filenames import format_filenames
-from mtgcard import MtgCard
+from imageelementdata import ImageElementData
 from rglob_util import rglob_cards_into_tsv
 from spring_cleaning import spring_clean
 
@@ -59,13 +59,10 @@ def populate_template(
         output_template_filename: str,
         output_filename: str,
         image_sources_directory_name: str,
-        cards: list[MtgCard],
+        cards: list[ImageElementData],
         glob_recursively: bool = False,
         ul_class: str | None = None,
         thumbnail_dir: str | None = None,
-        # li_class: str | None = None,
-        # link_tiles_to_html_pages_of_the_same_name_in: str | None = None,
-        # link_to_dedicated_pages: bool = False
 ):
     """Creates a populated HTML file given a template, output, and a local directory of images"""
 
@@ -123,7 +120,7 @@ def populate_template(
     image_filepaths = list(image_filepaths)
     image_filepaths.sort(key=lambda p: p.name)
 
-    final_card_selection: list[MtgCard] = []
+    final_card_selection: list[ImageElementData] = []
 
     for image_filepath in image_filepaths:
         card = get_card_by_id(cards=cards, card_id=Path(image_filepath).stem)
@@ -135,11 +132,11 @@ def populate_template(
 
     print(f"{Fore.GREEN}Populated {len(final_card_selection)} {output_template_path.stem} with images from {image_sources_directory_name}{Style.RESET_ALL}")
 
-def get_card_by_id(cards: list[MtgCard], card_id: str):
+def get_card_by_id(cards: list[ImageElementData], card_id: str):
     return next((card for card in cards if card.id == card_id), None)
 
 def render_and_write_to_template(
-        cards: list[MtgCard],
+        cards: list[ImageElementData],
         output_template_path: Path,
         output_filepath: Path,
         ul_class: str | None = None):
@@ -201,7 +198,7 @@ def create_thumbnails_for_images_recursively(
 def create_page_for_subdirectory_in_directory(
         parent_directory: str,
         output_template_filename: str,
-        cards: list[MtgCard],
+        cards: list[ImageElementData],
         output_to_directory: str | None = None,
         thumbnail_dir: str | None = None,
         ul_class: str | None = None,
@@ -236,33 +233,36 @@ def create_page_for_subdirectory_in_directory(
 
     print(f"{Fore.LIGHTBLUE_EX}Processed {directories_processed} directories{Style.RESET_ALL}")
 
-def populate_individual_mtg_pages(cards: list[MtgCard], card_template_path: Path, output_dir_path: Path):
+def populate_individual_mtg_pages(cards: list[ImageElementData], card_template_path: Path, output_dir_path: Path):
     for card in cards:
         render_and_write_individual_mtg_page(card, card_template_path=card_template_path, output_file_path=output_dir_path / (card.id + ".html"))
 
-def get_cards(tsv_path: Path, card_root_dir: Path, newspaper_search_root_path: Path, li_class: str | None = None) -> list[MtgCard]:
-    tsv_lines = tsv_path.read_text(encoding='utf-8').splitlines()
-    tsv_reader = csv.reader(tsv_lines, delimiter="\t")
-
+def get_image_element_data(
+        tsv_path: Path,
+        image_root_dir: Path,
+        info_root_dir: Path,
+        li_class: str | None = None) -> list[ImageElementData]:
+    # Find the thumbnails
     card_stem_to_thumbnail_path: dict[str, Path] = {}
-    for file in card_root_dir.rglob("*.webp"):
+    for file in image_root_dir.rglob("*.webp"):
         assert file.stem not in card_stem_to_thumbnail_path, "Duplicate stem found in mtg_card_search_root_path"
         card_stem_to_thumbnail_path[file.stem] = file
 
+    # Find the actual images
     card_stem_to_asset_path: dict[str, Path] = {}
-    for file in card_root_dir.rglob("*.png"):
+    for file in image_root_dir.rglob("*.png"):
         assert file.stem not in card_stem_to_asset_path, "Duplicate stem found in mtg_card_search_root_path"
         card_stem_to_asset_path[file.stem] = file
 
-    card_stem_to_newspaper: dict[str, Path] = {}
+    # Find the info
+    card_stem_to_info: dict[str, Path] = {}
+    for file in info_root_dir.rglob("*.txt"):
+        assert file.stem not in card_stem_to_info, f"Duplicate stem found in mtg_card_search_root_path: {file.as_posix()}"
+        card_stem_to_info[file.stem] = file
 
-    for file in newspaper_search_root_path.rglob("*.txt"):
-        assert file.stem not in card_stem_to_newspaper, f"Duplicate stem found in mtg_card_search_root_path: {file.as_posix()}"
-        card_stem_to_newspaper[file.stem] = file
-
+    # Find the backs (if applicable) and the links to the pages with more information
     double_sided_cards_fronts_to_backs: dict[str, Path] = {}
     linked_pages: dict[str, Path] = {}
-
     for card_stem, asset_filepath in card_stem_to_asset_path.items():
         back_char_index = card_stem.find("_back_")
 
@@ -275,18 +275,37 @@ def get_cards(tsv_path: Path, card_root_dir: Path, newspaper_search_root_path: P
         if linked_page is not None:
             linked_pages[card_stem] = linked_page
 
-    cards: list[MtgCard] = []
+    # Read card info tsv for more information
+    tsv_lines = tsv_path.read_text(encoding='utf-8').splitlines()
+    tsv_reader = csv.reader(tsv_lines, delimiter="\t")
 
-    for card in list(tsv_reader)[1:]:
+    raw_tsv_data = list(tsv_reader)[1:]
+
+    tsv_data: dict[str, tuple[str, str, str]] = {}
+
+    for card in raw_tsv_data:
         stem: str = card[0]
         name: str = card[1]
         created_at_str: str = card[2]
         commentary: str = card[3] if len(card) > 3 else ""
 
+        tsv_data[stem] = (name, created_at_str, commentary)
+
+    # Create entries for the image elements
+    image_elements: list[ImageElementData] = []
+
+    for stem, asset_path in card_stem_to_asset_path.items():
+        name, created_at_str, commentary = stem, "", ""
+
+        tsv_datum = tsv_data[stem] if tsv_data.get(stem) is not None else None
+
+        if tsv_datum is not None:
+            name, created_at_str, commentary = tsv_datum[0], tsv_datum[1], tsv_datum[2]
+
         asset_path = card_stem_to_asset_path[stem]
         thumbnail_path = card_stem_to_thumbnail_path[stem]
 
-        article_path = card_stem_to_newspaper.get(stem)
+        article_path = card_stem_to_info.get(stem)
         article_paragraphs = []
 
         if article_path is not None:
@@ -306,7 +325,7 @@ def get_cards(tsv_path: Path, card_root_dir: Path, newspaper_search_root_path: P
                 asset_path=back_asset,
                 commentary=commentary)
 
-        card_data = MtgCard(
+        image_element = ImageElementData(
             id=stem,
             name=name,
             front=front,
@@ -316,11 +335,11 @@ def get_cards(tsv_path: Path, card_root_dir: Path, newspaper_search_root_path: P
             linked_page=linked_pages[stem],
             li_class=li_class)
 
-        cards.append(card_data)
+        image_elements.append(image_element)
 
-    return cards
+    return image_elements
 
-def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path, output_file_path: Path):
+def render_and_write_individual_mtg_page(card: ImageElementData, card_template_path: Path, output_file_path: Path):
     with open(card_template_path, "r") as file:
         template = file.read()
 
@@ -349,12 +368,11 @@ def render_and_write_individual_mtg_page(card: MtgCard, card_template_path: Path
 if __name__ == "__main__":
     rglob_cards_into_tsv()
 
-    cards = get_cards(
+    cards = get_image_element_data(
         tsv_path=Path("./public/cardinfo.tsv"),
-        card_root_dir=Path("./public/mtg/"),
-        newspaper_search_root_path=Path("./public/mtg_card_info/"),
+        image_root_dir=Path("./public/mtg/"),
+        info_root_dir=Path("./public/mtg_card_info/"),
     )
-
 
     collections = []
 
@@ -378,9 +396,7 @@ if __name__ == "__main__":
         output_template_filename="mtg.template.html",
         output_filename="mtg.html",
         image_sources_directory_name="public/universes_beyond_logos",
-        ul_class="tilelist",
-        # li_class="real-size-tile",
-        # link_tiles_to_html_pages_of_the_same_name_in="/mtg_card_pages"
+        ul_class="tilelist"
     )
 
     # Subpages
@@ -389,8 +405,7 @@ if __name__ == "__main__":
         parent_directory="public/mtg",
         output_template_filename="mtg_cards.template.html",
         output_to_directory="mtg_card_pages",
-        thumbnail_dir="/public/mtg/thumbnails",
-        # link_to_dedicated_pages = True
+        thumbnail_dir="/public/mtg/thumbnails"
     )
 
     # Search page
@@ -399,8 +414,7 @@ if __name__ == "__main__":
         output_template_filename="mtg_search.template.html",
         output_filename="mtg_search.html",
         image_sources_directory_name="public/mtg",
-        glob_recursively=True,
-        # link_to_dedicated_pages=True
+        glob_recursively=True
     )
 
     spring_clean("./public/mtg/")
