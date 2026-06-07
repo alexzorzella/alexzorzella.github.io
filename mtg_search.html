@@ -326,12 +326,12 @@
     const all_lis = document.querySelectorAll("li");
 
     function updateVisibleCards(search_text) {
-        const queries = search_text.trim().split(" ")
+        const queries = search_text.trim().toLowerCase().split(" ")
 
         for(const li of all_lis) {
             const cardName = li.dataset["search"]
 
-            const passes = queries.some((q) => cardName.includes(q))
+            const passes = queries.some((q) => cardName.includes(q.toLowerCase()))
 
             if(!passes) {
                 li.style["display"] = "none";
