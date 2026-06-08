@@ -22,7 +22,7 @@
         justify-content: center;
         padding: 1px;
         background: hsl(from papayawhip h s 50);
-    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
 
         float: left;
         margin: 0 16px 16px 0;
@@ -112,20 +112,20 @@
         li.addEventListener("mouseleave", () => {
             img.style.transform = `rotateX(0) rotateY(0)`;
         });
+    })
 
-        const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
 
-        cardsWithBackside.forEach((card) => {
-            const anchor = card.querySelector("a")
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
 
-                card.addEventListener("mouseover", (e) => {
-                    anchor.style.transform="rotateY(180deg)"
-                })
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
 
-                card.addEventListener("mouseout", (e) => {
-                    anchor.style.transform="rotateY(0deg)"
-                })
-        })
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
     })
 </script>
 </body>

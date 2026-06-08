@@ -453,6 +453,7 @@ if __name__ == "__main__":
     artwork_image_data: list[ImageElementData] = get_image_element_data(
         tsv_path=art_info_tsv,
         image_root_dir=Path("./public/art/"),
+        info_root_dir=Path("./public/art_info/"),
         linked_page_dir="art_pages",
         li_class="tile"
     )
