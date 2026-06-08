@@ -388,9 +388,10 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
             output_file_path.write(template)
 
 if __name__ == "__main__":
+    format_filenames(r".\public\mtg")
+
     card_info_tsv = Path("./public/cardinfo.tsv")
     rglob_cards_into_tsv(source=Path("./public/mtg"), csv_path=card_info_tsv)
-    format_filenames(r".\public\mtg")
 
     create_thumbnails_for_images_recursively("public/mtg")
     create_thumbnails_for_images_recursively("public/universes_beyond_logos")
