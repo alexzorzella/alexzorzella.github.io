@@ -233,12 +233,13 @@ def create_page_for_subdirectory_in_directory(
 
     print(f"{Fore.LIGHTBLUE_EX}Processed {directories_processed} directories{Style.RESET_ALL}")
 
-def populate_individual_pages(image_elements: list[ImageElementData], page_template_path: Path, output_dir_path: Path):
+def populate_individual_pages(image_elements: list[ImageElementData], page_template_path: Path, output_dir_path: Path, raw_image: bool = False):
     for image_element in image_elements:
         render_and_write_individual_mtg_page(
             image_element=image_element,
             card_template_path=page_template_path,
-            output_file_path=output_dir_path / (image_element.id + ".html"))
+            output_file_path=output_dir_path / (image_element.id + ".html"),
+            raw_image=raw_image)
 
 def get_image_element_data(
         image_root_dir: Path,
@@ -349,7 +350,7 @@ def get_image_element_data(
 
     return image_elements
 
-def render_and_write_individual_mtg_page(image_element: ImageElementData, card_template_path: Path, output_file_path: Path):
+def render_and_write_individual_mtg_page(image_element: ImageElementData, card_template_path: Path, output_file_path: Path, raw_image: bool = False):
     with open(card_template_path, "r") as file:
         template = file.read()
 
@@ -358,7 +359,7 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
         thumbnail = image_element.get_front_thumbnail()
         commentary = image_element.get_front_commentary()
 
-        rendered_card: str = image_element.render(link_to_raw_asset=True)
+        rendered_card: str = image_element.render(link_to_raw_asset=True, raw_image=raw_image)
 
         content = "\n".join([create_element("p", {}, [paragraph]) for paragraph in image_element.article_paragraphs])
 
@@ -375,7 +376,7 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
         body_div_attributes = { "style": "display: flex; justify-content: center" } if is_null_or_whitespace(content) else {}
 
         body_element = create_element("div", body_div_attributes, [
-            create_element("ul", {}, [rendered_card]),
+            create_element("ul", {}, [rendered_card]) if not raw_image else rendered_card,
             content
         ])
 
@@ -387,7 +388,8 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
             output_file_path.write(template)
 
 if __name__ == "__main__":
-    rglob_cards_into_tsv()
+    card_info_tsv = Path("./public/cardinfo.tsv")
+    rglob_cards_into_tsv(source=Path("./public/mtg"), csv_path=card_info_tsv)
     format_filenames(r".\public\mtg")
 
     create_thumbnails_for_images_recursively("public/mtg")
@@ -396,14 +398,14 @@ if __name__ == "__main__":
     spring_clean("./public/mtg/")
 
     cards: list[ImageElementData] = get_image_element_data(
-        tsv_path=Path("./public/cardinfo.tsv"),
+        tsv_path=card_info_tsv,
         image_root_dir=Path("./public/mtg/"),
         linked_page_dir="dedicated_mtg_cards",
         info_root_dir=Path("./public/mtg_card_info/")
     )
 
     collections: list[ImageElementData] = get_image_element_data(
-        tsv_path=Path("./public/cardinfo.tsv"),
+        tsv_path=card_info_tsv,
         image_root_dir=Path("./public/universes_beyond_logos/"),
         linked_page_dir="mtg_card_pages",
         info_root_dir=Path("./public/mtg_card_info/"),
@@ -444,7 +446,12 @@ if __name__ == "__main__":
         glob_recursively=True
     )
 
+    art_info_tsv = Path("./public/artinfo.tsv")
+    rglob_cards_into_tsv(source=Path("./public/art"), csv_path=art_info_tsv)
+    format_filenames(r".\public\mtg")
+
     artwork_image_data: list[ImageElementData] = get_image_element_data(
+        tsv_path=art_info_tsv,
         image_root_dir=Path("./public/art/"),
         linked_page_dir="art_pages",
         li_class="tile"
@@ -453,14 +460,15 @@ if __name__ == "__main__":
     # Individual pages for artworks
     populate_individual_pages(
         image_elements=artwork_image_data,
-        page_template_path=Path("./mtg_card_page.template.html"),
-        output_dir_path=Path("./art_pages/")
+        page_template_path=Path("./artwork_page.template.html"),
+        output_dir_path=Path("./art_pages/"),
+        raw_image=True
     )
 
     populate_template(
         cards=artwork_image_data,
         output_template_filename="index.template.html",
-        output_filename="index_test.html",
+        output_filename="index.html",
         image_sources_directory_name="public/art",
         ul_class="tilelist"
     )

@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from assetwiththumbnail import AssetWithThumbnail
+from baklava import is_null_or_whitespace
 from webtools import create_element
 
 @dataclass(frozen=True)
@@ -37,7 +38,7 @@ class ImageElementData:
     def get_back_commentary(self):
         return self.get_front_commentary()
 
-    def render(self, link_to_raw_asset: bool = False):
+    def render(self, link_to_raw_asset: bool = False, raw_image: bool = False):
         data_search = self.id
         asset_path = self.front.asset_path.as_posix()
 
@@ -75,5 +76,10 @@ class ImageElementData:
 
         if self.li_class is not None:
             attributes["class"] = self.li_class
+
+        if raw_image:
+            attributes["class"] = ""
+            attributes["style"] = "display: flex; justify-content: center;"
+            return create_element(tag_name='div', attributes=attributes, children=children)
 
         return create_element(tag_name='li', attributes=attributes, children=children)
