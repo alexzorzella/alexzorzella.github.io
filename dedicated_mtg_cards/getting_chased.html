@@ -27,6 +27,8 @@
         float: left;
         margin: 0 16px 16px 0;
         width: 300px;
+
+        filter: grayscale(1);
     }
 
     li {
@@ -60,33 +62,37 @@
     }
 
     p {
-        text-indent: 2em;
+        /*text-indent: 2em;*/
+    }
+
+    div {
+        max-width: 768px;
+        text-align: justify;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        font-family: 'Imperial', 'Comic Sans MS', Arial, sans-serif;
+        width: 100%;
+    }
+
+    h1 {
+        font-family: 'Chomsky', 'Niagara', 'Times New Roman', serif;
+        font-size: 4rem;
+        font-weight: 300;
+        margin-top: 35px;
     }
 </style>
 
 <body>
-<main style="background-color: papayawhip;">
-    <div style="
-        max-width: 1024px;
-        text-align: justify;
-        font-size: 1.2rem;
-        line-height: 1.5rem;
-        font-family: 'Comic Sans MS', Arial, sans-serif;
-        width: 100%;">
-    <h1 style="font-family: 'Niagara', 'Times New Roman', serif; font-size: 8rem; letter-spacing: 0.32rem; font-weight: 500; margin-top: 30px;">Getting Chased</h1>
-        <ul>
-            <li title="" ><a href="/public/mtg/elesh_morn/getting_chased.png" ><img src="/public/mtg/thumbnails/getting_chased.webp" alt="getting_chased" ></img></a></li>
-        </ul>
+<main style="background-color: white;">
+    <div ><h1 >Getting Chased</h1></div>
 
-        <p>
-        
-        </p>
-    </div>
+    <div style="display: flex; justify-content: center" ><ul ><li data-search="getting_chased" title="" ><a href="/public/mtg/elesh_morn/getting_chased.png" ><img src="/public/mtg/thumbnails/getting_chased.webp" alt="getting_chased" ></a></li></ul>
+</div>
 </main>
 
 <script>
-    const lis = document.querySelectorAll("li:not([data-card-type])");
-    lis.forEach((li) => {
+    const perspective_compatible_lis = document.querySelectorAll("li:not([data-card-type])");
+    perspective_compatible_lis.forEach((li) => {
         const images = li.querySelectorAll("img");
         const img = images[images.length - 1];
 
