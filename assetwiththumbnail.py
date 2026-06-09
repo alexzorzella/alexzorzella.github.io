@@ -7,5 +7,7 @@ class AssetWithThumbnail:
     asset_path: Path
     commentary: str | None
 
+    raw_asset_path: Path | None = None
+
     def get_visual(self):
         return self.thumbnail_path.as_posix() if self.thumbnail_path is not None else self.asset_path.as_posix()

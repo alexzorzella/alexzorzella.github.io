@@ -128,6 +128,8 @@ def populate_template(
         if card is not None:
             final_card_selection.append(card)
 
+    final_card_selection = sorted(final_card_selection, key=lambda item: str(item.front.raw_asset_path))
+
     render_and_write_to_template(cards=final_card_selection, output_template_path=output_template_path, output_filepath=output_filepath, ul_class=ul_class)
 
     print(f"{Fore.GREEN}Populated {len(final_card_selection)} {output_template_path.stem} with images from {image_sources_directory_name}{Style.RESET_ALL}")
@@ -316,6 +318,8 @@ def get_image_element_data(
         assert card_stem_to_asset_path.get(stem) is not None, f"{stem} has no asset"
         assert card_stem_to_thumbnail_path.get(stem) is not None, f"{stem} has no thumbnail"
 
+        raw_asset_path = asset_path
+
         asset_path = card_stem_to_asset_path[stem]
         thumbnail_path = card_stem_to_thumbnail_path[stem]
 
@@ -328,7 +332,8 @@ def get_image_element_data(
         front: AssetWithThumbnail = AssetWithThumbnail(
             asset_path=asset_path,
             thumbnail_path=thumbnail_path,
-            commentary=commentary)
+            commentary=commentary,
+            raw_asset_path=raw_asset_path)
         back: AssetWithThumbnail | None = None
 
         back_asset = double_sided_cards_fronts_to_backs.get(stem)
@@ -351,7 +356,7 @@ def get_image_element_data(
 
         image_elements.append(image_element)
 
-    image_elements = sorted(image_elements, key=lambda item: str(item.front.thumbnail_path))
+    image_elements = sorted(image_elements, key=lambda item: str(item.front.raw_asset_path))
 
     return image_elements
 
