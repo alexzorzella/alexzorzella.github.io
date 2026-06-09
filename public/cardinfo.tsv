@@ -12,11 +12,11 @@ subsidize_squirrels	Subsidize Squirrels	2026/05/20
 bill_and_ted	Bill and Ted	2026/05/20	Excellent!
 leslie_deputy_director	Leslie, Deputy Director	2026/05/20
 atmosphere_skimmer	Atmosphere Skimmer	2026/05/20
-sleeper_monument	Sleeper Monument	2026/05/14
+sleeper_monument	Sleeper Monument	2026/05/17
 prius_vehicle	Prius	2026/05/14	Works well with Vegan cost reducers like Community Garden and Faux Chicken Store.
-lady_liberty_reforged	Lady Liberty, Reforged	2026/05/14	The replacement parts were sourced from IKEA (it's true).
-heist_the_louvre	Heist the Louvre	2026/05/14	They'll be back (they just left for breakfast)
-go_to_ihop	Go To IHop Or Go To Subwawy	2026/05/14
+lady_liberty_reforged	Lady Liberty, Reforged	2026/05/17	The replacement parts were sourced from IKEA (it's true).
+heist_the_louvre	Heist the Louvre	2026/05/17	They'll be back (they just left for breakfast)
+go_to_ihop	Go To IHop Or Go To Subwawy	2026/05/17
 five_guys	Five Guys	2026/05/14
 build_a_blockade	Build a Blockade	2026/05/14	Catan in real life
 break_into_a_windows_users_house	Break Into a Windows User's House	2026/05/14	Not based on true events                        yet
@@ -24,9 +24,9 @@ the_liaison	The Liaison	2026/05/14
 tempt_the_merchants	Tempt the Merchants	2026/05/14
 mariah_faithful	Mariah, Faithful Edition	2026/05/14
 yosemite_falls	Yosemite Falls	2026/05/14	National Parks are really beautiful, we should protect them at all costs.
-vending_machine	Vending Machine	2026/05/14	Vaccine vending machine that also sells croissants
-unplanned_hike	Unplanned Hike	2026/07/28
-trailhead	Trailhead	2026/07/28
+vending_machine	Vending Machine	2025/05/16	Vaccine vending machine that also sells croissants
+unplanned_hike	Unplanned Hike	2024/07/28
+trailhead	Trailhead	2024/07/28
 the_guide_nialls_invention	The Guide, Niall's Invention	2024/07/28
 road_trip_to_yosemite_back_yosemite_national_park	Yosemite National Park	2024/07/28
 road_trip_to_yosemite	Road Trip To Yosemite	2024/07/28
@@ -105,7 +105,7 @@ taeyeon_venue_packer	Taeyeon Venue Packer	2023/07/17
 solar_steadfast_cultivator	Solar, Steadfast Cultivator	2023/07/17
 signed_on	Signed On	2023/07/17
 show_recruitment	Show Recruitment	2023/07/17
-shot_clock	Shot Clock	2023/07/17
+shot_clock	Shot Clock	2025/05/14
 seungyeon_friend_of_many	Seungyeon, Friend of Many	2023/07/17
 seulgi_risk_taker	Seulgi, Risk Taker	2023/07/17
 seri_joybringer	Seri, Joybringer	2023/07/17
@@ -114,7 +114,7 @@ sakura	Sakura	2023/07/17
 rose_flag_bearer	Rosé, Flag Bearer	2023/07/17
 romantic_confession	Romantic Confession	2023/07/17
 recruitment_spree	Recruitment Spree	2023/07/17
-raid_the_kmart	Raid the KMart	2023/07/17
+raid_the_kmart	Raid the KMart	2025/05/14
 ningning_marine_prodigy	Ningning, Marine Prodigy	2023/07/17
 nayeon_peacekeeper	Nayeon, Peacekeeper	2023/07/17
 moonbyul_synchronized_plotter	Moonbyul, Synchronized Plotter	2023/07/17
@@ -151,11 +151,11 @@ chaewon	Chaewon	2023/07/17
 berate	Berate	2023/07/17
 behold_the_kpocalypse	Behold the KPocalypse	2023/07/17
 awaited_debut	Awaited Debut	2023/07/17
-ring_fit_session	Ring Fit Session	2026/06/01	
-repurpose_the_surplus	Repurpose the Surplus	2026/06/01	
-fax_machine	Fax Machine	2026/06/01	Windows still supporting fax LOL
-copier_machine	Copier Machine	2026/06/01	Where's the paste machine
-christmas_in_july	Christmas In July	2026/06/01	99 Panasonic
+ring_fit_session	Ring Fit Session	2024/07/28
+repurpose_the_surplus	Repurpose the Surplus	2025/05/14
+fax_machine	Fax Machine	2025/05/16	Windows still supporting fax LOL
+copier_machine	Copier Machine	2025/05/16	Where's the paste machine
+christmas_in_july	Christmas In July	2025/05/16	99 Panasonic
 mission_control	Mission Control	2026/05/13	I crew your Parhelion
 matt_kowalski	Matt Kowalski	2026/05/13	Who would win? Matt 🥊 or Matt 🛰
 kessler_effect	Kessler Effect	2026/05/13	If you want to decommission a satellite, maybe try a graveyard orbit like Michael talks about: https://youtu.be/GDrBIKOR01c
@@ -163,7 +163,7 @@ hubble_space_telescope	Hubble Space Telescope	2026/05/13
 doctor_ryan_stone	Doctor Ryan Stone	2026/05/13
 surreal	Surreal	2024/12/08
 running_slowly	Running Slowly	2024/12/08
-recurring_rift	Recurring Rift	2024/12/08
+recurring_rift	Recurring Rift	2025/05/14
 journey_through_the_subconscious	Journey Through the Subconscious	2024/12/08
 i_wonder_how_it_ends	I Wonder How It Ends	2024/12/08
 getting_chased	Getting Chased	2024/12/08
@@ -178,65 +178,66 @@ date_at_frys_electronics	Date At Fry's Electronics	2024/12/08
 another_recurring_nightmare	Another Recurring Nightmare	2024/12/08
 adventure	Adventure	2024/12/08
 a_momentary_lapse_in_physicality	A Momentary Lapse In Physicality	2024/12/08
-stephan_tableau_acolyte	Stephan, Tableau Acolyte	2026/06/01	
-stephan_datamaster	Stephan, Datamaster	2026/06/01	
+stephan_tableau_acolyte	Stephan, Tableau Acolyte	2026/05/15
+stephan_datamaster	Stephan, Datamaster	2026/05/15
 scott_the_astromancer	Scott, the Astromancer	2025/08/07
-scott_enlightened_thinker	Scott, Enlightened Thinker	2026/06/01	
+scott_enlightened_thinker	Scott, Enlightened Thinker	2022/07/15
 park_imperial_counselor	Park, Imperial Counselor	2022/07/14
-mango_multiversal_constant	Mango, Multiversal Constant	2026/06/01	
-david_life_of_the_party	David, Life of the Party	2026/06/01	
-almond_and_milk_enjoyers	Almond And Milk Enjoyers	2026/06/01	
+mango_multiversal_constant	Mango, Multiversal Constant	2026/05/15
+david_life_of_the_party	David, Life of the Party	2024/05/15
+almond_and_milk_enjoyers	Almond And Milk Enjoyers	2024/07/28
 alex_airplane_devourer	Alex, Airplane Devourer	2025/08/07
-scryfalls_random_tale	Scryfalls Random Tale	2026/06/01	
-scryfall_random	Scryfall Random	2026/06/01	
-usps_delivery_truck	USPS Delivery Truck	2026/06/01	Excellent use of taxes
-the_player	2024/12/16	2024/12/16
-the_contessa	2024/12/16	2024/12/16
-the_chainsaw_man	2024/12/16	2024/12/16
-the_beheaded	2024/12/16	2024/12/16
+scryfalls_random_tale	Scryfalls Random Tale	2024/08/13
+scryfall_random	Scryfall Random	2024/08/13
+usps_delivery_truck	USPS Delivery Truck	2024/08/13	Excellent use of taxes
+the_player	The Player	2024/12/16
+the_contessa	The Contessa	2024/12/16
+the_chainsaw_man	The Chainsaw Man	2024/12/16
+the_beheaded	The Beheaded	2024/12/16
 take_six	Take Six	2024/06/11
 senator_steven_armstrong	Senator Steven Armstrong	2024/12/16
-run_them_back	2024/12/16	2024/12/16
-relic_nabber	2024/12/16	2024/12/16
-recall_obelisk	Recall Obelisk	2026/06/01	
-pistol	2024/12/16	2024/12/16
-one_punch_man	2024/12/16	2024/12/16
-megalodon	2024/12/16	2024/12/16
-lt_elliot_and_trooper_wagner	2024/12/16	2024/12/16
-landline	2024/12/16	2024/12/16
-joseph_traveling_merchant	2024/12/16	2024/12/16
-joining_the_circus	Joining the Circus	2026/06/01	"Are those clowns at a convenience store, drinking some water? That person they're talking to seems suspicious of them. Wait, now they're searching for something. Now they're sharing some gum. Oh, now they're headed towards the beach. In the water. They're past the horizon. There's a note: ""Back in two hours."""
-high_sea_mutineers	High Sea Mutineers	2026/06/01	
-hay_hauler	Hay Hauler	2026/06/01	
-hatsune_miku_digital_idol	Hatsune Miku, Digital Idol	2026/06/01
-hanging_chad	Hanging Chad	2026/06/01	
-gather_in_the_public_square	Gather In the Public Square	2026/06/01	
-garfield_banquet_devourer	Garfield, Banquet Devourer	2026/06/01	
-falin_faceless_broker_life	Falin, Faceless Broker Life	2026/06/01	
-emergency_meeting_version_2	Emergency Meeting (Ver. 2)	2026/06/01
-emergency_meeting	Emergency Meeting	2026/06/01	
-dracula	Dracula	2026/06/01	
+run_them_back	Run Them Back	2024/12/16
+relic_nabber	2024/12/16	2025/05/14
+recall_obelisk	Recall Obelisk	2025/05/14
+pistol	Pistol	2024/12/16
+one_punch_man	One Punch Man	2024/12/16
+megalodon	Megalodon	2025/05/14
+lt_elliot_and_trooper_wagner	Lt. Elliot and Trooper Wagner	2024/12/16
+landline	Landline	2024/12/16
+joseph_traveling_merchant	Joseph, Traveling Merchant	2024/12/16
+joining_the_circus	Joining the Circus	2026/05/15	"Are those clowns at a convenience store, drinking some water? That person they're talking to seems suspicious of them. Wait, now they're searching for something. Now they're sharing some gum. Oh, now they're headed towards the beach. In the water. They're past the horizon. There's a note: ""Back in two hours."""
+high_sea_mutineers	High Sea Mutineers	2025/05/14
+hay_hauler	Hay Hauler	2025/05/14
+hatsune_miku_digital_idol	Hatsune Miku, Digital Idol	2025/05/15
+hanging_chad	Hanging Chad	2026/05/15
+gather_in_the_public_square	Gather In the Public Square	2026/05/15
+garfield_banquet_devourer	Garfield, Banquet Devourer	2024/08/12
+falin_faceless_broker_life	Falin, Faceless Broker Life	2024/08/12
+emergency_meeting_version_2	Emergency Meeting (Ver. 2)	2026/05/15
+emergency_meeting	Emergency Meeting	2024/06/26
+dracula	Dracula	2024/12/16
 coin	Coin	2024/12/16
-chain_of_waves	Chain of Waves	2026/06/01	
-burnice	Burnice	2026/06/01	
-bountiful_season	Bountiful Season	2026/06/01	
-beast_seeker	Beast Seeker	2026/06/01	
-atomic_separator	Atomic Separator	2026/06/01	
-artificial_vendetta	Artificial Vendetta	2026/06/01	
-aq_deep_drilling_unit_mk_iii	AQ Deep Drilling Unit Mk III	2026/06/01	""
-apoapsis_crawler	Apoapsis Crawler	2026/06/01	
-antinous_siiver_gunner	Antinous, SiIver Gunner	2026/06/01
-uscss_nostromo	USCSS Nostromo	2026/06/01
-the_xenomorph	The Xenomorph	2026/06/01
-power_loader	Power Loader	2026/06/01	
-newt_fearless_survivor	Newt, Fearless Survivor	2026/06/01	
-lieutenant_ellen_ripley	Lieutenant Ellen Ripley	2026/06/01	
-face_hugger_back_parasitic_attachment	Parasitic Attachment	2026/06/01
-face_hugger	Face Hugger	2026/06/01	
-bishop_artificial_person_back_still_operational	Still Operational	2026/06/01
-bishop_artificial_person	Bishop, Artificial Person	2026/06/01	
+chain_of_waves	Chain of Waves	2024/07/28
+burnice	Burnice	2024/07/28
+bountiful_season	Bountiful Season	2025/04/10
+beast_seeker	Beast Seeker	2025/05/14
+atomic_separator	Atomic Separator	2025/04/11
+artificial_vendetta	Artificial Vendetta	2025/05/14
+aq_deep_drilling_unit_mk_iii	AQ Deep Drilling Unit Mk III	2026/05/15	""
+apoapsis_crawler	Apoapsis Crawler	2026/05/15
+antinous_siiver_gunner	Antinous, SiIver Gunner	2024/08/12
+uscss_nostromo	USCSS Nostromo	2025/07/04
+the_xenomorph	The Xenomorph	2025/07/04
+power_loader	Power Loader	2025/07/04
+newt_fearless_survivor	Newt, Fearless Survivor	2025/07/04
+lieutenant_ellen_ripley	Lieutenant Ellen Ripley	2025/07/04
+face_hugger_back_parasitic_attachment	Parasitic Attachment	2025/07/04
+face_hugger	Face Hugger	2025/07/04
+bishop_artificial_person_back_still_operational	Still Operational	2025/07/04
+bishop_artificial_person	Bishop, Artificial Person	2025/07/04
 time_machine	Time Machine	2026/06/05	
 beas_dennys_carpool	Bea's Denny's Carpool	2026/06/08
-offworld_applicant	offworld Applicant	2026/06/09	
+offworld_applicant	Offworld Applicant	2026/06/09
 sussus_amogus_is_on_payroll	Sussus Amogus Is On Payroll	2026/06/09	
 riverbank_loungers	Riverbank Loungers	2026/06/09	
+becca_baking_virtuoso	Becca, Baking Virtuoso	2024/12/09
