@@ -3,14 +3,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from assetwiththumbnail import AssetWithThumbnail
-from baklava import is_null_or_whitespace
 from webtools import create_element
 
 @dataclass(frozen=True)
 class ImageElementData:
     id: str
     name: str
-    created_at: datetime.datetime
+    creation_date: datetime.datetime
 
     front: AssetWithThumbnail
     back: AssetWithThumbnail | None = None

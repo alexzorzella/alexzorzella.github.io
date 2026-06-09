@@ -13,6 +13,7 @@ from assetwiththumbnail import AssetWithThumbnail
 from baklava import is_null_or_whitespace
 from format_filenames import format_filenames
 from imageelementdata import ImageElementData
+from order import Order
 from rglob_util import rglob_cards_into_tsv
 from spring_cleaning import spring_clean
 
@@ -60,9 +61,10 @@ def populate_template(
         output_template_filename: str,
         output_filename: str,
         image_sources_directory_name: str,
+        order: Order = Order.BY_NAME,
         thumbnail_dir: str | None = None,
         ul_class: str | None = None,
-        glob_recursively: bool = False,
+        glob_recursively: bool = False
 ):
     """Creates a populated HTML file given a template, output, and a local directory of images"""
 
@@ -118,7 +120,10 @@ def populate_template(
         image_filepaths = list(unique_set(all, key=lambda p: p.name))
 
     image_filepaths = list(image_filepaths)
-    image_filepaths.sort(key=lambda p: p.name)
+    image_filepaths.sort(key=lambda item: item.name)
+
+    if order == Order.BY_DATE:
+        image_filepaths.reverse()
 
     final_card_selection: list[ImageElementData] = []
 
@@ -128,7 +133,18 @@ def populate_template(
         if card is not None:
             final_card_selection.append(card)
 
-    final_card_selection = sorted(final_card_selection, key=lambda item: str(item.front.raw_asset_path))
+    match order:
+        case Order.BY_NAME:
+            key = lambda item: str(item.id)
+        case Order.BY_PATH:
+            key = lambda item: str(item.front.raw_asset_path)
+        case Order.BY_DATE:
+            key = lambda item: item.creation_date
+
+    final_card_selection = sorted(final_card_selection, key=key)
+
+    if order == Order.BY_DATE:
+        final_card_selection.reverse()
 
     render_and_write_to_template(cards=final_card_selection, output_template_path=output_template_path, output_filepath=output_filepath, ul_class=ul_class)
 
@@ -349,7 +365,7 @@ def get_image_element_data(
             name=name,
             front=front,
             back=back,
-            created_at=datetime.datetime.strptime(created_at_str, "%Y/%m/%d"),
+            creation_date=datetime.datetime.strptime(created_at_str, "%Y/%m/%d"),
             article_paragraphs=article_paragraphs,
             linked_page=linked_pages[stem],
             li_class=li_class)
@@ -454,7 +470,8 @@ if __name__ == "__main__":
         output_template_filename="mtg_search.template.html",
         output_filename="mtg_search.html",
         image_sources_directory_name="public/mtg",
-        glob_recursively=True
+        glob_recursively=True,
+        order=Order.BY_DATE
     )
 
 
@@ -486,7 +503,8 @@ if __name__ == "__main__":
         output_template_filename="index.template.html",
         output_filename="index.html",
         image_sources_directory_name="public/art",
-        ul_class="tilelist"
+        ul_class="tilelist",
+        order=Order.BY_PATH
     )
 
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
