@@ -41,7 +41,7 @@ class ImageElementData:
         data_search = self.id
         asset_path = self.front.asset_path.as_posix()
 
-        front_image_path = self.front.get_visual()
+        front_image_path = self.front.get_visual() if not raw_image else self.front.asset_path
 
         is_double_faced = self.back is not None
 
