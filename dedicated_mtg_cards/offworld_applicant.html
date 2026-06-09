@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="title" content="offworld Applicant"/>
+    <meta name="description" content=""/>
+    <meta property="og:title" content="offworld Applicant"/>
+    <meta property="og:description" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://highqualitybackup.com/dedicated_mtg_cards/offworld_applicant.html"/>
+    <meta property="og:image" content="/public/mtg/thumbnails/offworld_applicant.webp"/>
+    <title>offworld Applicant</title>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <link href="/public/favicon.ico" rel="icon"/>
+</head>
+
+<style>
+    ul {
+        display: grid;
+        gap: 1px;
+        justify-content: center;
+        padding: 1px;
+        background: hsl(from papayawhip h s 50);
+        grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+
+        float: left;
+        margin: 0 16px 16px 0;
+        width: 300px;
+
+        filter: grayscale(1);
+    }
+
+    li {
+        perspective: 1000px;
+        box-sizing: border-box;
+        transition: transform 0.25s ease;
+
+        & a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+
+            transition: transform 0.6s;
+        }
+
+        & img {
+            border: 2px solid hsl(from coral h s 75);
+            border-radius: 8px;
+            transform-style: preserve-3d;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.1s ease-out;
+        }
+
+        &:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+    }
+
+    p {
+        /*text-indent: 2em;*/
+    }
+
+    div {
+        max-width: 768px;
+        text-align: justify;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        font-family: 'Imperial', 'Comic Sans MS', Arial, sans-serif;
+        width: 100%;
+    }
+
+    h1 {
+        font-family: 'Chomsky', 'Niagara', 'Times New Roman', serif;
+        font-size: 4rem;
+        font-weight: 300;
+        margin-top: 35px;
+    }
+</style>
+
+<body>
+<main style="background-color: white;">
+    <div ><h1 >offworld Applicant</h1></div>
+
+    <div style="display: flex; justify-content: center" ><ul ><li data-search="offworld_applicant" title="" ><a href="/public/mtg/earth/offworld_applicant.png" ><img src="/public/mtg/thumbnails/offworld_applicant.webp" alt="offworld_applicant" ></a></li></ul>
+</div>
+</main>
+
+<script>
+    const perspective_compatible_lis = document.querySelectorAll("li:not([data-card-type])");
+    perspective_compatible_lis.forEach((li) => {
+        const images = li.querySelectorAll("img");
+        const img = images[images.length - 1];
+
+        li.addEventListener("mousemove", (e) => {
+            const rect = img.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const xCenter = rect.width / 2;
+            const yCenter = rect.height / 2;
+
+            const xRotate = (yCenter - y) / 7;
+            const yRotate = (x - xCenter) / 7;
+
+            img.style.transform = `rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
+        });
+
+        li.addEventListener("mouseleave", () => {
+            img.style.transform = `rotateX(0) rotateY(0)`;
+        });
+    })
+
+    const cardsWithBackside = document.querySelectorAll(`[data-card-type="double_faced"]`)
+
+    cardsWithBackside.forEach((card) => {
+        const anchor = card.querySelector("a")
+
+            card.addEventListener("mouseover", (e) => {
+                anchor.style.transform="rotateY(180deg)"
+            })
+
+            card.addEventListener("mouseout", (e) => {
+                anchor.style.transform="rotateY(0deg)"
+            })
+    })
+</script>
+</body>
+</html>

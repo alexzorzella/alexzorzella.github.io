@@ -313,6 +313,9 @@ def get_image_element_data(
         if tsv_datum is not None:
             name, created_at_str, commentary = tsv_datum[0], tsv_datum[1], tsv_datum[2]
 
+        assert card_stem_to_asset_path.get(stem) is not None, f"{stem} has no asset"
+        assert card_stem_to_thumbnail_path.get(stem) is not None, f"{stem} has no thumbnail"
+
         asset_path = card_stem_to_asset_path[stem]
         thumbnail_path = card_stem_to_thumbnail_path[stem]
 
@@ -347,6 +350,8 @@ def get_image_element_data(
             li_class=li_class)
 
         image_elements.append(image_element)
+
+    image_elements = sorted(image_elements, key=lambda item: str(item.front.thumbnail_path))
 
     return image_elements
 
@@ -390,11 +395,11 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
 if __name__ == "__main__":
     format_filenames(r".\public\mtg")
 
-    card_info_tsv = Path("./public/cardinfo.tsv")
-    rglob_cards_into_tsv(source=Path("./public/mtg"), csv_path=card_info_tsv)
-
     create_thumbnails_for_images_recursively("public/mtg")
     create_thumbnails_for_images_recursively("public/universes_beyond_logos")
+
+    card_info_tsv = Path("./public/cardinfo.tsv")
+    rglob_cards_into_tsv(source=Path("./public/mtg"), csv_path=card_info_tsv)
 
     spring_clean("./public/mtg/")
 
@@ -447,9 +452,13 @@ if __name__ == "__main__":
         glob_recursively=True
     )
 
+
+    format_filenames(r".\public\mtg")
+
+    create_thumbnails_for_images_recursively("public/art")
+
     art_info_tsv = Path("./public/artinfo.tsv")
     rglob_cards_into_tsv(source=Path("./public/art"), csv_path=art_info_tsv)
-    format_filenames(r".\public\mtg")
 
     artwork_image_data: list[ImageElementData] = get_image_element_data(
         tsv_path=art_info_tsv,
@@ -476,7 +485,6 @@ if __name__ == "__main__":
     )
 
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
-    # create_thumbnails_for_images_recursively("public/art")
 
     # create_thumbnails_for_images_recursively("public/metafight")
 
