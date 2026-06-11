@@ -19,7 +19,7 @@ from spring_cleaning import spring_clean
 
 from colorama import Fore, Style
 
-from webtools import create_element
+from webtools import create_element, create_html_dropdown
 
 image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
 
@@ -172,6 +172,9 @@ def render_and_write_to_template(
     with open(output_template_path, "r") as file:
         template = file.read()
         template = template.replace("__TEMPLATE__", code_gen)
+        # template = template.replace(
+        #     "__DROPDOWN__",
+        #     create_html_dropdown(name="cards", id="cards", options=[(card.id, card.name) for card in cards]))
 
     with open(output_filepath, "w", encoding='utf-8') as output_filename:
         output_filename.write(template)
