@@ -50,12 +50,15 @@ class ImageElementData:
         if is_double_faced:
             back_image_path = self.back.get_visual()
 
+            front_img_child = create_element("img", {"src": f"/{front_image_path}", "alt": data_search, "class": "flip__card-front"}, self_closing=True)
+            back_img_child = create_element("img", {"src": f"/{back_image_path}", "alt": data_search, "class": "flip__card-back"}, self_closing=True)
+
             children = [create_element(
                 "a",
                 {"href": href},
                 children=[
-                    create_element("img", {"src": f"/{front_image_path}", "alt": data_search, "class": "flip__card-front"}, self_closing=True),
-                    create_element("img", {"src": f"/{back_image_path}", "alt": data_search, "class": "flip__card-back"}, self_closing=True)
+                    front_img_child,
+                    back_img_child
                 ]
             )]
         else:
