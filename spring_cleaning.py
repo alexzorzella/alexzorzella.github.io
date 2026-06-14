@@ -1,6 +1,7 @@
 import itertools
 from pathlib import Path
 from PIL import Image
+from baklava import is_null_or_whitespace
 
 image_filetypes = ["*.png", "*.jpg", "*.jpeg"]
 
@@ -38,4 +39,12 @@ def spring_clean(parent_directory: str):
     print(f"Processed {processed_image_count} images")
 
 if __name__ == "__main__":
-    spring_clean("./public/mtg/")
+    directory = None
+    
+    while is_null_or_whitespace(directory) or not directory.is_dir():
+        try:
+            directory = Path(input("Please input a path to spring clean: "))
+        except:
+            pass
+
+    spring_clean(directory.as_posix())
