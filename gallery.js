@@ -69,7 +69,7 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-function createFramedPiece(scene, artwork_src, scale=2, border=0.25) {
+function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25, frame_border=0.1) {
     const loader = new THREE.TextureLoader();
 
     const artwork_texture = loader.load(artwork_src, () => {
@@ -86,22 +86,25 @@ function createFramedPiece(scene, artwork_src, scale=2, border=0.25) {
         artwork_texture.minFilter = THREE.NearestMipmapNearestFilter;
         artwork_texture.colorSpace = THREE.SRGBColorSpace;
 
-        const frame_origin_y = 0.45
+        scene.add(artwork);
+
+        const frame_origin_y = 1
         const frame_origin_z = 0.5
 
-        const frame_width = final_width + border * 2
-        const frame_height = final_height + border * 2
+        const frame_width = final_width + inner_border * 2
+        const frame_height = final_height + inner_border * 2
         const frame_depth = 0.2
 
         const frame = createObject(scene, new THREE.Color(0xf5eae4), null, frame_width, frame_height, frame_depth, 0, frame_origin_y, frame_origin_z);
+        createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_width + frame_border * 2, frame_border, frame_depth + 0.05, 0, frame_height / 2 + frame_border / 2, 0, frame);
+        createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_width + frame_border * 2, frame_border, frame_depth + 0.05, 0, -(frame_height / 2 + frame_border / 2), 0, frame);
+        createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_border, frame_height, frame_depth + 0.05, -(frame_width / 2 + frame_border / 2), 0, 0, frame);
+        createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_border, frame_height, frame_depth + 0.05, frame_width / 2 + frame_border / 2, 0, 0, frame);
 
-        artwork.parent = frame;
-        artwork.position.set(0, frame_origin_y, frame_origin_z + frame_depth / 2 + 0.01);
+        frame.add(artwork);
 
-        scene.add(artwork);
+        artwork.position.set(0, 0, frame_depth / 2 + 0.01);
     });
-
-    console.log(artwork_texture);
 }
 
 function createObject(
@@ -130,12 +133,13 @@ function createObject(
 
     const object = new THREE.Mesh(geometry, material);
 
+    scene.add(object);
+
     if(parent != null) {
-        object.parent = parent;
+        parent.add(object);
     }
 
     object.position.set(x, y, z);
-    scene.add(object);
 
     return object;
 }
