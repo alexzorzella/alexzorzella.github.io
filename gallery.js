@@ -43,6 +43,7 @@ window.addEventListener( 'resize', onWindowResize );
 //
 
 createObject(scene, null, 'resources/textures/beige_wall.jpg', 14, 8, 1, 0,2, 0)
+createObject(scene, null, 'resources/textures/dark_wood.jpg', 3, 0.7, 0.8, 0, -1.75, 5.7);
 
 const url = new URL(window.location.href);
 const initial_query = url.searchParams.get("q");
