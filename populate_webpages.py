@@ -417,68 +417,68 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
             output_file_path.write(template)
 
 if __name__ == "__main__":
-    format_filenames(r".\public\mtg")
-
-    create_thumbnails_for_images_recursively("public/mtg")
-    create_thumbnails_for_images_recursively("public/universes_beyond_logos")
-
-    card_info_tsv = Path("./public/cardinfo.tsv")
-    rglob_cards_into_tsv(source=Path("./public/mtg"), csv_path=card_info_tsv)
-
-    spring_clean("./public/mtg/")
-
-    cards: list[ImageElementData] = get_image_element_data(
-        tsv_path=card_info_tsv,
-        image_root_dir=Path("./public/mtg/"),
-        linked_page_dir="dedicated_mtg_cards",
-        info_root_dir=Path("./public/mtg_card_info/")
-    )
-
-    collections: list[ImageElementData] = get_image_element_data(
-        tsv_path=card_info_tsv,
-        image_root_dir=Path("./public/universes_beyond_logos/"),
-        linked_page_dir="mtg_card_pages",
-        info_root_dir=Path("./public/mtg_card_info/"),
-        li_class="real-size-tile"
-    )
-
-    # Individual pages
-    populate_individual_pages(
-        image_elements=cards,
-        page_template_path=Path("./mtg_card_page.template.html"),
-        output_dir_path=Path("./dedicated_mtg_cards/")
-    )
-
-    # Main grid
-    populate_template(
-        cards=collections,
-        output_template_filename="mtg.template.html",
-        output_filename="mtg.html",
-        image_sources_directory_name="public/universes_beyond_logos",
-        ul_class="tilelist"
-    )
-
-    # Subpages
-    create_page_for_subdirectory_in_directory(
-        cards = cards,
-        parent_directory="public/mtg",
-        output_template_filename="mtg_cards.template.html",
-        output_to_directory="mtg_card_pages",
-        thumbnail_dir="/public/mtg/thumbnails"
-    )
-
-    # Search page
-    populate_template(
-        cards=cards,
-        output_template_filename="mtg_search.template.html",
-        output_filename="mtg_search.html",
-        image_sources_directory_name="public/mtg",
-        glob_recursively=True,
-        order=Order.BY_DATE
-    )
-
-
-    format_filenames(r".\public\mtg")
+    # format_filenames(r".\public\mtg")
+    #
+    # create_thumbnails_for_images_recursively("public/mtg")
+    # create_thumbnails_for_images_recursively("public/universes_beyond_logos")
+    #
+    # card_info_tsv = Path("./public/cardinfo.tsv")
+    # rglob_cards_into_tsv(source=Path("./public/mtg"), csv_path=card_info_tsv)
+    #
+    # spring_clean("./public/mtg/")
+    #
+    # cards: list[ImageElementData] = get_image_element_data(
+    #     tsv_path=card_info_tsv,
+    #     image_root_dir=Path("./public/mtg/"),
+    #     linked_page_dir="dedicated_mtg_cards",
+    #     info_root_dir=Path("./public/mtg_card_info/")
+    # )
+    #
+    # collections: list[ImageElementData] = get_image_element_data(
+    #     tsv_path=card_info_tsv,
+    #     image_root_dir=Path("./public/universes_beyond_logos/"),
+    #     linked_page_dir="mtg_card_pages",
+    #     info_root_dir=Path("./public/mtg_card_info/"),
+    #     li_class="real-size-tile"
+    # )
+    #
+    # # Individual pages
+    # populate_individual_pages(
+    #     image_elements=cards,
+    #     page_template_path=Path("./mtg_card_page.template.html"),
+    #     output_dir_path=Path("./dedicated_mtg_cards/")
+    # )
+    #
+    # # Main grid
+    # populate_template(
+    #     cards=collections,
+    #     output_template_filename="mtg.template.html",
+    #     output_filename="mtg.html",
+    #     image_sources_directory_name="public/universes_beyond_logos",
+    #     ul_class="tilelist"
+    # )
+    #
+    # # Subpages
+    # create_page_for_subdirectory_in_directory(
+    #     cards = cards,
+    #     parent_directory="public/mtg",
+    #     output_template_filename="mtg_cards.template.html",
+    #     output_to_directory="mtg_card_pages",
+    #     thumbnail_dir="/public/mtg/thumbnails"
+    # )
+    #
+    # # Search page
+    # populate_template(
+    #     cards=cards,
+    #     output_template_filename="mtg_search.template.html",
+    #     output_filename="mtg_search.html",
+    #     image_sources_directory_name="public/mtg",
+    #     glob_recursively=True,
+    #     order=Order.BY_DATE
+    # )
+    #
+    #
+    # format_filenames(r".\public\mtg")
 
     create_thumbnails_for_images_recursively("public/art")
 

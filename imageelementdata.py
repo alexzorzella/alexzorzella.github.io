@@ -1,4 +1,5 @@
 import datetime
+from urllib.parse import quote
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -45,7 +46,8 @@ class ImageElementData:
 
         is_double_faced = self.back is not None
 
-        href = f"{self.linked_page.as_posix()}" if self.linked_page is not None and not link_to_raw_asset else f"/{asset_path}"
+        # href = f"{self.linked_page.as_posix()}" if self.linked_page is not None and not link_to_raw_asset else f"/{asset_path}"
+        href = f"/gallery.html?q={quote(asset_path, safe="~()*!.'")}" if self.linked_page is not None and not link_to_raw_asset else f"/{asset_path}"
 
         if is_double_faced:
             back_image_path = self.back.get_visual()
