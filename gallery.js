@@ -44,7 +44,12 @@ window.addEventListener( 'resize', onWindowResize );
 
 createObject(scene, null, 'resources/textures/beige_wall.jpg', 14, 8, 1, 0,2, 0)
 
-createFramedPiece(scene, 'public/art/00_illustrations/1_sunset_drive.png')
+const url = new URL(window.location.href);
+const initial_query = url.searchParams.get("q");
+
+if(initial_query != null) {
+    createFramedPiece(scene, decodeURIComponent(initial_query))
+}
 
 // const floor_geometry = new THREE.BoxGeometry(10, 0.5, 10);
 // const floor_material = new THREE.MeshBasicMaterial({ color: 0xf2e5df });
@@ -83,7 +88,7 @@ function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25, frame
         const artwork_material = new THREE.MeshBasicMaterial({ map: artwork_texture });
         const artwork = new THREE.Mesh(artwork_geometry, artwork_material);
 
-        artwork_texture.minFilter = THREE.NearestMipmapNearestFilter;
+        artwork_texture.minFilter = THREE.LinearMipmapNearestFilter;
         artwork_texture.colorSpace = THREE.SRGBColorSpace;
 
         scene.add(artwork);
@@ -102,8 +107,11 @@ function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25, frame
         createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_border, frame_height, frame_depth + 0.05, frame_width / 2 + frame_border / 2, 0, 0, frame);
 
         frame.add(artwork);
-
         artwork.position.set(0, 0, frame_depth / 2 + 0.01);
+
+        // const glass_material = new THREE.MeshPhysicalMaterial({ roughness: 0, transmission: 1 });
+        // const glass = createObject(scene, null, null, frame_width, frame_height, 0.025, 0, 0, 0.1, frame, glass_material);
+        // glass.material.set(glass_material);
     });
 }
 
@@ -117,9 +125,13 @@ function createObject(
     x=0,
     y=0,
     z=0,
-    parent=null) {
+    parent=null,
+    material=null) {
     const geometry = new THREE.BoxGeometry(width, height, depth);
-    const material = new THREE.MeshBasicMaterial();
+
+    if(material == null) {
+        material = new THREE.MeshBasicMaterial();
+    }
 
     if(color != null) {
        material.color = color;
