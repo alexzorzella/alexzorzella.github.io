@@ -93,7 +93,7 @@ function createFramedPiece(scene, artwork_src, scale=2, border=0.25) {
         const frame_height = final_height + border * 2
         const frame_depth = 0.2
 
-        const frame = createObject(scene, new THREE.Color(0x3EF049), null, frame_width, frame_height, frame_depth, 0, frame_origin_y, frame_origin_z);
+        const frame = createObject(scene, new THREE.Color(0xf5eae4), null, frame_width, frame_height, frame_depth, 0, frame_origin_y, frame_origin_z);
 
         artwork.parent = frame;
         artwork.position.set(0, frame_origin_y, frame_origin_z + frame_depth / 2 + 0.01);
