@@ -44,27 +44,7 @@ window.addEventListener( 'resize', onWindowResize );
 
 createObject(scene, null, 'resources/textures/beige_wall.jpg', 14, 8, 1, 0,2, 0)
 
-const loader = new THREE.TextureLoader();
-
-const artwork_src = 'public/art/00_illustrations/1_sunset_drive.png'
-
-const artwork_texture = loader.load(artwork_src, () => {
-    const width = artwork_texture.width;
-    const height = artwork_texture.height;
-    const aspect_ratio = width / height;
-    const final_width = 2 * aspect_ratio;
-    const final_height = 2;
-
-    const artwork_geometry = new THREE.PlaneGeometry(final_width, final_height);
-    const artwork_material = new THREE.MeshBasicMaterial({ map: artwork_texture });
-    const artwork = new THREE.Mesh(artwork_geometry, artwork_material);
-    artwork.position.set(0, 0.5, 1);
-    scene.add(artwork);
-});
-artwork_texture.minFilter = THREE.NearestMipmapNearestFilter;
-artwork_texture.colorSpace = THREE.SRGBColorSpace;
-
-console.log(artwork_texture);
+createFramedPiece(scene, 'public/art/00_illustrations/1_sunset_drive.png')
 
 // const floor_geometry = new THREE.BoxGeometry(10, 0.5, 10);
 // const floor_material = new THREE.MeshBasicMaterial({ color: 0xf2e5df });
@@ -87,6 +67,41 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
 
     renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+function createFramedPiece(scene, artwork_src, scale=2, border=0.25) {
+    const loader = new THREE.TextureLoader();
+
+    const artwork_texture = loader.load(artwork_src, () => {
+        const width = artwork_texture.width;
+        const height = artwork_texture.height;
+        const aspect_ratio = width / height;
+        const final_width = scale * aspect_ratio;
+        const final_height = scale;
+
+        const artwork_geometry = new THREE.PlaneGeometry(final_width, final_height);
+        const artwork_material = new THREE.MeshBasicMaterial({ map: artwork_texture });
+        const artwork = new THREE.Mesh(artwork_geometry, artwork_material);
+
+        artwork_texture.minFilter = THREE.NearestMipmapNearestFilter;
+        artwork_texture.colorSpace = THREE.SRGBColorSpace;
+
+        const frame_origin_y = 0.45
+        const frame_origin_z = 0.5
+
+        const frame_width = final_width + border * 2
+        const frame_height = final_height + border * 2
+        const frame_depth = 0.2
+
+        const frame = createObject(scene, new THREE.Color(0x3EF049), null, frame_width, frame_height, frame_depth, 0, frame_origin_y, frame_origin_z);
+
+        artwork.parent = frame;
+        artwork.position.set(0, frame_origin_y, frame_origin_z + frame_depth / 2 + 0.01);
+
+        scene.add(artwork);
+    });
+
+    console.log(artwork_texture);
 }
 
 function createObject(
@@ -121,4 +136,6 @@ function createObject(
 
     object.position.set(x, y, z);
     scene.add(object);
+
+    return object;
 }
