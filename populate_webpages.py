@@ -479,9 +479,9 @@ if __name__ == "__main__":
     #
     #
     # format_filenames(r".\public\mtg")
-    #
-    # create_thumbnails_for_images_recursively("public/art")
-    #
+
+    create_thumbnails_for_images_recursively("public/art")
+
     art_info_tsv = Path("./public/artinfo.tsv")
     # rglob_cards_into_tsv(source=Path("./public/art"), csv_path=art_info_tsv)
     #
