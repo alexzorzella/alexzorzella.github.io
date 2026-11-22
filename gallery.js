@@ -42,15 +42,9 @@ window.addEventListener( 'resize', onWindowResize );
 
 //
 
-const loader = new THREE.TextureLoader();
-const texture = loader.load('resources/textures/beige_wall.jpg');
-texture.colorSpace = THREE.SRGBColorSpace;
+createObject(scene, null, 'resources/textures/beige_wall.jpg', 14, 8, 1, 0,2, 0)
 
-const geometry = new THREE.BoxGeometry(14, 8, 1);
-const material = new THREE.MeshBasicMaterial({ map: texture });
-const cube = new THREE.Mesh(geometry, material);
-cube.position.set(0, 2, 0);
-scene.add(cube);
+const loader = new THREE.TextureLoader();
 
 const artwork_src = 'public/art/00_illustrations/1_sunset_drive.png'
 
@@ -60,12 +54,6 @@ const artwork_texture = loader.load(artwork_src, () => {
     const aspect_ratio = width / height;
     const final_width = 2 * aspect_ratio;
     const final_height = 2;
-
-    console.log(width);
-    console.log(height);
-    console.log(aspect_ratio);
-    console.log(final_width);
-    console.log(final_height);
 
     const artwork_geometry = new THREE.PlaneGeometry(final_width, final_height);
     const artwork_material = new THREE.MeshBasicMaterial({ map: artwork_texture });
@@ -87,7 +75,7 @@ console.log(artwork_texture);
 camera.position.z = 5;
 
 function animate(time) {
-    controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+    controls.update();
 
     renderer.render(scene, camera);
 }
@@ -99,4 +87,38 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
 
     renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+function createObject(
+    scene,
+    color=null,
+    texture_src=null,
+    width=1,
+    height=1,
+    depth=1,
+    x=0,
+    y=0,
+    z=0,
+    parent=null) {
+    const geometry = new THREE.BoxGeometry(width, height, depth);
+    const material = new THREE.MeshBasicMaterial();
+
+    if(color != null) {
+       material.color = color;
+    } else if(texture_src != null) {
+        const loader = new THREE.TextureLoader();
+        const texture = loader.load(texture_src);
+        console.log(texture);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        material.map = texture;
+    }
+
+    const object = new THREE.Mesh(geometry, material);
+
+    if(parent != null) {
+        object.parent = parent;
+    }
+
+    object.position.set(x, y, z);
+    scene.add(object);
 }
