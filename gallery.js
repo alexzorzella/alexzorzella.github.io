@@ -99,6 +99,40 @@ const DATA = {
 
 }
 
+/**
+ *
+ * @param {string} contents
+ * @param {CanvasRenderingContext2D} context
+ * @param {number} current_y_offset
+ * @param {number} font_size
+ */
+function wrapText(contents, context, current_y_offset, font_size) {
+    let safe_line= "";
+    let current_line_index = 0;
+
+    const words = contents.split(" ");
+
+    for(const word of words) {
+       const current_line = safe_line + (safe_line.length > 0 ? " " : "") + word;
+
+       if(context.measureText(current_line).width > context.canvas.width) {
+           context.fillText(safe_line, 40, current_y_offset);
+           current_line_index++;
+           current_y_offset += font_size * 1.2;
+           safe_line = word;
+           console.log(current_y_offset)
+       } else {
+           safe_line = current_line;
+       }
+    }
+
+    console.log(current_y_offset)
+
+    context.fillText(safe_line, 40, current_y_offset);
+
+    return current_y_offset;
+}
+
 function main() {
     let controls;
 
@@ -223,17 +257,17 @@ async function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25,
     frame.add(artwork);
     artwork.position.set(0, 0, frame_depth / 2 + 0.01);
 
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    canvas.width = 1000
-    canvas.height = 1410
-    context.fillStyle = "#f5eae4"
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = 1000;
+    canvas.height = 1410;
+    context.fillStyle = "#f5eae4";
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = "#000000";
-    context.font = "normal 900 100px imperial"
-    context.fillText(DATA[artwork_reference_id].title, 40, 120)
-    context.font = "80px imperial"
-    context.fillText(DATA[artwork_reference_id].description, 40, 220)
+    context.font = "normal 900 100px imperial";
+    context.fillText(DATA[artwork_reference_id].title, 40, 120);
+    context.font = "50px arial";
+    wrapText(DATA[artwork_reference_id].description, context, 220, 50);
 
     const info_texture = new THREE.CanvasTexture(canvas);
 
