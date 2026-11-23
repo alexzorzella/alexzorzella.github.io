@@ -159,16 +159,16 @@ function main() {
 
     // controls.maxPolarAngle = Math.PI / 2;
 
-    const dirLight1 = new THREE.DirectionalLight( 0xffffff, 3 );
-    dirLight1.position.set( 1, 1, 1 );
-    scene.add( dirLight1 );
-
-    const dirLight2 = new THREE.DirectionalLight( 0x002288, 3 );
-    dirLight2.position.set( - 1, - 1, - 1 );
-    scene.add( dirLight2 );
-
-    const ambientLight = new THREE.AmbientLight( 0x555555 );
-    scene.add( ambientLight );
+    // const dirLight1 = new THREE.DirectionalLight( 0xffffff, 3 );
+    // dirLight1.position.set( 1, 1, 1 );
+    // scene.add( dirLight1 );
+    //
+    // const dirLight2 = new THREE.DirectionalLight( 0x002288, 3 );
+    // dirLight2.position.set( - 1, - 1, - 1 );
+    // scene.add( dirLight2 );
+    //
+    // const ambientLight = new THREE.AmbientLight( 0x555555 );
+    // scene.add( ambientLight );
 
     window.addEventListener( 'resize', onWindowResize );
 
@@ -282,6 +282,12 @@ async function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25,
     frame.add(info_object);
 
     info_object.position.set(frame_width / 2 + info_width / 2 + frame_border + 0.25, -(frame_height / 2 + frame_border) + info_height / 2, 0.01);
+
+    // const light = new THREE.Light("0xFFFFFF", 10);
+    // scene.add(light);
+    // frame.add(light);
+
+    // light.position.set(0, 0, 0.1)
 
     // const glass_material = new THREE.MeshPhysicalMaterial({ roughness: 0, transmission: 1, thickness: 0 });
     // const glass = createObject(scene, null, null, frame_width, frame_height, 0.025, 0, 0, 0.1, frame, glass_material);
