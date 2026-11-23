@@ -12,8 +12,9 @@ __DATA__
  * @param {CanvasRenderingContext2D} context
  * @param {number} current_y_offset
  * @param {number} font_size
+ * @param {number} padding
  */
-function wrapText(contents, context, current_y_offset, font_size) {
+function wrapText(contents, context, current_y_offset, font_size, padding) {
     let safe_line= "";
     let current_line_index = 0;
 
@@ -22,7 +23,7 @@ function wrapText(contents, context, current_y_offset, font_size) {
     for(const word of words) {
        const current_line = safe_line + (safe_line.length > 0 ? " " : "") + word;
 
-       if(context.measureText(current_line).width > context.canvas.width) {
+       if(context.measureText(current_line).width > context.canvas.width - padding * 2) {
            context.fillText(safe_line, 40, current_y_offset);
            current_line_index++;
            current_y_offset += font_size * 1.2;
@@ -173,8 +174,8 @@ async function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25,
     context.fillStyle = "#000000";
     context.font = "normal 900 100px imperial";
     context.fillText(DATA[artwork_reference_id].title, 40, 120);
-    context.font = "80px arial";
-    wrapText(DATA[artwork_reference_id].description, context, 220, 80);
+    context.font = "55px arial";
+    wrapText(DATA[artwork_reference_id].description, context, 220, 55, 40);
 
     const info_texture = new THREE.CanvasTexture(canvas);
 
