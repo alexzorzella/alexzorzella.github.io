@@ -173,8 +173,8 @@ async function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25,
     context.fillStyle = "#000000";
     context.font = "normal 900 100px imperial";
     context.fillText(DATA[artwork_reference_id].title, 40, 120);
-    context.font = "50px arial";
-    wrapText(DATA[artwork_reference_id].description, context, 220, 50);
+    context.font = "80px arial";
+    wrapText(DATA[artwork_reference_id].description, context, 220, 80);
 
     const info_texture = new THREE.CanvasTexture(canvas);
 
