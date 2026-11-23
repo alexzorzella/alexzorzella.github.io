@@ -129,7 +129,6 @@ function wrapText(contents, context, current_y_offset, font_size, padding) {
                         current_line_index++;
                         current_y_offset += font_size * 1.2;
                         safe_line = remaining_word;
-                        console.log(safe_line);
                         break;
                     } else {
                         remaining_word = remaining_word.substring(1);
@@ -233,9 +232,6 @@ async function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25,
     const query = artwork_src.split("/");
     const artwork_reference_id = query[query.length - 1].replace('.png','');
 
-    console.log(artwork_reference_id);
-    console.log(DATA[artwork_reference_id]);
-
     const loader = new THREE.TextureLoader();
 
     const font = new FontFace("imperial", "url(/public/fonts/imperial.woff2)")
@@ -332,7 +328,6 @@ function createObject(
     } else if(texture_src != null) {
         const loader = new THREE.TextureLoader();
         const texture = loader.load(texture_src);
-        console.log(texture);
         texture.colorSpace = THREE.SRGBColorSpace;
         material.map = texture;
     }
