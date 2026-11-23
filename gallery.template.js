@@ -2,6 +2,10 @@ import * as THREE from 'three';
 
 import { MapControls } from 'three/addons/controls/MapControls.js';
 
+const DATA = {
+__DATA__
+}
+
 let controls;
 
 const scene = new THREE.Scene();
@@ -110,7 +114,7 @@ function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25, frame
         frame.add(artwork);
         artwork.position.set(0, 0, frame_depth / 2 + 0.01);
 
-        // const glass_material = new THREE.MeshPhysicalMaterial({ roughness: 0, transmission: 1 });
+        // const glass_material = new THREE.MeshPhysicalMaterial({ roughness: 0, transmission: 1, thickness: 0 });
         // const glass = createObject(scene, null, null, frame_width, frame_height, 0.025, 0, 0, 0.1, frame, glass_material);
         // glass.material.set(glass_material);
     });
