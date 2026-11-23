@@ -522,35 +522,35 @@ if __name__ == "__main__":
 
     ######### index.html #########
 
-    # create_thumbnails_for_images_recursively("public/art")
-    #
-    # art_info_tsv = Path("./public/artinfo.tsv")
-    # rglob_cards_into_tsv(source=Path("./public/art"), csv_path=art_info_tsv)
-    #
-    # artwork_image_data: list[ImageElementData] = get_image_element_data(
-    #     tsv_path=art_info_tsv,
-    #     image_root_dir=Path("./public/art/"),
-    #     info_root_dir=Path("./public/art_info/"),
-    #     linked_page_dir="art_pages",
-    #     li_class="tile"
-    # )
-    #
-    # # Individual pages for artworks
-    # populate_individual_pages(
-    #     image_elements=artwork_image_data,
-    #     page_template_path=Path("./artwork_page.template.html"),
-    #     output_dir_path=Path("./art_pages/"),
-    #     raw_image=True
-    # )
-    #
-    # populate_template(
-    #     cards=artwork_image_data,
-    #     output_template_filename="index.template.html",
-    #     output_filename="index.html",
-    #     image_sources_directory_name="public/art",
-    #     ul_class="tilelist",
-    #     order=Order.BY_PATH
-    # )
+    create_thumbnails_for_images_recursively("public/art")
+
+    art_info_tsv = Path("./public/artinfo.tsv")
+    rglob_cards_into_tsv(source=Path("./public/art"), csv_path=art_info_tsv)
+
+    artwork_image_data: list[ImageElementData] = get_image_element_data(
+        tsv_path=art_info_tsv,
+        image_root_dir=Path("./public/art/"),
+        info_root_dir=Path("./public/art_info/"),
+        linked_page_dir="art_pages",
+        li_class="tile"
+    )
+
+    # Individual pages for artworks
+    populate_individual_pages(
+        image_elements=artwork_image_data,
+        page_template_path=Path("./artwork_page.template.html"),
+        output_dir_path=Path("./art_pages/"),
+        raw_image=True
+    )
+
+    populate_template(
+        cards=artwork_image_data,
+        output_template_filename="index.template.html",
+        output_filename="index.html",
+        image_sources_directory_name="public/art",
+        ul_class="tilelist",
+        order=Order.BY_PATH
+    )
 
     populate_gallery_file()
 
