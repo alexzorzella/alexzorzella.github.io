@@ -419,7 +419,7 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
 def populate_gallery_file(
         tsv_path: Path = Path("./public/artinfo.tsv"),
         gallery_template_path: Path = Path("./gallery.template.js"),
-        gallery_output_path: Path = Path("./gallery.html")):
+        gallery_output_path: Path = Path("./gallery.js")):
 
     file_exists = tsv_path.is_file()
 
