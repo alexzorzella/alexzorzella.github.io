@@ -99,71 +99,73 @@ const DATA = {
 
 }
 
-let controls;
+function main() {
+    let controls;
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-scene.background = new THREE.Color(0xf2e5df);
+    scene.background = new THREE.Color(0xf2e5df);
 
-const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+    const renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-controls = new MapControls( camera, renderer.domElement );
+    controls = new MapControls( camera, renderer.domElement );
 
-controls.enableDamping = true;
-controls.dampingFactor = 0.05;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
 
-controls.screenSpacePanning = true;
+    controls.screenSpacePanning = true;
 
-controls.minDistance = 1;
-controls.maxDistance = 10;
+    controls.minDistance = 1;
+    controls.maxDistance = 10;
 
-controls.zoomToCursor = true;
+    controls.zoomToCursor = true;
 
-// controls.maxPolarAngle = Math.PI / 2;
+    // controls.maxPolarAngle = Math.PI / 2;
 
-const dirLight1 = new THREE.DirectionalLight( 0xffffff, 3 );
-dirLight1.position.set( 1, 1, 1 );
-scene.add( dirLight1 );
+    const dirLight1 = new THREE.DirectionalLight( 0xffffff, 3 );
+    dirLight1.position.set( 1, 1, 1 );
+    scene.add( dirLight1 );
 
-const dirLight2 = new THREE.DirectionalLight( 0x002288, 3 );
-dirLight2.position.set( - 1, - 1, - 1 );
-scene.add( dirLight2 );
+    const dirLight2 = new THREE.DirectionalLight( 0x002288, 3 );
+    dirLight2.position.set( - 1, - 1, - 1 );
+    scene.add( dirLight2 );
 
-const ambientLight = new THREE.AmbientLight( 0x555555 );
-scene.add( ambientLight );
+    const ambientLight = new THREE.AmbientLight( 0x555555 );
+    scene.add( ambientLight );
 
-window.addEventListener( 'resize', onWindowResize );
+    window.addEventListener( 'resize', onWindowResize );
 
-//
+    //
 
-createObject(scene, null, 'resources/textures/beige_wall.jpg', 14, 8, 1, 0,2, 0)
-createObject(scene, null, 'resources/textures/dark_wood.jpg', 3, 0.7, 0.8, 0, -1.75, 5.7);
+    createObject(scene, null, 'resources/textures/beige_wall.jpg', 14, 8, 1, 0,2, 0)
+    createObject(scene, null, 'resources/textures/dark_wood.jpg', 3, 0.7, 0.8, 0, -1.75, 5.7);
 
-const url = new URL(window.location.href);
-const initial_query = url.searchParams.get("q");
+    const url = new URL(window.location.href);
+    const initial_query = url.searchParams.get("q");
 
-if(initial_query != null) {
-    createFramedPiece(scene, decodeURIComponent(initial_query))
+    if(initial_query != null) {
+        createFramedPiece(scene, decodeURIComponent(initial_query))
+    }
+
+    // const floor_geometry = new THREE.BoxGeometry(10, 0.5, 10);
+    // const floor_material = new THREE.MeshBasicMaterial({ color: 0xf2e5df });
+    // const floor = new THREE.Mesh(floor_geometry, floor_material);
+    // floor.position.set(0, -2, 0)
+    // scene.add(floor);
+
+    camera.position.z = 5;
+
+    function animate(time) {
+        controls.update();
+
+        renderer.render(scene, camera);
+    }
+
+    renderer.setAnimationLoop(animate);
 }
-
-// const floor_geometry = new THREE.BoxGeometry(10, 0.5, 10);
-// const floor_material = new THREE.MeshBasicMaterial({ color: 0xf2e5df });
-// const floor = new THREE.Mesh(floor_geometry, floor_material);
-// floor.position.set(0, -2, 0)
-// scene.add(floor);
-
-camera.position.z = 5;
-
-function animate(time) {
-    controls.update();
-
-    renderer.render(scene, camera);
-}
-
-renderer.setAnimationLoop(animate);
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -172,57 +174,84 @@ function onWindowResize() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25, frame_border=0.1) {
+async function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25, frame_border=0.1) {
+    const query = artwork_src.split("/");
+    const artwork_reference_id = query[query.length - 1].replace('.png','');
+
+    console.log(artwork_reference_id);
+    console.log(DATA[artwork_reference_id]);
+
     const loader = new THREE.TextureLoader();
 
-    const artwork_texture = loader.load(artwork_src, () => {
-        const width = artwork_texture.width;
-        const height = artwork_texture.height;
-        const aspect_ratio = width / height;
-        const final_width = scale * aspect_ratio;
-        const final_height = scale;
+    const font = new FontFace("imperial", "url(/public/fonts/imperial.woff2)")
 
-        const artwork_geometry = new THREE.PlaneGeometry(final_width, final_height);
-        const artwork_material = new THREE.MeshBasicMaterial({ map: artwork_texture });
-        const artwork = new THREE.Mesh(artwork_geometry, artwork_material);
+    const [artwork_texture, _] = await Promise.all([
+            new Promise( (resolve, reject) => {
+            const texture = loader.load(artwork_src, () => { resolve(texture) })
+        }),
+        font.load()
+    ])
 
-        artwork_texture.minFilter = THREE.LinearMipmapNearestFilter;
-        artwork_texture.colorSpace = THREE.SRGBColorSpace;
+    const width = artwork_texture.width;
+    const height = artwork_texture.height;
+    const aspect_ratio = width / height;
+    const final_width = scale * aspect_ratio;
+    const final_height = scale;
 
-        scene.add(artwork);
+    const artwork_geometry = new THREE.PlaneGeometry(final_width, final_height);
+    const artwork_material = new THREE.MeshBasicMaterial({ map: artwork_texture });
+    const artwork = new THREE.Mesh(artwork_geometry, artwork_material);
 
-        const frame_origin_y = 1
-        const frame_origin_z = 0.5
+    artwork_texture.minFilter = THREE.LinearMipmapNearestFilter;
+    artwork_texture.colorSpace = THREE.SRGBColorSpace;
 
-        const frame_width = final_width + inner_border * 2
-        const frame_height = final_height + inner_border * 2
-        const frame_depth = 0.2
+    scene.add(artwork);
 
-        const frame = createObject(scene, new THREE.Color(0xf5eae4), null, frame_width, frame_height, frame_depth, 0, frame_origin_y, frame_origin_z);
-        createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_width + frame_border * 2, frame_border, frame_depth + 0.05, 0, frame_height / 2 + frame_border / 2, 0, frame);
-        createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_width + frame_border * 2, frame_border, frame_depth + 0.05, 0, -(frame_height / 2 + frame_border / 2), 0, frame);
-        createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_border, frame_height, frame_depth + 0.05, -(frame_width / 2 + frame_border / 2), 0, 0, frame);
-        createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_border, frame_height, frame_depth + 0.05, frame_width / 2 + frame_border / 2, 0, 0, frame);
+    const frame_origin_y = 1
+    const frame_origin_z = 0.5
 
-        frame.add(artwork);
-        artwork.position.set(0, 0, frame_depth / 2 + 0.01);
+    const frame_width = final_width + inner_border * 2
+    const frame_height = final_height + inner_border * 2
+    const frame_depth = 0.2
 
-        const info_width = 1 / 2
-        const info_height = 1.41 / 2
+    const frame = createObject(scene, new THREE.Color(0xf5eae4), null, frame_width, frame_height, frame_depth, 0, frame_origin_y, frame_origin_z);
+    createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_width + frame_border * 2, frame_border, frame_depth + 0.05, 0, frame_height / 2 + frame_border / 2, 0, frame);
+    createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_width + frame_border * 2, frame_border, frame_depth + 0.05, 0, -(frame_height / 2 + frame_border / 2), 0, frame);
+    createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_border, frame_height, frame_depth + 0.05, -(frame_width / 2 + frame_border / 2), 0, 0, frame);
+    createObject(scene, null, 'resources/textures/dark_wood.jpg', frame_border, frame_height, frame_depth + 0.05, frame_width / 2 + frame_border / 2, 0, 0, frame);
 
-        const info_geometry = new THREE.PlaneGeometry(info_width, info_height);
-        const info_material = new THREE.MeshBasicMaterial({ color: new THREE.Color(0xf5eae4) });
-        const info_object = new THREE.Mesh(info_geometry, info_material);
+    frame.add(artwork);
+    artwork.position.set(0, 0, frame_depth / 2 + 0.01);
 
-        scene.add(info_object);
-        frame.add(info_object);
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    canvas.width = 1000
+    canvas.height = 1410
+    context.fillStyle = "#f5eae4"
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#000000";
+    context.font = "normal 900 100px imperial"
+    context.fillText(DATA[artwork_reference_id].title, 40, 120)
+    context.font = "80px imperial"
+    context.fillText(DATA[artwork_reference_id].description, 40, 220)
 
-        info_object.position.set(frame_width / 2 + info_width / 2 + frame_border + 0.25, -(frame_height / 2 + frame_border) + info_height / 2, 0.01);
+    const info_texture = new THREE.CanvasTexture(canvas);
 
-        // const glass_material = new THREE.MeshPhysicalMaterial({ roughness: 0, transmission: 1, thickness: 0 });
-        // const glass = createObject(scene, null, null, frame_width, frame_height, 0.025, 0, 0, 0.1, frame, glass_material);
-        // glass.material.set(glass_material);
-    });
+    const info_width = 1 / 2
+    const info_height = 1.41 / 2
+
+    const info_geometry = new THREE.PlaneGeometry(info_width, info_height);
+    const info_material = new THREE.MeshBasicMaterial({ map: info_texture });
+    const info_object = new THREE.Mesh(info_geometry, info_material);
+
+    scene.add(info_object);
+    frame.add(info_object);
+
+    info_object.position.set(frame_width / 2 + info_width / 2 + frame_border + 0.25, -(frame_height / 2 + frame_border) + info_height / 2, 0.01);
+
+    // const glass_material = new THREE.MeshPhysicalMaterial({ roughness: 0, transmission: 1, thickness: 0 });
+    // const glass = createObject(scene, null, null, frame_width, frame_height, 0.025, 0, 0, 0.1, frame, glass_material);
+    // glass.material.set(glass_material);
 }
 
 function createObject(
@@ -265,3 +294,5 @@ function createObject(
 
     return object;
 }
+
+main();
