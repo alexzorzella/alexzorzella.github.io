@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 import { MapControls } from 'three/addons/controls/MapControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const DATA = {
 	"time_travel_cat": {title: "Time Travel Cat", date_created: "2026/06/01", description: "Tim and his wife Laura in her original body."},
@@ -215,6 +216,22 @@ function main() {
     // const floor = new THREE.Mesh(floor_geometry, floor_material);
     // floor.position.set(0, -2, 0)
     // scene.add(floor);
+
+   // const loader = new GLTFLoader();
+   //
+   //  loader.load( '/resources/models/planter.glb', function ( gltf ) {
+   //
+   //    scene.add( gltf.scene );
+   //
+   //    gltf.scene.position.set(0, -1.5, 8.25)
+   //
+   //  }, undefined, function ( error ) {
+   //
+   //    console.error( error );
+   //
+   //  } );
+   //
+   //  createObject(scene, null, 'resources/textures/dark_wood.jpg', 3, 0.7, 0.8, 0, -1.75, 10.7);
 
     function animate(time) {
         controls.update();
