@@ -77,7 +77,7 @@ function main() {
     const ambientLight = new THREE.AmbientLight( 0x555555 );
     scene.add( ambientLight );
 
-    window.addEventListener( 'resize', onWindowResize );
+    window.addEventListener( 'resize', () => onWindowResize(camera) );
 
     //
 
@@ -108,7 +108,7 @@ function main() {
     renderer.setAnimationLoop(animate);
 }
 
-function onWindowResize() {
+function onWindowResize(camera) {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
