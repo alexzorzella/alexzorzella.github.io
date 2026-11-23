@@ -73,7 +73,7 @@ function main() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    controls = new MapControls( camera, renderer.domElement );
+    controls = new MapControls(camera, renderer.domElement);
 
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
@@ -85,22 +85,28 @@ function main() {
 
     controls.zoomToCursor = true;
 
+
     // controls.maxPolarAngle = Math.PI / 2;
 
-    const dirLight1 = new THREE.DirectionalLight( 0xffffff, 3 );
+    const initial_camera_y = 1;
+    const initial_camera_z = 4;
+
+    controls.target.set(0, initial_camera_y, 0);
+    camera.position.set(0, initial_camera_y, initial_camera_z);
+    controls.update();
+
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 3);
     dirLight1.position.set( 1, 1, 1 );
     scene.add( dirLight1 );
 
-    const dirLight2 = new THREE.DirectionalLight( 0x002288, 3 );
+    const dirLight2 = new THREE.DirectionalLight(0x002288, 3);
     dirLight2.position.set( - 1, - 1, - 1 );
     scene.add( dirLight2 );
 
-    const ambientLight = new THREE.AmbientLight( 0x555555 );
+    const ambientLight = new THREE.AmbientLight(0x555555);
     scene.add( ambientLight );
 
-    window.addEventListener( 'resize', () => onWindowResize(camera, renderer) );
-
-    //
+    window.addEventListener('resize', () => onWindowResize(camera, renderer));
 
     createObject(scene, null, 'resources/textures/beige_wall.jpg', 14, 8, 1, 0,2, 0)
     createObject(scene, null, 'resources/textures/dark_wood.jpg', 3, 0.7, 0.8, 0, -1.75, 5.7);
@@ -117,8 +123,6 @@ function main() {
     // const floor = new THREE.Mesh(floor_geometry, floor_material);
     // floor.position.set(0, -2, 0)
     // scene.add(floor);
-
-    camera.position.z = 5;
 
     function animate(time) {
         controls.update();
