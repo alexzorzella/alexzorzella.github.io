@@ -20,17 +20,39 @@ function wrapText(contents, context, current_y_offset, font_size, padding) {
 
     const words = contents.split(" ");
 
-    for(const word of words) {
-       const current_line = safe_line + (safe_line.length > 0 ? " " : "") + word;
+    const canvas_width = context.canvas.width - padding * 2;
 
-       if(context.measureText(current_line).width > context.canvas.width - padding * 2) {
-           context.fillText(safe_line, padding, current_y_offset);
-           current_line_index++;
-           current_y_offset += font_size * 1.2;
-           safe_line = word;
-       } else {
-           safe_line = current_line;
-       }
+    for(const word of words) {
+        const current_line = safe_line + (safe_line.length > 0 ? " " : "") + word;
+
+        if(context.measureText(current_line).width > canvas_width) {
+            if(context.measureText(word).width > canvas_width) {
+                let remaining_word = word;
+
+                for(const character of word) {
+                    const current_line = safe_line + character;
+
+                    if(context.measureText(current_line).width > canvas_width) {
+                        context.fillText(safe_line, padding, current_y_offset);
+                        current_line_index++;
+                        current_y_offset += font_size * 1.2;
+                        safe_line = remaining_word;
+                        console.log(safe_line);
+                        break;
+                    } else {
+                        remaining_word = remaining_word.substring(1);
+                        safe_line = current_line;
+                    }
+                }
+            } else {
+                context.fillText(safe_line, padding, current_y_offset);
+                current_line_index++;
+                current_y_offset += font_size * 1.2;
+                safe_line = word;
+            }
+        } else {
+            safe_line = current_line;
+        }
     }
 
     context.fillText(safe_line, 40, current_y_offset);

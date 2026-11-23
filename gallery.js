@@ -10,15 +10,15 @@ const DATA = {
 	"legally_blonde_movie_night": {title: "Legally Blonde Movie Night", date_created: "2026/06/01", description: "If a machine has good taste in media, does it mean that it's alive?"},
 	"frog_genie_and_tess": {title: "Frog, Genie, And Tess", date_created: "2026/06/01", description: "Tessa Pacific, holding the baseball summoning bat, and Frogman (Eun Nayar), at the beginning of the Quest To Find the Exit."},
 	"bartholomew_and_scranklet": {title: "Bartholomew And Scranklet", date_created: "2026/06/01", description: "Bartholomew (left) and Skranklet (right) pose for a picture (taken by a French passerby) in front of The Louvre before they heist it"},
-	"siiva_4": {title: "SiIVa", date_created: "2026/06/01", description: "Science has proven that there is always a higher quality track than the last. SiIvaGunner's peer reviews skip academia and ask the public. SiIVa's Australia/Mongolia/Brazil tour was their most successful, being nominated for various awards, but eventually winning 'Best in Quality'. After demand from the public increased post-ceremony, the tour was extended to Canada and the United States of America.From Wikipedia (https://en.wikipedia.org/wiki/SiIvaGu...) under Creative Commons Attribution CC-BY-SA 3.0 (https://creativecommons.org/licenses/...)"},
+	"siiva_4": {title: "SiIVa", date_created: "2026/06/01", description: "Science has proven that there is always a higher quality track than the last. Let t0 and t1 be tracks. Assume it is possible to create a high quality rip h using t0 and t1. Given the Law of High Quality, a high quality track h made from tracks t0 and t1 will have at least quality tq = q(t0)+q(t1) where q(t0) > 0 and q(t1) > 0, thus t > q(t0) and t > q(t1). From Wikipedia (https://en.wikipedia.org/wiki/SiIvaGunner) under Creative Commons Attribution CC-BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/deed.en)"},
 	"knights_of_the_grand_2": {title: "Knights of the Grand Table", date_created: "2026/06/01", description: "In August of 2005, SiIvaGunner released their third compilation album to the public. Three years after their second release, the public had assumed they had left the scene. Millions watched the premiere live, flooding the streets of Paris, where the event was held live. While SiIvaGunner's Grand Day Out explored the line between rip and art and SiIvaGunner Fans When the Channel Is Ending for the 37th Time showcased longer tracks than ever before, SiIvaGunner's Knights of the Round Table is the quest to find the highest quality rips to date. From Wikipedia (https://en.wikipedia.org/wiki/SiIvaGu...) under Creative Commons Attribution CC-BY-SA 3.0 (https://creativecommons.org/licenses/...)"},
-	"high_quality_hotline": {title: "High Quality Hotline", date_created: "2026/06/01", description: "The High Quality storage facility was constructed with hundreds of landlines in preparation for the High Quality Shortage. Call, toll-free, at 1 800 555 0001"},
+	"siiva_5": {title: "High Quality Hotline", date_created: "2026/06/01", description: "The High Quality storage facility was constructed with hundreds of landlines in preparation for the High Quality Shortage. Call, toll-free, at 1 800 555 0001. Operators are standing by, twenty four hours a day."},
 	"grand_halation": {title: "Grand Halation", date_created: "2026/06/01", description: "..."},
 	"wedding_ring": {title: "Wedding Ring", date_created: "2026/06/01", description: "Eloise bought her wedding dress at Lowe's and Jacob ordered the wedding rings at Michael's."},
 	"toaster": {title: "Toaster", date_created: "2026/06/01", description: "A toaster with a man's soul. He sees through a CCTV camera, has a chainsaw for an arm, and runs everything on ten Intel® Core™ i7-7700 Processors hooked up in parallel. His torso is a car battery. His consciousness requires no computational power to maintain."},
 	"taylor": {title: "Taylor", date_created: "2026/06/01", description: "Taylor commits many federal crimes on her pet ostrich."},
-	"snuffler_s_bluff_ratman_at_sign": {title: "Snuffler's Bluff and Ratman At Sign", date_created: "2026/06/01", description: "Snuffler's Bluff National Park: privately funded, publicly owned."},
-	"snuffler_s_bluff": {title: "Snuffler's Bluff", date_created: "2026/06/01", description: "That's rare, it's just walking by."},
+	"snuffler_s_bluff_ratman_at_sign": {title: "Snuffler's Bluff National Park", date_created: "2026/06/01", description: "Snuffler's Bluff National Park: privately funded, publicly owned. If you've never been to Snuffler's Bluff, I would highly recommend the drive."},
+	"snuffler_s_bluff": {title: "Snuffler", date_created: "2026/06/01", description: "That's rare, it's just walking by."},
 	"sharkman": {title: "Sharkman", date_created: "2026/06/01", description: "The president of WCO (World Circuit Organization) 2030 shakes hands with a sharkman."},
 	"refrigerator": {title: "Refrigerator", date_created: "2026/06/01", description: "The first prototypes of the toaster man's mobile features."},
 	"ratman_models": {title: "Ratman Model Catalogue", date_created: "2026/06/01", description: "Funding for the exoskeletons was generously provided by REDACTED."},
@@ -71,7 +71,6 @@ const DATA = {
 	"siiva_2": {title: "SiIvaGunner Fans When the Channel Is Ending For the 37th Time", date_created: "2026/07/17", description: "nodesc"},
 	"siiva_6": {title: "SiIva6unner's This Mix Contains a High Concentration of Quality Music", date_created: "2026/07/17", description: "nodesc"},
 	"siiva_3": {title: "SiIvaGunner's Knights of the Grand Table", date_created: "2026/06/17", description: "nodesc"},
-	"siiva_5": {title: "SiIvaGunner's High Quality Hotline", date_created: "2026/06/17", description: "nodesc"},
 	"siiva_0": {title: "SiIvaGunner's Grand Halation", date_created: "2026/06/17", description: "nodesc"},
 	"xenomorph_leaping": {title: "Xenomorph Leaping", date_created: "2026/11/22", description: ""},
 	"breaking_bad_valorant_crossover_blown_up": {title: "Breaking Bad Valorant Crossover Blown Up", date_created: "2026/11/22", description: ""},
@@ -113,17 +112,39 @@ function wrapText(contents, context, current_y_offset, font_size, padding) {
 
     const words = contents.split(" ");
 
-    for(const word of words) {
-       const current_line = safe_line + (safe_line.length > 0 ? " " : "") + word;
+    const canvas_width = context.canvas.width - padding * 2;
 
-       if(context.measureText(current_line).width > context.canvas.width - padding * 2) {
-           context.fillText(safe_line, padding, current_y_offset);
-           current_line_index++;
-           current_y_offset += font_size * 1.2;
-           safe_line = word;
-       } else {
-           safe_line = current_line;
-       }
+    for(const word of words) {
+        const current_line = safe_line + (safe_line.length > 0 ? " " : "") + word;
+
+        if(context.measureText(current_line).width > canvas_width) {
+            if(context.measureText(word).width > canvas_width) {
+                let remaining_word = word;
+
+                for(const character of word) {
+                    const current_line = safe_line + character;
+
+                    if(context.measureText(current_line).width > canvas_width) {
+                        context.fillText(safe_line, padding, current_y_offset);
+                        current_line_index++;
+                        current_y_offset += font_size * 1.2;
+                        safe_line = remaining_word;
+                        console.log(safe_line);
+                        break;
+                    } else {
+                        remaining_word = remaining_word.substring(1);
+                        safe_line = current_line;
+                    }
+                }
+            } else {
+                context.fillText(safe_line, padding, current_y_offset);
+                current_line_index++;
+                current_y_offset += font_size * 1.2;
+                safe_line = word;
+            }
+        } else {
+            safe_line = current_line;
+        }
     }
 
     context.fillText(safe_line, 40, current_y_offset);
@@ -159,18 +180,18 @@ function main() {
 
     // controls.maxPolarAngle = Math.PI / 2;
 
-    // const dirLight1 = new THREE.DirectionalLight( 0xffffff, 3 );
-    // dirLight1.position.set( 1, 1, 1 );
-    // scene.add( dirLight1 );
-    //
-    // const dirLight2 = new THREE.DirectionalLight( 0x002288, 3 );
-    // dirLight2.position.set( - 1, - 1, - 1 );
-    // scene.add( dirLight2 );
-    //
-    // const ambientLight = new THREE.AmbientLight( 0x555555 );
-    // scene.add( ambientLight );
+    const dirLight1 = new THREE.DirectionalLight( 0xffffff, 3 );
+    dirLight1.position.set( 1, 1, 1 );
+    scene.add( dirLight1 );
 
-    window.addEventListener( 'resize', onWindowResize );
+    const dirLight2 = new THREE.DirectionalLight( 0x002288, 3 );
+    dirLight2.position.set( - 1, - 1, - 1 );
+    scene.add( dirLight2 );
+
+    const ambientLight = new THREE.AmbientLight( 0x555555 );
+    scene.add( ambientLight );
+
+    window.addEventListener( 'resize', () => onWindowResize(camera) );
 
     //
 
@@ -201,7 +222,7 @@ function main() {
     renderer.setAnimationLoop(animate);
 }
 
-function onWindowResize() {
+function onWindowResize(camera) {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
@@ -282,12 +303,6 @@ async function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25,
     frame.add(info_object);
 
     info_object.position.set(frame_width / 2 + info_width / 2 + frame_border + 0.25, -(frame_height / 2 + frame_border) + info_height / 2, 0.01);
-
-    // const light = new THREE.Light("0xFFFFFF", 10);
-    // scene.add(light);
-    // frame.add(light);
-
-    // light.position.set(0, 0, 0.1)
 
     // const glass_material = new THREE.MeshPhysicalMaterial({ roughness: 0, transmission: 1, thickness: 0 });
     // const glass = createObject(scene, null, null, frame_width, frame_height, 0.025, 0, 0, 0.1, frame, glass_material);
