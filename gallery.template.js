@@ -24,7 +24,7 @@ function wrapText(contents, context, current_y_offset, font_size, padding) {
        const current_line = safe_line + (safe_line.length > 0 ? " " : "") + word;
 
        if(context.measureText(current_line).width > context.canvas.width - padding * 2) {
-           context.fillText(safe_line, 40, current_y_offset);
+           context.fillText(safe_line, padding, current_y_offset);
            current_line_index++;
            current_y_offset += font_size * 1.2;
            safe_line = word;
@@ -173,7 +173,7 @@ async function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25,
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = "#000000";
     context.font = "normal 900 100px imperial";
-    context.fillText(DATA[artwork_reference_id].title, 40, 120);
+    wrapText(DATA[artwork_reference_id].title, context, 40, 100, 40);
     context.font = "55px arial";
     wrapText(DATA[artwork_reference_id].description, context, 220, 55, 40);
 
