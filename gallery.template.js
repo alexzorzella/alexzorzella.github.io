@@ -114,6 +114,18 @@ function createFramedPiece(scene, artwork_src, scale=2, inner_border=0.25, frame
         frame.add(artwork);
         artwork.position.set(0, 0, frame_depth / 2 + 0.01);
 
+        const info_width = 1 / 2
+        const info_height = 1.41 / 2
+
+        const info_geometry = new THREE.PlaneGeometry(info_width, info_height);
+        const info_material = new THREE.MeshBasicMaterial({ color: new THREE.Color(0xf5eae4) });
+        const info_object = new THREE.Mesh(info_geometry, info_material);
+
+        scene.add(info_object);
+        frame.add(info_object);
+
+        info_object.position.set(frame_width / 2 + info_width / 2 + frame_border + 0.25, -(frame_height / 2 + frame_border) + info_height / 2, 0.01);
+
         // const glass_material = new THREE.MeshPhysicalMaterial({ roughness: 0, transmission: 1, thickness: 0 });
         // const glass = createObject(scene, null, null, frame_width, frame_height, 0.025, 0, 0, 0.1, frame, glass_material);
         // glass.material.set(glass_material);
