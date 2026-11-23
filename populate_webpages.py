@@ -416,6 +416,46 @@ def render_and_write_individual_mtg_page(image_element: ImageElementData, card_t
         with open(output_file_path, "w", encoding='utf-8') as output_file_path:
             output_file_path.write(template)
 
+def populate_gallery_file(
+        tsv_path: Path = Path("./public/artinfo.tsv"),
+        gallery_template_path: Path = Path("./gallery.template.js"),
+        gallery_output_path: Path = Path("./gallery.html")):
+
+    file_exists = tsv_path.is_file()
+
+    if not file_exists:
+        print(f"{Fore.RED}{tsv_path} doesn't exist{Style.RESET_ALL}")
+
+    final_data_entries = ""
+
+    print(f"{Fore.GREEN}Converting data in {tsv_path} from tsv to js...{Style.RESET_ALL}")
+
+    tsv_lines = tsv_path.read_text(encoding='utf-8').splitlines()
+    tsv_reader = csv.reader(tsv_lines, delimiter="\t")
+
+    total_lines_read = 0
+
+    for entry in list(tsv_reader)[1:]:
+        reference: str = entry[0]
+        title: str = entry[1] if len(entry) >= 2 else "untitled"
+        date_created: str = entry[2] if len(entry) >= 3 else "????/??/??"
+        description: str = entry[3] if len(entry) >= 4 else "nodesc"
+
+        final_data_entries += f'\t"{reference}": {{title: "{title}", date_created: "{date_created}", description: "{description}"}}"\n'
+
+        total_lines_read += 1
+
+    print(f"{Fore.GREEN}Converted {Fore.CYAN}{total_lines_read}{Fore.GREEN} tsv entries!{Style.RESET_ALL}")
+
+    with open(gallery_template_path, "r") as file:
+        template = file.read()
+        template = template.replace("__DATA__", final_data_entries)
+
+        with open(gallery_output_path, "w", encoding='utf-8') as output_file_path:
+            output_file_path.write(template)
+
+            print(f"{Fore.GREEN}Wrote data to {Fore.CYAN}{gallery_output_path}{Fore.GREEN}!{Style.RESET_ALL}")
+
 if __name__ == "__main__":
     # format_filenames(r".\public\mtg")
     #
@@ -480,35 +520,41 @@ if __name__ == "__main__":
     #
     # format_filenames(r".\public\mtg")
 
-    create_thumbnails_for_images_recursively("public/art")
+    ######### index.html #########
 
-    art_info_tsv = Path("./public/artinfo.tsv")
-    rglob_cards_into_tsv(source=Path("./public/art"), csv_path=art_info_tsv)
+    # create_thumbnails_for_images_recursively("public/art")
+    #
+    # art_info_tsv = Path("./public/artinfo.tsv")
+    # rglob_cards_into_tsv(source=Path("./public/art"), csv_path=art_info_tsv)
+    #
+    # artwork_image_data: list[ImageElementData] = get_image_element_data(
+    #     tsv_path=art_info_tsv,
+    #     image_root_dir=Path("./public/art/"),
+    #     info_root_dir=Path("./public/art_info/"),
+    #     linked_page_dir="art_pages",
+    #     li_class="tile"
+    # )
+    #
+    # # Individual pages for artworks
+    # populate_individual_pages(
+    #     image_elements=artwork_image_data,
+    #     page_template_path=Path("./artwork_page.template.html"),
+    #     output_dir_path=Path("./art_pages/"),
+    #     raw_image=True
+    # )
+    #
+    # populate_template(
+    #     cards=artwork_image_data,
+    #     output_template_filename="index.template.html",
+    #     output_filename="index.html",
+    #     image_sources_directory_name="public/art",
+    #     ul_class="tilelist",
+    #     order=Order.BY_PATH
+    # )
 
-    artwork_image_data: list[ImageElementData] = get_image_element_data(
-        tsv_path=art_info_tsv,
-        image_root_dir=Path("./public/art/"),
-        info_root_dir=Path("./public/art_info/"),
-        linked_page_dir="art_pages",
-        li_class="tile"
-    )
+    populate_gallery_file()
 
-    # Individual pages for artworks
-    populate_individual_pages(
-        image_elements=artwork_image_data,
-        page_template_path=Path("./artwork_page.template.html"),
-        output_dir_path=Path("./art_pages/"),
-        raw_image=True
-    )
-
-    populate_template(
-        cards=artwork_image_data,
-        output_template_filename="index.template.html",
-        output_filename="index.html",
-        image_sources_directory_name="public/art",
-        ul_class="tilelist",
-        order=Order.BY_PATH
-    )
+    ##############################
 
     # create_thumbnails_for_images_recursively("public/fine_art_i_like")
 
