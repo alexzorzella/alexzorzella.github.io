@@ -441,7 +441,7 @@ def populate_gallery_file(
         date_created: str = entry[2] if len(entry) >= 3 else "????/??/??"
         description: str = entry[3] if len(entry) >= 4 else "nodesc"
 
-        final_data_entries += f'\t"{reference}": {{title: "{title}", date_created: "{date_created}", description: "{description}"}}"\n'
+        final_data_entries += f'\t"{reference}": {{title: "{title}", date_created: "{date_created}", description: "{description}"}},\n'
 
         total_lines_read += 1
 
