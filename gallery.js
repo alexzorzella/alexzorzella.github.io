@@ -11,7 +11,7 @@ const DATA = {
 	"legally_blonde_movie_night": {title: "Legally Blonde Movie Night", date_created: "2026/06/01", description: "If a machine has good taste in media, does it mean that it's alive?"},
 	"frog_genie_and_tess": {title: "Frog, Genie, And Tess", date_created: "2026/06/01", description: "Tessa Pacific, holding the baseball summoning bat, and Frogman (Eun Nayar), at the beginning of the Quest To Find the Exit."},
 	"bartholomew_and_scranklet": {title: "Bartholomew And Scranklet", date_created: "2026/06/01", description: "Bartholomew (left) and Skranklet (right) pose for a picture (taken by a French passerby) in front of The Louvre before they heist it"},
-	"siiva_4": {title: "SiIVa", date_created: "2026/06/01", description: "Science has proven that there is always a higher quality track than the last. Let t0 and t1 be tracks. Assume it is possible to create a high quality rip h using t0 and t1. Given the Law of High Quality, a high quality track h made from tracks t0 and t1 will have at least quality tq = q(t0)+q(t1) where q(t0) > 0 and q(t1) > 0, thus t > q(t0) and t > q(t1). From Wikipedia (https://en.wikipedia.org/wiki/SiIvaGunner) under Creative Commons Attribution CC-BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/deed.en)"},
+	"siiva_4": {title: "SiIVa", date_created: "2026/06/01", description: "Science has proven that there is always a higher quality track than the last. Let t0 and t1 be tracks. Assume it is possible to create a high quality rip h using t0 and t1. Given the Law of High Quality, a high quality track h made from tracks t0 and t1 will have at least quality tq = q(t0)+q(t1) where q(t0) > 0 and q(t1) > 0, thus t > q(t0) and t > q(t1). From Wikipedia (https://en.wikipedia.org/wiki/SiIvaGunner) under Creative Commons Attribution CC-BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/legalcode)"},
 	"knights_of_the_grand_2": {title: "Knights of the Grand Table", date_created: "2026/06/01", description: "In August of 2005, SiIvaGunner released their third compilation album to the public. Three years after their second release, the public had assumed they had left the scene. Millions watched the premiere live, flooding the streets of Paris, where the event was held live. While SiIvaGunner's Grand Day Out explored the line between rip and art and SiIvaGunner Fans When the Channel Is Ending for the 37th Time showcased longer tracks than ever before, SiIvaGunner's Knights of the Round Table is the quest to find the highest quality rips to date. From Wikipedia (https://en.wikipedia.org/wiki/SiIvaGu...) under Creative Commons Attribution CC-BY-SA 3.0 (https://creativecommons.org/licenses/...)"},
 	"siiva_5": {title: "High Quality Hotline", date_created: "2026/06/01", description: "The High Quality storage facility was constructed with hundreds of landlines in preparation for the High Quality Shortage. Call, toll-free, at 1 800 555 0001. Operators are standing by, twenty four hours a day."},
 	"grand_halation": {title: "Grand Halation", date_created: "2026/06/01", description: "..."},
@@ -96,6 +96,9 @@ const DATA = {
 	"lang": {title: "Lang", date_created: "2026/11/22", description: ""},
 	"introspect": {title: "Introspect", date_created: "2026/11/22", description: ""},
 	"bag": {title: "Bag", date_created: "2026/11/22", description: ""},
+	"codegnat_studios": {title: "Codegnat Studios", date_created: "2026/11/26", description: ""},
+	"bus_stop": {title: "Bus Stop", date_created: "2026/11/26", description: ""},
+	"fnk_banner_drafts": {title: "Fnk Banner Drafts", date_created: "2026/11/26", description: ""},
 
 }
 
